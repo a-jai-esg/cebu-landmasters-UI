@@ -1,33 +1,83 @@
-import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
-import LogoComponent from "../Logo";
+import React from "react";
+import { ProSidebar, MenuItem, Menu } from "react-pro-sidebar";
+import "react-pro-sidebar/dist/css/styles.css";
+import LogoComponent from "../LogoComponent";
+import CurrencyExchangeOutlined from "@mui/icons-material/CurrencyExchangeOutlined";
+import { Box, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
+import { useState } from "react";
+
+interface ItemProps {
+  title: string;
+  to: string;
+  icon: JSX.Element;
+  selected: string;
+  setSelected: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const Item: React.FC<ItemProps> = ({
+  title,
+  to,
+  icon,
+  selected,
+  setSelected,
+}) => {
+  return (
+    <MenuItem
+      active={selected === title}
+      style={{ color: "#24274c" }}
+      onClick={() => setSelected(title)}
+      icon={icon}
+      className="sidebar-item"
+    >
+      <Typography>{title}</Typography>
+      <Link to={to} />
+    </MenuItem>
+  );
+};
 
 const SidebarComponent = () => {
+  const [selected, setSelected] = useState("Income Statement");
   return (
-    <>
-      <Sidebar
-        rootStyles={{
-          borderRadius: "15px",
-          backgroundColor: "#24274c",
-          color: "aliceblue",
-          fontWeight: 600,
-        }}
-      >
-        <LogoComponent />
-        <Menu
-          rootStyles={{
-            backgroundColor: "#24274c",
-            color: "#fff",
-          }}
-        >
-          <SubMenu label="Charts">
-            <MenuItem> Pie charts </MenuItem>
-            <MenuItem> Line charts </MenuItem>
-          </SubMenu>
-          <MenuItem> Documentation </MenuItem>
-          <MenuItem> Calendar </MenuItem>
+    <Box
+      sx={{
+        "& .pro-sidebar-inner": {
+          background: `${`#24274c`} !important`,
+        },
+        "& .pro-icon-wrapper": {
+          backgroundColor: "transparent !important",
+        },
+        "& .pro-inner-item": {
+          marginLeft: "25px",
+          padding: "5px 30px 5px 20px !important",
+          borderTopLeftRadius: "25px",
+          borderBottomLeftRadius: "25px",
+          borderLeft: "none",
+          "&:hover, &:active": {
+            color: "#333 !important",
+            backgroundColor: "#c1c5de", // Change to desired background color when hovered or clicked
+          },
+        },
+        "& .pro-menu-item.active": {
+          color: "#c1c5de !important",
+        },
+      }}
+    >
+      <ProSidebar>
+        <Menu iconShape="square">
+          <LogoComponent />
+          <Box>
+            <Item
+              title="Income Statement"
+              to="/dashboard"
+              icon={<CurrencyExchangeOutlined />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+          </Box>
         </Menu>
-      </Sidebar>
-    </>
+      </ProSidebar>
+    </Box>
   );
 };
 
