@@ -1,4 +1,4 @@
-import logoImage from "../../../assets/CLI-Logo-Transparent-Grayscale.png";
+import logoImage from "../../../../assets/CLI-Logo-Transparent-Grayscale.png";
 
 const LogoComponent = () => {
   return (

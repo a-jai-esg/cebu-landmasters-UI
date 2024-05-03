@@ -1,11 +1,12 @@
 import React from "react";
 import { ProSidebar, MenuItem, Menu } from "react-pro-sidebar";
 import "react-pro-sidebar/dist/css/styles.css";
-import LogoComponent from "../LogoComponent";
+import LogoComponent from "./LogoComponent";
 import CurrencyExchangeOutlined from "@mui/icons-material/CurrencyExchangeOutlined";
 import { Box, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import FilterComponent from "./FilterComponent";
 
 interface ItemProps {
   title: string;
@@ -42,6 +43,7 @@ const SidebarComponent = () => {
     <Box
       sx={{
         "& .pro-sidebar-inner": {
+          borderRadius: "12.5px",
           background: `${`#24274c`} !important`,
         },
         "& .pro-icon-wrapper": {
@@ -65,7 +67,12 @@ const SidebarComponent = () => {
     >
       <ProSidebar>
         <Menu iconShape="square">
-          <LogoComponent />
+          
+          {/* Logo Component */}
+          <Box>
+            <LogoComponent />
+          </Box>
+          {/* Income Statement Button */}
           <Box>
             <Item
               title="Income Statement"
@@ -74,6 +81,13 @@ const SidebarComponent = () => {
               selected={selected}
               setSelected={setSelected}
             />
+          </Box>
+          {/* Filter Component */}
+          <Box sx={{
+            paddingTop: "30px",
+            marginLeft: "25px"
+          }}>
+            <FilterComponent/>
           </Box>
         </Menu>
       </ProSidebar>

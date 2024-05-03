@@ -11,6 +11,11 @@ body,
   font-style: normal;
 }
 
+.app {
+  display: flex;
+  position: relative;
+}
+
 ::-webkit-scrollbar {
   width: 10px;
 }
