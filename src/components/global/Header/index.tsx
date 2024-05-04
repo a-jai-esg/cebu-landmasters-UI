@@ -1,7 +1,11 @@
 import { Typography, Box } from "@mui/material";
 
-const Header = (title: string): JSX.Element =>{
-    return (
+interface HeaderProps {
+  title: string;
+}
+
+const Header = ({ title }: HeaderProps): JSX.Element => {
+  return (
     <Box mb="30px;">
       <Typography
         variant="h5"
@@ -12,7 +16,7 @@ const Header = (title: string): JSX.Element =>{
         {title}
       </Typography>
     </Box>
-    );
+  );
 }
 
 export default Header;

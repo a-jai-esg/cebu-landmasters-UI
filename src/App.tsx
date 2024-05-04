@@ -14,7 +14,6 @@ const App: React.FC = () => {
     <div className="app-container"> {/* Apply CSS flexbox/grid styles here */}
       <SidebarComponent />
       <div className="dashboard-container"> {/* Apply CSS flexbox/grid styles here */}
-        <h1>My Dashboard</h1>
         <Dashboard data={data} /> {/* Render the Dashboard component */}
       </div>
     </div>
