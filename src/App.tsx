@@ -8,6 +8,8 @@ const App: React.FC = () => {
     { title: 'Card 1', content: 'Content for Card 1' },
     { title: 'Card 2', content: 'Content for Card 2' },
     { title: 'Card 3', content: 'Content for Card 3' },
+    { title: 'Card 4', content: 'Content for Card 4' },
+    { title: 'Card 5', content: 'Content for Card 5' },
   ];
 
   return (
