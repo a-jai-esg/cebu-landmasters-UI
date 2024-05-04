@@ -36,7 +36,7 @@ const FilterComponent = () => {
         style={{
           display: "flex",
           alignItems: "center",
-          margin: "25px 0 5px 20px",
+          margin: "45px 0 5px 20px",
         }}
       >
         <FilterAltOutlined
@@ -53,7 +53,7 @@ const FilterComponent = () => {
           marginTop: "20px",
           marginLeft: "25px",
           marginRight: "25px",
-          marginBottom: "75px",
+          marginBottom: "50px",
         }}
       >
         {/* Start Date */}
@@ -97,7 +97,7 @@ const FilterComponent = () => {
         style={{
           display: "flex",
           alignItems: "center",
-          margin: "45px 0 5px 20px",
+          margin: "60px 0 5px 20px",
         }}
       >
         <Typography variant="h6" color="#c1c5de" fontWeight="600" fontSize={14}>
