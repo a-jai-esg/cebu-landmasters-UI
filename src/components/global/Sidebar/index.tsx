@@ -45,6 +45,7 @@ const SidebarComponent = () => {
         "& .pro-sidebar-inner": {
           borderRadius: "12.5px",
           background: `${`#24274c`} !important`,
+          color: "#c1c5de"
         },
         "& .pro-icon-wrapper": {
           backgroundColor: "transparent !important",
