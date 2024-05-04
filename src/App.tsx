@@ -7,9 +7,9 @@ const App: React.FC = () => {
   const data = [
     { title: 'Card 1'},
     { title: 'REVENUE per BUs'},
-    { title: 'Card 3'},
+    { title: 'OPERATION EXPENSES VS BUDGET'},
     { title: 'Card 4'},
-    { title: 'Card 5'},
+    { title: 'GPM PER ENTITY'},
   ];
 
   return (
