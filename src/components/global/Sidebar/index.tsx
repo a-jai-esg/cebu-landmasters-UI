@@ -26,7 +26,10 @@ const Item: React.FC<ItemProps> = ({
   return (
     <MenuItem
       active={selected === title}
-      style={{ color: "#24274c" }}
+      style={{
+        color: "#24274c",
+        fontWeight: selected === title ? 600 : "normal", // Setting font weight based on selected state
+      }}
       onClick={() => setSelected(title)}
       icon={icon}
       className="sidebar-item"
@@ -45,7 +48,7 @@ const SidebarComponent = () => {
         "& .pro-sidebar-inner": {
           borderRadius: "12.5px",
           background: `${`#24274c`} !important`,
-          color: "#c1c5de"
+          color: "#c1c5de",
         },
         "& .pro-icon-wrapper": {
           backgroundColor: "transparent !important",
@@ -58,6 +61,8 @@ const SidebarComponent = () => {
           borderLeft: "none",
           "&:hover, &:active": {
             color: "#333 !important",
+            fontSize: "16px",
+            fontWeight: 600,
             backgroundColor: "#c1c5de", // Change to desired background color when hovered or clicked
           },
         },
@@ -68,13 +73,16 @@ const SidebarComponent = () => {
     >
       <ProSidebar>
         <Menu iconShape="square">
-          
           {/* Logo Component */}
           <Box>
             <LogoComponent />
           </Box>
           {/* Income Statement Button */}
-          <Box>
+          <Box
+            sx={{
+              paddingTop: "30px",
+            }}
+          >
             <Item
               title="Income Statement"
               to="/dashboard"
@@ -84,11 +92,13 @@ const SidebarComponent = () => {
             />
           </Box>
           {/* Filter Component */}
-          <Box sx={{
-            paddingTop: "30px",
-            marginLeft: "25px"
-          }}>
-            <FilterComponent/>
+          <Box
+            sx={{
+              paddingTop: "30px",
+              marginLeft: "25px",
+            }}
+          >
+            <FilterComponent />
           </Box>
         </Menu>
       </ProSidebar>
