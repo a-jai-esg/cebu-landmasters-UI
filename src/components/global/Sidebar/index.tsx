@@ -7,7 +7,7 @@ import { Box, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import FilterComponent from "./FilterComponent";
-
+import "../../../App.css";
 interface ItemProps {
   title: string;
   to: string;
@@ -97,7 +97,7 @@ const SidebarComponent = () => {
           {/* Filter Component */}
           <Box
             sx={{
-              paddingTop: "30px",
+              marginTop: "5vh",
               marginLeft: "25px",
             }}
           >

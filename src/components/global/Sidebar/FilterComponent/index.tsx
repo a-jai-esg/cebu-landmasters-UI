@@ -10,6 +10,36 @@ import {
   FormControlLabel,
   FormGroup,
 } from "@mui/material";
+import { styled } from "@mui/system";
+
+const StyledDatePicker = styled(DatePicker)(({}) => ({
+  "& .MuiSvgIcon-root": {
+    color: "#c1c5de",
+  },
+  "& .MuiOutlinedInput-root": {
+    "& fieldset": {
+      color: "#c1c5de",
+      borderColor: "#c1c5de",
+    },
+    "&:hover fieldset": {
+      borderColor: "#c1c5de",
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: "#c1c5de",
+    },
+    color: "#c1c5de", // Change input text color
+  },
+  "& .MuiInputLabel-root": {
+    color: "#c1c5de", // Change label text color
+  },
+  "& .MuiFormHelperText-root": {
+    color: "#c1c5de", // Change helper text color
+  },
+}));
+
+const StyledFormControlLabel = styled(FormControlLabel)(({}) => ({
+  color: "#c1c5de", // Change label text color
+}));
 
 const FilterComponent = () => {
   const [state, setState] = React.useState({
@@ -36,11 +66,15 @@ const FilterComponent = () => {
         style={{
           display: "flex",
           alignItems: "center",
-          margin: "45px 0 5px 20px",
+          margin: "60px 0 5px 25px",
         }}
       >
         <FilterAltOutlined
-          sx={{ paddingRight: "15px", color: "#c1c5de", fontWeight: 600 }}
+          sx={{
+            paddingRight: "10px",
+            color: "#c1c5de",
+            fontWeight: 600,
+          }}
         />
         <Typography variant="h6" color="#c1c5de" fontWeight="600" fontSize={14}>
           Filters
@@ -59,34 +93,23 @@ const FilterComponent = () => {
         {/* Start Date */}
         <Box sx={{ marginBottom: "10px" }}>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DatePicker
+            <StyledDatePicker
               label="Start Date"
-              sx={{
-                fontWeight: 400,
-                fontSize: "inherit",
-                color: "#c1c5de",
-                "& input": {
-                  fontSize: "14px",
-                  color: "#c1c5de",
-                },
-              }}
+              slotProps={{ textField: { variant: "outlined" } }}
             />
           </LocalizationProvider>
         </Box>
         {/* End Date */}
-        <Box sx={{ marginTop: "20px", marginBottom: "20px" }}>
+        <Box
+          sx={{
+            marginTop: "20px",
+            marginBottom: "20px",
+          }}
+        >
           <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DatePicker
+            <StyledDatePicker
               label="End Date"
-              sx={{
-                fontWeight: 400,
-                fontSize: "inherit",
-                color: "#c1c5de",
-                "& input": {
-                  fontSize: "14px",
-                  color: "#c1c5de",
-                },
-              }}
+              slotProps={{ textField: { variant: "outlined" } }}
             />
           </LocalizationProvider>
         </Box>
@@ -97,7 +120,7 @@ const FilterComponent = () => {
         style={{
           display: "flex",
           alignItems: "center",
-          margin: "60px 0 5px 20px",
+          margin: "60px 0 15px 25px",
         }}
       >
         <Typography variant="h6" color="#c1c5de" fontWeight="600" fontSize={14}>
@@ -110,36 +133,82 @@ const FilterComponent = () => {
         <Box sx={{ marginBottom: "10px" }}>
           <FormControl component="fieldset" variant="standard">
             <FormGroup sx={{ marginLeft: "20px" }}>
-              <FormControlLabel
+              <StyledFormControlLabel
                 control={
-                  <Checkbox checked={CLI} onChange={handleChange} name="CLI" />
+                  <Checkbox
+                    checked={CLI}
+                    onChange={handleChange}
+                    name="CLI"
+                    sx={{
+                      color: "#c1c5de",
+                      "&.Mui-checked": {
+                        color: "#c1c5de",
+                      },
+                    }}
+                  />
                 }
                 label="CLI"
               />
-              <FormControlLabel
+              <StyledFormControlLabel
                 control={
-                  <Checkbox checked={CPH} onChange={handleChange} name="CPH" />
+                  <Checkbox
+                    checked={CPH}
+                    onChange={handleChange}
+                    name="CPH"
+                    sx={{
+                      color: "#c1c5de",
+                      "&.Mui-checked": {
+                        color: "#c1c5de",
+                      },
+                    }}
+                  />
                 }
                 label="CPH"
               />
-              <FormControlLabel
+              <StyledFormControlLabel
                 control={
-                  <Checkbox checked={CPM} onChange={handleChange} name="CPM" />
+                  <Checkbox
+                    checked={CPM}
+                    onChange={handleChange}
+                    name="CPM"
+                    sx={{
+                      color: "#c1c5de",
+                      "&.Mui-checked": {
+                        color: "#c1c5de",
+                      },
+                    }}
+                  />
                 }
                 label="CPM"
               />
-              <FormControlLabel
+              <StyledFormControlLabel
                 control={
-                  <Checkbox checked={ASF} onChange={handleChange} name="ASF" />
+                  <Checkbox
+                    checked={ASF}
+                    onChange={handleChange}
+                    name="ASF"
+                    sx={{
+                      color: "#c1c5de",
+                      "&.Mui-checked": {
+                        color: "#c1c5de",
+                      },
+                    }}
+                  />
                 }
                 label="ASF"
               />
-              <FormControlLabel
+              <StyledFormControlLabel
                 control={
                   <Checkbox
                     checked={BLCBP}
                     onChange={handleChange}
                     name="BLCBP"
+                    sx={{
+                      color: "#c1c5de",
+                      "&.Mui-checked": {
+                        color: "#c1c5de",
+                      },
+                    }}
                   />
                 }
                 label="BLCBP"
