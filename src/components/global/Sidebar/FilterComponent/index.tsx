@@ -27,7 +27,8 @@ const FilterComponent = () => {
                                 fontSize: "inherit",
                                 color: "#c1c5de",
                                 '& input': {
-                                    fontSize: "8px",
+                                    fontSize: "14px",
+                                    color: "#c1c5de",
                                 }
                             }}
                         />
@@ -43,7 +44,8 @@ const FilterComponent = () => {
                                 fontSize: "inherit",
                                 color: "#c1c5de",
                                 '& input': {
-                                    fontSize: "8px",
+                                    fontSize: "14px",
+                                    color: "#c1c5de",
                                 }
                             }}
                         />
