@@ -69,3 +69,12 @@
   font-weight: 900;
   font-style: italic;
 }
+
+.app-container {
+  display: flex;
+}
+
+.dashboard-container {
+  flex: 1;
+  padding: 20px;
+}
