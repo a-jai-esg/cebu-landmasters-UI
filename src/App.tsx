@@ -5,11 +5,11 @@ import Dashboard from '../src/pages/Dashboard'; // Import the Dashboard componen
 
 const App: React.FC = () => {
   const data = [
-    { title: 'Card 1', content: 'Content for Card 1' },
-    { title: 'Card 2', content: 'Content for Card 2' },
-    { title: 'Card 3', content: 'Content for Card 3' },
-    { title: 'Card 4', content: 'Content for Card 4' },
-    { title: 'Card 5', content: 'Content for Card 5' },
+    { title: 'Card 1'},
+    { title: 'REVENUE per BUs'},
+    { title: 'Card 3'},
+    { title: 'Card 4'},
+    { title: 'Card 5'},
   ];
 
   return (
