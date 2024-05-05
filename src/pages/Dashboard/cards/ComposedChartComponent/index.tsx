@@ -35,7 +35,7 @@ const ComposedChartComponent = ({
       <Typography fontSize={20} color="#333" fontWeight="bold" padding={1}>
         {title}
       </Typography>
-      <ResponsiveContainer width="100%" height={240}>
+      <ResponsiveContainer width="100%" height={320}>
         <ComposedChart
           data={lineData}
           margin={{ top: 30, right: 20, bottom: 20, left: 20 }}
