@@ -1,22 +1,11 @@
 import React from "react";
 import Header from "../../components/global/Header";
 import { Card, CardContent, Typography, Grid } from "@mui/material";
-import {
-  Bar,
-  XAxis,
-  YAxis,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-  Line,
-  ComposedChart,
-  CartesianGrid,
-} from "recharts";
-
 import SecondaryPieChartComponent from "./cards/SecondaryPieChartComponent";
 import IncomeStatementTable from "./cards/IncomeStatementTableComponent";
 import BarchartComponent from "./cards/BarchartComponent";
 import PrimaryPieChartComponent from "./cards/PrimaryPieChartComponent";
+import ComposedChartComponent from "./cards/ComposedChartComponent";
 
 interface DashboardProps {
   data: {
@@ -213,28 +202,10 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
           <Grid item xs={16} sm={8}>
             <Card sx={{ borderRadius: 3 }}>
               <CardContent>
-                <Typography
-                  fontSize={20}
-                  color="#333"
-                  fontWeight="bold"
-                  padding={1}
-                >
-                  {data[4].title}
-                </Typography>
-                <ResponsiveContainer width="100%" height={300}>
-                  <ComposedChart
-                    data={lineData}
-                    margin={{ top: 40, right: 40, bottom: 40, left: 40 }}
-                  >
-                    <CartesianGrid stroke="#f5f5f5" />
-                    <XAxis dataKey="name" scale="band" />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
-                    <Bar dataKey="uv" barSize={40} fill="#413ea0" />
-                    <Line type="monotone" dataKey="uv" stroke="#ff7300" />
-                  </ComposedChart>
-                </ResponsiveContainer>
+                <ComposedChartComponent
+                  lineData={lineData}
+                  title={data[4].title}
+                />
               </CardContent>
             </Card>
           </Grid>
