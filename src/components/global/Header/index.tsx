@@ -11,12 +11,12 @@ const Header = ({ title }: HeaderProps): JSX.Element => {
         variant="h5"
         color="#333"
         fontWeight="bold"
-        sx={{ marginBottom: "5px" }}
+        sx={{ marginBottom: "auto" }}
       >
         {title}
       </Typography>
     </Box>
   );
-}
+};
 
 export default Header;

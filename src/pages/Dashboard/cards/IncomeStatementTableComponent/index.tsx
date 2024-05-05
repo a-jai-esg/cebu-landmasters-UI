@@ -4,7 +4,6 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { Title } from "@mui/icons-material";
 import { ResponsiveContainer } from "recharts";
 
 interface incomeStatementData {
@@ -23,9 +22,8 @@ interface dataObjects {
 const IncomeStatementTable = ({ data }: dataObjects): JSX.Element => {
   return (
     <>
-      <ResponsiveContainer width="auto" height="auto">
-        <React.Fragment>
-          <Title>Recent Orders</Title>
+      <React.Fragment>
+        <ResponsiveContainer width="auto" height="55vh">
           <Table size="small">
             <TableHead>
               <TableRow>
@@ -101,8 +99,8 @@ const IncomeStatementTable = ({ data }: dataObjects): JSX.Element => {
               )}
             </TableBody>
           </Table>
-        </React.Fragment>
-      </ResponsiveContainer>
+        </ResponsiveContainer>
+      </React.Fragment>
     </>
   );
 };
