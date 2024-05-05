@@ -23,7 +23,7 @@ const IncomeStatementTable = ({ data }: dataObjects): JSX.Element => {
   return (
     <>
       <React.Fragment>
-        <ResponsiveContainer width="auto" height="55vh">
+        <ResponsiveContainer width="auto" height="auto">
           <Table size="small">
             <TableHead>
               <TableRow>
