@@ -2,6 +2,10 @@ import React from 'react';
 import Header from '../../components/global/Header';
 import { Card, CardContent, Typography, Grid } from '@mui/material';
 import { 
+  PieChart,
+  Pie, 
+  Cell, 
+  Label,
   BarChart, 
   Bar, 
   Rectangle,
@@ -9,14 +13,11 @@ import {
   YAxis, 
   Tooltip, 
   Legend, 
-  ResponsiveContainer,  
-  Line, 
-  PieChart, 
-  Pie, 
-  Cell,
+  ResponsiveContainer,
   ComposedChart,
   CartesianGrid,
-} from 'recharts'; // Import components from Recharts library
+  Line  
+  } from 'recharts'; 
 
 interface DashboardProps {
   data: {
@@ -25,22 +26,22 @@ interface DashboardProps {
 }
 
 const Dashboard: React.FC<DashboardProps> = ({ data }) => {
-  // Sample data for the bar chart
-  const barData = [
+  // Sample data for the doughnut chart
+  const doughnutData = [
+    { name: 'Category A', value: 200 },
+    { name: 'Category B', value: 300 },
+  ];
+  const doughnutColors = ['#413ea0', '#D7DBFA'];
+  const categoryAValue = doughnutData.find(entry => entry.name === 'Category A')?.value;
+
+   // Sample data for the bar chart
+   const barData = [
     { name: 'Page A', uv: 4000, pv: 2400, amt: 2400, },
     { name: 'Page B', uv: 3000, pv: 1398, amt: 2210, },
     { name: 'Page C', uv: 2000, pv: 9800, amt: 2290, },
     { name: 'Page D', uv: 2780, pv: 3908, amt: 2000, },
     { name: 'Page E', uv: 1890, pv: 4800, amt: 2181, },
   ];
-
-  // const barData = [
-  //   { name: 'Category 1', value: 400 },
-  //   { name: 'Category 2', value: 300 },
-  //   { name: 'Category 3', value: 200 },
-  //   { name: 'Category 4', value: 500 },
-  //   { name: 'Category 5', value: 600 },
-  // ];
 
   // Sample data for the composed chart
   const lineData = [
@@ -65,24 +66,173 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
     <>
       <Header title="Financial Dashboard - Income Statement" />
       <Grid container spacing={2}>
-        {/* Render Card 1 */}
+        {/* Doughnut charts */}
         {data.length > 0 && (
           <Grid item xs={12}>
             <Card>
-              <CardContent>
-                <Typography variant="h5" component="h2">
-                  {data[0].title}
-                </Typography>
+              <CardContent style={{ textAlign: 'center' }}>
+                <Grid container spacing={2} justifyContent="center">
+                  <Grid item xs={2}>
+                    <div style={{ display: 'flex', justifyContent: 'center' }}>
+                      <PieChart width={400} height={200}>
+                        <Pie
+                          data={doughnutData}
+                          cx="50%"
+                          cy="50%"
+                          innerRadius={60}
+                          outerRadius={80}
+                          fill="#8884d8"
+                          paddingAngle={5}
+                          dataKey="value"
+                        >
+                          {doughnutData.map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={doughnutColors[index % doughnutColors.length]} />
+                          ))}
+                          <Label value={categoryAValue} position="center" />
+                        </Pie>
+                      </PieChart>
+                    </div>
+                    <Typography
+                      fontSize={20}
+                      color="#333"
+                      fontWeight="bold"
+                      marginTop={-3}
+                    >
+                      Gross Profit Margin
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={2}>
+                    <div style={{ display: 'flex', justifyContent: 'center' }}>
+                      <PieChart width={400} height={200}>
+                        <Pie
+                          data={doughnutData}
+                          cx="50%"
+                          cy="50%"
+                          innerRadius={60}
+                          outerRadius={80}
+                          fill="#8884d8"
+                          paddingAngle={5}
+                          dataKey="value"
+                        >
+                          {doughnutData.map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={doughnutColors[index % doughnutColors.length]} />
+                          ))}
+                          <Label value={categoryAValue} position="center" />
+                        </Pie>
+                      </PieChart>
+                    </div>
+                    <Typography
+                      fontSize={20}
+                      color="#333"
+                      fontWeight="bold"
+                      marginTop={-3}
+                    >
+                      OPEX Ratio
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={2}>
+                    <div style={{ display: 'flex', justifyContent: 'center' }}>
+                      <PieChart width={400} height={200}>
+                        <Pie
+                          data={doughnutData}
+                          cx="50%"
+                          cy="50%"
+                          innerRadius={60}
+                          outerRadius={80}
+                          fill="#8884d8"
+                          paddingAngle={5}
+                          dataKey="value"
+                        >
+                          {doughnutData.map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={doughnutColors[index % doughnutColors.length]} />
+                          ))}
+                          <Label value={categoryAValue} position="center" />
+                        </Pie>
+                      </PieChart>
+                    </div>
+                    <Typography
+                      fontSize={20}
+                      color="#333"
+                      fontWeight="bold"
+                      marginTop={-3}
+                    >
+                      EBITDA Margin
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={2}>
+                    <div style={{ display: 'flex', justifyContent: 'center' }}>
+                      <PieChart width={400} height={200}>
+                        <Pie
+                          data={doughnutData}
+                          cx="50%"
+                          cy="50%"
+                          innerRadius={60}
+                          outerRadius={80}
+                          fill="#8884d8"
+                          paddingAngle={5}
+                          dataKey="value"
+                        >
+                          {doughnutData.map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={doughnutColors[index % doughnutColors.length]} />
+                          ))}
+                          <Label value={categoryAValue} position="center" />
+                        </Pie>
+                      </PieChart>
+                    </div>
+                    <Typography
+                      fontSize={20}
+                      color="#333"
+                      fontWeight="bold"
+                      marginTop={-3}
+                    >
+                      Conso NIAT
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={2}>
+                    <div style={{ display: 'flex', justifyContent: 'center' }}>
+                      <PieChart width={400} height={200}>
+                        <Pie
+                          data={doughnutData}
+                          cx="50%"
+                          cy="50%"
+                          innerRadius={60}
+                          outerRadius={80}
+                          fill="#8884d8"
+                          paddingAngle={5}
+                          dataKey="value"
+                        >
+                          {doughnutData.map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={doughnutColors[index % doughnutColors.length]} />
+                          ))}
+                          <Label value={categoryAValue} position="center" />
+                        </Pie>
+                      </PieChart>
+                    </div>
+                    <Typography
+                      fontSize={20}
+                      color="#333"
+                      fontWeight="bold"
+                      marginTop={-3}
+                    >
+                      Parent NIAT
+                    </Typography>
+                  </Grid>
+                </Grid>   
               </CardContent>
             </Card>
           </Grid>
-        )}
-        {/* Bar Chart */}
+        )}   
+        {/* Bar chart */}
         {data.length > 1 && (
           <Grid item xs={12} sm={6} md={4}>
             <Card sx={{ borderRadius: 3 }}>
               <CardContent>
-                <Typography variant="h5" component="h2">
+                <Typography
+                    fontSize={20}
+                    color="#333"
+                    fontWeight="bold"
+                    padding={1}
+                    >
                   {data[1].title}
                 </Typography>
                 <ResponsiveContainer width="100%" height={300}>
@@ -95,7 +245,6 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
                     <YAxis />
                     <Tooltip />
                     <Legend />
-                    {/* <Bar dataKey="value" fill="#8884d8" /> */}
                     <Bar dataKey="pv" fill="#2BA9DF" activeBar={<Rectangle fill="pink" stroke="blue" />} />
                     <Bar dataKey="uv" fill="#85C7EE" activeBar={<Rectangle fill="gold" stroke="purple" />} />
                     <Bar dataKey="amt" fill="#99D8E9" activeBar={<Rectangle fill="orange" stroke="red" />} />
@@ -110,7 +259,12 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
           <Grid item xs={12} sm={6} md={4}>
              <Card sx={{ borderRadius: 3 }}>
               <CardContent>
-                <Typography variant="h5" component="h2">
+                <Typography 
+                fontSize={20}
+                color="#333"
+                fontWeight="bold"
+                padding={1}
+                >
                   {data[2].title}
                 </Typography>
                 <ResponsiveContainer width="100%" height={300}>
@@ -137,24 +291,34 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
             </Card>
           </Grid>
         )}
-        {/* Render other cards as before */}
+        {/* Table*/}
         {data.length > 3 && (
           <Grid item xs={12} sm={6} md={4}>
             <Card sx={{ borderRadius: 3 }}>
               <CardContent>
-                <Typography variant="h5" component="h2">
+                <Typography 
+                fontSize={20}
+                color="#333"
+                fontWeight="bold"
+                padding={1}
+                >
                   {data[3].title}
                 </Typography>
               </CardContent>
             </Card>
           </Grid>
         )}
-        {/* Composed Chart (Hybrid line and bar chart) */}
+        {/* Composed Chart*/}
         {data.length > 4 && (
           <Grid item xs={16} sm={8}>
              <Card sx={{ borderRadius: 3 }}>
               <CardContent>
-                <Typography variant="h5" component="h2">
+                <Typography 
+                fontSize={20}
+                color="#333"
+                fontWeight="bold"
+                padding={1}
+                >
                   {data[4].title}
                 </Typography>
                 <ResponsiveContainer width="100%" height={300}>
