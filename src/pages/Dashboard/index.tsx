@@ -1,7 +1,22 @@
 import React from 'react';
 import Header from '../../components/global/Header';
 import { Card, CardContent, Typography, Grid } from '@mui/material';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell } from 'recharts'; // Import components from Recharts library
+import { 
+  BarChart, 
+  Bar, 
+  Rectangle,
+  XAxis, 
+  YAxis, 
+  Tooltip, 
+  Legend, 
+  ResponsiveContainer,  
+  Line, 
+  PieChart, 
+  Pie, 
+  Cell,
+  ComposedChart,
+  CartesianGrid,
+} from 'recharts'; // Import components from Recharts library
 
 interface DashboardProps {
   data: {
@@ -11,15 +26,23 @@ interface DashboardProps {
 
 const Dashboard: React.FC<DashboardProps> = ({ data }) => {
   // Sample data for the bar chart
-  const chartData = [
-    { name: 'Category 1', value: 400 },
-    { name: 'Category 2', value: 300 },
-    { name: 'Category 3', value: 200 },
-    { name: 'Category 4', value: 500 },
-    { name: 'Category 5', value: 600 },
+  const barData = [
+    { name: 'Page A', uv: 4000, pv: 2400, amt: 2400, },
+    { name: 'Page B', uv: 3000, pv: 1398, amt: 2210, },
+    { name: 'Page C', uv: 2000, pv: 9800, amt: 2290, },
+    { name: 'Page D', uv: 2780, pv: 3908, amt: 2000, },
+    { name: 'Page E', uv: 1890, pv: 4800, amt: 2181, },
   ];
 
-  // Sample data for the line chart
+  // const barData = [
+  //   { name: 'Category 1', value: 400 },
+  //   { name: 'Category 2', value: 300 },
+  //   { name: 'Category 3', value: 200 },
+  //   { name: 'Category 4', value: 500 },
+  //   { name: 'Category 5', value: 600 },
+  // ];
+
+  // Sample data for the composed chart
   const lineData = [
     { name: 'Page 1', uv: 400, pv: 2400, amt: 2400 },
     { name: 'Page 2', uv: 300, pv: 1398, amt: 2210 },
@@ -36,7 +59,7 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
       { name: 'Category D', value: 100 },
     ];
   
-    const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+    const COLORS = ['#3FB3E5', '#D777C3', '#84E48D', '#85C7EE'];
 
   return (
     <>
@@ -54,39 +77,46 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
             </Card>
           </Grid>
         )}
-        {/* Render Card 2 */}
+        {/* Bar Chart */}
         {data.length > 1 && (
           <Grid item xs={12} sm={6} md={4}>
-            <Card>
+            <Card sx={{ borderRadius: 3 }}>
               <CardContent>
                 <Typography variant="h5" component="h2">
                   {data[1].title}
                 </Typography>
-                {/* Render the bar chart */}
                 <ResponsiveContainer width="100%" height={300}>
-                  <BarChart data={chartData}>
+                  <BarChart 
+                  data={barData}
+                  margin={{ top: 30, right: 20 }}
+                  style={{ backgroundColor: '#E4F4FA' }}
+                  >
                     <XAxis dataKey="name" />
                     <YAxis />
                     <Tooltip />
                     <Legend />
-                    <Bar dataKey="value" fill="#8884d8" />
+                    {/* <Bar dataKey="value" fill="#8884d8" /> */}
+                    <Bar dataKey="pv" fill="#2BA9DF" activeBar={<Rectangle fill="pink" stroke="blue" />} />
+                    <Bar dataKey="uv" fill="#85C7EE" activeBar={<Rectangle fill="gold" stroke="purple" />} />
+                    <Bar dataKey="amt" fill="#99D8E9" activeBar={<Rectangle fill="orange" stroke="red" />} />
                   </BarChart>
                 </ResponsiveContainer>
               </CardContent>
             </Card>
           </Grid>
         )}
-        {/* Render Card 3 - Line Chart */}
+        {/* Pie Chart*/}
         {data.length > 2 && (
           <Grid item xs={12} sm={6} md={4}>
-             <Card>
+             <Card sx={{ borderRadius: 3 }}>
               <CardContent>
                 <Typography variant="h5" component="h2">
                   {data[2].title}
                 </Typography>
-                {/* Render the pie chart */}
                 <ResponsiveContainer width="100%" height={300}>
-                  <PieChart>
+                  <PieChart
+                  style={{ backgroundColor: '#E4F4FA' }}
+                  >
                     <Pie
                       data={pieData}
                       dataKey="value"
@@ -110,7 +140,7 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
         {/* Render other cards as before */}
         {data.length > 3 && (
           <Grid item xs={12} sm={6} md={4}>
-            <Card>
+            <Card sx={{ borderRadius: 3 }}>
               <CardContent>
                 <Typography variant="h5" component="h2">
                   {data[3].title}
@@ -119,24 +149,27 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
             </Card>
           </Grid>
         )}
+        {/* Composed Chart (Hybrid line and bar chart) */}
         {data.length > 4 && (
           <Grid item xs={16} sm={8}>
-             <Card>
+             <Card sx={{ borderRadius: 3 }}>
               <CardContent>
                 <Typography variant="h5" component="h2">
                   {data[4].title}
                 </Typography>
-                {/* Render the line chart */}
                 <ResponsiveContainer width="100%" height={300}>
-                  <LineChart data={lineData}>
-                    <XAxis dataKey="name" />
+                  <ComposedChart
+                    data={lineData}
+                    margin={{ top: 40, right: 40, bottom: 40, left: 40 }}
+                  >
+                    <CartesianGrid stroke="#f5f5f5" />
+                    <XAxis dataKey="name" scale="band" />
                     <YAxis />
                     <Tooltip />
                     <Legend />
-                    <Line type="monotone" dataKey="uv" stroke="#8884d8" />
-                    <Line type="monotone" dataKey="pv" stroke="#82ca9d" />
-                    <Line type="monotone" dataKey="amt" stroke="#ffc658" />
-                  </LineChart>
+                    <Bar dataKey="uv" barSize={40} fill="#413ea0" />
+                    <Line type="monotone" dataKey="uv" stroke="#ff7300" />
+                  </ComposedChart>
                 </ResponsiveContainer>
               </CardContent>
             </Card>
