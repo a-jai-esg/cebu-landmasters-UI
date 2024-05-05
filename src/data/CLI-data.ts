@@ -1,7 +1,22 @@
-export const OperatingExpensesData = [
+export const EntityData = [
   {
     CLI: {
-      OperatingExpenses: {
+      CONSOLIDATED_NIAT: {
+        value: 64,
+      },
+      PARENT_NIAT: {
+        value: 64,
+      },
+      GPM: {
+        value: 48,
+      },
+      OPEX_RATIO: {
+        value: -17,
+      },
+      NP_MARGIN: {
+        value: 26,
+      },
+      OPERATING_EXPENSES: {
         advertising: 33811073,
         association_dues: 18608774,
         commissions: 600232618,
@@ -32,6 +47,21 @@ export const OperatingExpensesData = [
   },
   {
     CPH: {
+      CONSOLIDATED_NIAT: {
+        value: 267,
+      },
+      PARENT_NIAT: {
+        value: null,
+      },
+      GPM: {
+        value: 57,
+      },
+      OPEX_RATIO: {
+        value: -63,
+      },
+      NP_MARGIN: {
+        value: -6,
+      },
       OperatingExpenses: {
         advertising: 106514,
         association_dues: null,
@@ -63,6 +93,21 @@ export const OperatingExpensesData = [
   },
   {
     ASF: {
+      CONSOLIDATED_NIAT: {
+        value: 829,
+      },
+      PARENT_NIAT: {
+        value: null,
+      },
+      GPM: {
+        value: 0,
+      },
+      OPEX_RATIO: {
+        value: 0,
+      },
+      NP_MARGIN: {
+        value: 0,
+      },
       OperatingExpenses: {
         advertising: null,
         association_dues: null,
@@ -94,6 +139,21 @@ export const OperatingExpensesData = [
   },
   {
     CPM: {
+      CONSOLIDATED_NIAT: {
+        value: 160,
+      },
+      PARENT_NIAT: {
+        value: null,
+      },
+      GPM: {
+        value: 57,
+      },
+      OPEX_RATIO: {
+        value: -21,
+      },
+      NP_MARGIN: {
+        value: 27,
+      },
       OperatingExpenses: {
         advertising: null,
         association_dues: null,
@@ -124,8 +184,23 @@ export const OperatingExpensesData = [
     },
   },
   {
-    OperatingExpenses: {
-      BLCBP: {
+    BLCBP: {
+      CONSOLIDATED_NIAT: {
+        value: 75,
+      },
+      PARENT_NIAT: {
+        value: null,
+      },
+      GPM: {
+        value: 38,
+      },
+      OPEX_RATIO: {
+        value: -90,
+      },
+      NP_MARGIN: {
+        value: -95,
+      },
+      OperatingExpenses: {
         advertising: 375085,
         association_dues: 285994,
         commissions: 2740054,
