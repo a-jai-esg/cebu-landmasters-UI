@@ -307,7 +307,7 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
         {/* Bar chart */}
         {data.length > 1 && (
           <Grid item xs={12} sm={6} md={4}>
-            <Card sx={{ borderRadius: 3 }}>
+            <Card sx={{ borderRadius: 3 }} style={{ height: "100%" }}>
               <CardContent>
                 <Typography
                   fontSize={20}
@@ -317,7 +317,7 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
                 >
                   {data[1].title}
                 </Typography>
-                <ResponsiveContainer width="100%" height={300}>
+                <ResponsiveContainer width="100%" height={400}>
                   <BarChart
                     data={barData}
                     margin={{ top: 30, right: 20 }}
@@ -352,7 +352,7 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
         {/* Pie Chart*/}
         {data.length > 2 && (
           <Grid item xs={12} sm={6} md={4}>
-            <Card sx={{ borderRadius: 3 }}>
+            <Card sx={{ borderRadius: 3 }} style={{ height: "100%" }}>
               <CardContent>
                 <Typography
                   fontSize={20}
@@ -362,7 +362,7 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
                 >
                   {data[2].title}
                 </Typography>
-                <ResponsiveContainer width="100%" height={300}>
+                <ResponsiveContainer width="100%" height={400}>
                   <PieChart style={{ backgroundColor: "#E4F4FA" }}>
                     <Pie
                       data={pieData}
@@ -391,7 +391,7 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
         {/* Table*/}
         {data.length > 3 && (
           <Grid item xs={12} sm={6} md={4}>
-            <Card sx={{ borderRadius: 3 }}>
+            <Card sx={{ borderRadius: 3 }} style={{ height: "100%" }}>
               <CardContent>
                 <Typography
                   fontSize={20}
@@ -408,7 +408,7 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
         )}
         {/* Composed Chart*/}
         {data.length > 4 && (
-          <Grid item xs={16} sm={8}>
+          <Grid item xs={12}>
             <Card sx={{ borderRadius: 3 }}>
               <CardContent>
                 <Typography
