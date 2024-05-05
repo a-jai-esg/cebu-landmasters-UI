@@ -2,9 +2,6 @@ import React from "react";
 import Header from "../../components/global/Header";
 import { Card, CardContent, Typography, Grid } from "@mui/material";
 import {
-  PieChart,
-  Pie,
-  Cell,
   Label,
   BarChart,
   Bar,
@@ -14,7 +11,6 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
-  Line,
   PieChart,
   Pie,
   Cell,
