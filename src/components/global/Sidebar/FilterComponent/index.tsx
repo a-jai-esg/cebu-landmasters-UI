@@ -66,17 +66,24 @@ const FilterComponent = () => {
         style={{
           display: "flex",
           alignItems: "center",
-          margin: "60px 0 5px 25px",
+          margin: "30px 0 5px 0px",
         }}
       >
         <FilterAltOutlined
           sx={{
-            paddingRight: "10px",
+            paddingRight: "5px",
             color: "#c1c5de",
             fontWeight: 600,
           }}
         />
-        <Typography variant="h6" color="#c1c5de" fontWeight="600" fontSize={14}>
+        <Typography
+          variant="h5"
+          sx={{
+            color: "#c1c5de",
+            fontWeight: 600,
+            fontSize: "16px",
+          }}
+        >
           Filters
         </Typography>
       </div>
@@ -84,9 +91,21 @@ const FilterComponent = () => {
       {/* Date Filters */}
       <div
         style={{
+          display: "flex",
+          alignItems: "center",
+          margin: "40px 0 15px 25px",
+        }}
+      >
+        <Typography variant="h6" color="#c1c5de" fontWeight="600" fontSize={14}>
+          DATE
+        </Typography>
+      </div>
+
+      <div
+        style={{
           marginTop: "20px",
           marginLeft: "25px",
-          marginRight: "25px",
+          marginRight: "35px",
           marginBottom: "50px",
         }}
       >
@@ -120,7 +139,7 @@ const FilterComponent = () => {
         style={{
           display: "flex",
           alignItems: "center",
-          margin: "60px 0 15px 25px",
+          margin: "40px 0 15px 25px",
         }}
       >
         <Typography variant="h6" color="#c1c5de" fontWeight="600" fontSize={14}>

@@ -16,8 +16,8 @@ const LogoComponent = () => {
         alt="Logo"
         style={{
           cursor: "pointer",
-          maxWidth: "22.5vh",
-          maxHeight: "22.5vh",
+          maxWidth: "25.5vh",
+          maxHeight: "25.5vh",
         }}
       />
     </div>
