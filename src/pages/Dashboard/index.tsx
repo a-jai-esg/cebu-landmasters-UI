@@ -1,37 +1,38 @@
-import React from 'react';
-import Header from '../../components/global/Header';
-import { Card, CardContent, Typography, Grid } from '@mui/material';
-import { 
-  BarChart, 
-  Bar, 
+import React from "react";
+import Header from "../../components/global/Header";
+import { Card, CardContent, Typography, Grid } from "@mui/material";
+import {
+  BarChart,
+  Bar,
   Rectangle,
-  XAxis, 
-  YAxis, 
-  Tooltip, 
-  Legend, 
-  ResponsiveContainer,  
-  Line, 
-  PieChart, 
-  Pie, 
+  XAxis,
+  YAxis,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+  Line,
+  PieChart,
+  Pie,
   Cell,
   ComposedChart,
   CartesianGrid,
-} from 'recharts'; // Import components from Recharts library
+} from "recharts"; // Import components from Recharts library
+import IncomeStatementTable from "./cards/IncomeStatementTable";
 
 interface DashboardProps {
   data: {
-    title: string;
+    title: string | null;
   }[];
 }
 
 const Dashboard: React.FC<DashboardProps> = ({ data }) => {
   // Sample data for the bar chart
   const barData = [
-    { name: 'Page A', uv: 4000, pv: 2400, amt: 2400, },
-    { name: 'Page B', uv: 3000, pv: 1398, amt: 2210, },
-    { name: 'Page C', uv: 2000, pv: 9800, amt: 2290, },
-    { name: 'Page D', uv: 2780, pv: 3908, amt: 2000, },
-    { name: 'Page E', uv: 1890, pv: 4800, amt: 2181, },
+    { name: "Page A", uv: 4000, pv: 2400, amt: 2400 },
+    { name: "Page B", uv: 3000, pv: 1398, amt: 2210 },
+    { name: "Page C", uv: 2000, pv: 9800, amt: 2290 },
+    { name: "Page D", uv: 2780, pv: 3908, amt: 2000 },
+    { name: "Page E", uv: 1890, pv: 4800, amt: 2181 },
   ];
 
   // const barData = [
@@ -44,22 +45,76 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
 
   // Sample data for the composed chart
   const lineData = [
-    { name: 'Page 1', uv: 400, pv: 2400, amt: 2400 },
-    { name: 'Page 2', uv: 300, pv: 1398, amt: 2210 },
-    { name: 'Page 3', uv: 200, pv: 9800, amt: 2290 },
-    { name: 'Page 4', uv: 278, pv: 3908, amt: 2000 },
-    { name: 'Page 5', uv: 189, pv: 4800, amt: 2181 },
+    { name: "Page 1", uv: 400, pv: 2400, amt: 2400 },
+    { name: "Page 2", uv: 300, pv: 1398, amt: 2210 },
+    { name: "Page 3", uv: 200, pv: 9800, amt: 2290 },
+    { name: "Page 4", uv: 278, pv: 3908, amt: 2000 },
+    { name: "Page 5", uv: 189, pv: 4800, amt: 2181 },
   ];
 
-    // Sample data for the pie chart
-    const pieData = [
-      { name: 'Category A', value: 200 },
-      { name: 'Category B', value: 300 },
-      { name: 'Category C', value: 500 },
-      { name: 'Category D', value: 100 },
-    ];
-  
-    const COLORS = ['#3FB3E5', '#D777C3', '#84E48D', '#85C7EE'];
+  // Sample data for the pie chart
+  const pieData = [
+    { name: "Category A", value: 200 },
+    { name: "Category B", value: 300 },
+    { name: "Category C", value: 500 },
+    { name: "Category D", value: 100 },
+  ];
+
+  function createData(
+    id: number,
+    date: string,
+    name: string,
+    shipTo: string,
+    paymentMethod: string,
+    amount: number
+  ) {
+    return { id, date, name, shipTo, paymentMethod, amount };
+  }
+
+  const rows = [
+    createData(
+      0,
+      "16 Mar, 2019",
+      "Elvis Presley",
+      "Tupelo, MS",
+      "VISA ⠀•••• 3719",
+      312.44
+    ),
+    createData(
+      1,
+      "16 Mar, 2019",
+      "Paul McCartney",
+      "London, UK",
+      "VISA ⠀•••• 2574",
+      866.99
+    ),
+    createData(
+      2,
+      "16 Mar, 2019",
+      "Tom Scholz",
+      "Boston, MA",
+      "MC ⠀•••• 1253",
+      100.81
+    ),
+    createData(
+      3,
+      "16 Mar, 2019",
+      "Michael Jackson",
+      "Gary, IN",
+      "AMEX ⠀•••• 2000",
+      654.39
+    ),
+    createData(
+      4,
+      "15 Mar, 2019",
+      "Bruce Springsteen",
+      "Long Branch, NJ",
+      "VISA ⠀•••• 5919",
+      212.79
+    ),
+  ];
+
+  const COLORS = ["#3FB3E5", "#D777C3", "#84E48D", "#85C7EE"];
 
   return (
     <>
@@ -86,19 +141,31 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
                   {data[1].title}
                 </Typography>
                 <ResponsiveContainer width="100%" height={300}>
-                  <BarChart 
-                  data={barData}
-                  margin={{ top: 30, right: 20 }}
-                  style={{ backgroundColor: '#E4F4FA' }}
+                  <BarChart
+                    data={barData}
+                    margin={{ top: 30, right: 20 }}
+                    style={{ backgroundColor: "#E4F4FA" }}
                   >
                     <XAxis dataKey="name" />
                     <YAxis />
                     <Tooltip />
                     <Legend />
                     {/* <Bar dataKey="value" fill="#8884d8" /> */}
-                    <Bar dataKey="pv" fill="#2BA9DF" activeBar={<Rectangle fill="pink" stroke="blue" />} />
-                    <Bar dataKey="uv" fill="#85C7EE" activeBar={<Rectangle fill="gold" stroke="purple" />} />
-                    <Bar dataKey="amt" fill="#99D8E9" activeBar={<Rectangle fill="orange" stroke="red" />} />
+                    <Bar
+                      dataKey="pv"
+                      fill="#2BA9DF"
+                      activeBar={<Rectangle fill="pink" stroke="blue" />}
+                    />
+                    <Bar
+                      dataKey="uv"
+                      fill="#85C7EE"
+                      activeBar={<Rectangle fill="gold" stroke="purple" />}
+                    />
+                    <Bar
+                      dataKey="amt"
+                      fill="#99D8E9"
+                      activeBar={<Rectangle fill="orange" stroke="red" />}
+                    />
                   </BarChart>
                 </ResponsiveContainer>
               </CardContent>
@@ -108,15 +175,13 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
         {/* Pie Chart*/}
         {data.length > 2 && (
           <Grid item xs={12} sm={6} md={4}>
-             <Card sx={{ borderRadius: 3 }}>
+            <Card sx={{ borderRadius: 3 }}>
               <CardContent>
                 <Typography variant="h5" component="h2">
                   {data[2].title}
                 </Typography>
                 <ResponsiveContainer width="100%" height={300}>
-                  <PieChart
-                  style={{ backgroundColor: '#E4F4FA' }}
-                  >
+                  <PieChart style={{ backgroundColor: "#E4F4FA" }}>
                     <Pie
                       data={pieData}
                       dataKey="value"
@@ -126,7 +191,10 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
                       label
                     >
                       {pieData.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                        <Cell
+                          key={`cell-${index}`}
+                          fill={COLORS[index % COLORS.length]}
+                        />
                       ))}
                     </Pie>
                     <Tooltip />
@@ -137,6 +205,7 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
             </Card>
           </Grid>
         )}
+        {/* Income Statement Table */}
         {/* Render other cards as before */}
         {data.length > 3 && (
           <Grid item xs={12} sm={6} md={4}>
@@ -145,6 +214,7 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
                 <Typography variant="h5" component="h2">
                   {data[3].title}
                 </Typography>
+                <IncomeStatementTable data={rows} />
               </CardContent>
             </Card>
           </Grid>
@@ -152,7 +222,7 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
         {/* Composed Chart (Hybrid line and bar chart) */}
         {data.length > 4 && (
           <Grid item xs={16} sm={8}>
-             <Card sx={{ borderRadius: 3 }}>
+            <Card sx={{ borderRadius: 3 }}>
               <CardContent>
                 <Typography variant="h5" component="h2">
                   {data[4].title}
