@@ -1,10 +1,10 @@
 import React from "react";
 import Header from "../../components/global/Header";
 import { Card, CardContent, Typography, Grid } from "@mui/material";
-import SecondaryPieChartComponent from "./cards/SecondaryPieChartComponent";
+import GaugeComponent from "./cards/GaugeComponent";
 import IncomeStatementTable from "./cards/IncomeStatementTableComponent";
 import BarchartComponent from "./cards/BarchartComponent";
-import PrimaryPieChartComponent from "./cards/PrimaryPieChartComponent";
+import PrimaryPieChartComponent from "./cards/PieChartComponent";
 import ComposedChartComponent from "./cards/ComposedChartComponent";
 
 interface DashboardProps {
@@ -15,7 +15,7 @@ interface DashboardProps {
 
 const Dashboard: React.FC<DashboardProps> = ({ data }) => {
   // Sample data for the doughnut chart
-  const doughnutData = [
+  const gaugeData = [
     { name: "Category A", value: 200 },
     { name: "Category B", value: 300 },
   ];
@@ -107,45 +107,45 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
         {/* Doughnut charts */}
         {data.length > 0 && (
           <Grid item xs={12}>
-            <Card>
+            <Card sx={{ borderRadius: 3 }}>
               <CardContent style={{ textAlign: "center" }}>
                 <Grid container spacing={2} justifyContent="center">
                   <Grid item xs={2}>
                     <div style={{ display: "flex", justifyContent: "center" }}>
-                      <SecondaryPieChartComponent
-                        doughNutData={doughnutData}
+                      <GaugeComponent
+                        gaugeData={gaugeData}
                         title="Gross Profit Margin"
                       />
                     </div>
                   </Grid>
                   <Grid item xs={2}>
                     <div style={{ display: "flex", justifyContent: "center" }}>
-                      <SecondaryPieChartComponent
-                        doughNutData={doughnutData}
+                      <GaugeComponent
+                        gaugeData={gaugeData}
                         title="Opex Ratio"
                       />
                     </div>
                   </Grid>
                   <Grid item xs={2}>
                     <div style={{ display: "flex", justifyContent: "center" }}>
-                      <SecondaryPieChartComponent
-                        doughNutData={doughnutData}
+                      <GaugeComponent
+                        gaugeData={gaugeData}
                         title="EBITDA Margin"
                       />
                     </div>
                   </Grid>
                   <Grid item xs={2}>
                     <div style={{ display: "flex", justifyContent: "center" }}>
-                      <SecondaryPieChartComponent
-                        doughNutData={doughnutData}
+                      <GaugeComponent
+                        gaugeData={gaugeData}
                         title="Conso NIAT"
                       />
                     </div>
                   </Grid>
                   <Grid item xs={2}>
                     <div style={{ display: "flex", justifyContent: "center" }}>
-                      <SecondaryPieChartComponent
-                        doughNutData={doughnutData}
+                      <GaugeComponent
+                        gaugeData={gaugeData}
                         title="Parent NIAT"
                       />
                     </div>
