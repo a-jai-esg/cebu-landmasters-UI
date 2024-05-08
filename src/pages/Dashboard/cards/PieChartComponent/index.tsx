@@ -32,7 +32,7 @@ const PrimaryPieChartComponent = ({
       <Typography fontSize={20} color="#333" fontWeight="bold" padding={1}>
         {title}
       </Typography>
-      <ResponsiveContainer width="100%" height={250}>
+      <ResponsiveContainer width="100%" height={255}>
         <PieChart style={{ backgroundColor: "#E4F4FA" }}>
           <Pie
             data={pieData}
@@ -42,7 +42,7 @@ const PrimaryPieChartComponent = ({
             fill="#8884d8"
             label
           >
-            {pieData.map((entry, index) => (
+            {pieData.map((_entry, index) => (
               <Cell
                 key={`cell-${index}`}
                 fill={COLORS[index % COLORS.length]}

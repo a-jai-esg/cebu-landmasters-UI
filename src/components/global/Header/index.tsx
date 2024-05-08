@@ -6,7 +6,7 @@ interface HeaderProps {
 
 const Header = ({ title }: HeaderProps): JSX.Element => {
   return (
-    <Box mb="30px;">
+    <Box mb="10px;">
       <Typography
         variant="h5"
         color="#333"

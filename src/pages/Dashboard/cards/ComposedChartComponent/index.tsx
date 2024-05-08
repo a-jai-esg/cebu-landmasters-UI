@@ -35,10 +35,10 @@ const ComposedChartComponent = ({
       <Typography fontSize={20} color="#333" fontWeight="bold" padding={1}>
         {title}
       </Typography>
-      <ResponsiveContainer width="100%" height={320}>
+      <ResponsiveContainer width="100%" height={240}>
         <ComposedChart
           data={lineData}
-          margin={{ top: 30, right: 20, bottom: 20, left: 20 }}
+          margin={{ top: 20, right: 20, bottom: 20, left: 20 }}
         >
           <CartesianGrid stroke="#f5f5f5" />
           <XAxis dataKey="name" scale="band" />
