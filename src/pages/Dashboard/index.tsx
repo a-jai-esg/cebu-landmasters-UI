@@ -6,46 +6,17 @@ import IncomeStatementTable from "./cards/IncomeStatementTableComponent";
 import BarchartComponent from "./cards/BarchartComponent";
 import PrimaryPieChartComponent from "./cards/PieChartComponent";
 import ComposedChartComponent from "./cards/ComposedChartComponent";
+import chartDataInterface from "../../common/interfaces/data/charts/chartDataInterface";
 
 interface DashboardProps {
-  data: {
+  cardTitles: {
     title: string | null;
   }[];
+
+  chartData: chartDataInterface;
 }
 
-const Dashboard: React.FC<DashboardProps> = ({ data }) => {
-  // Sample data for the doughnut chart
-  const gaugeData = [
-    { name: "Category A", value: 200 },
-    { name: "Category B", value: 300 },
-  ];
-
-  // Sample data for the bar chart
-  const barData = [
-    { name: "Page A", uv: 4000, pv: 2400, amt: 2400 },
-    { name: "Page B", uv: 3000, pv: 1398, amt: 2210 },
-    { name: "Page C", uv: 2000, pv: 9800, amt: 2290 },
-    { name: "Page D", uv: 2780, pv: 3908, amt: 2000 },
-    { name: "Page E", uv: 1890, pv: 4800, amt: 2181 },
-  ];
-
-  // Sample data for the composed chart
-  const lineData = [
-    { name: "Page 1", uv: 400, pv: 2400, amt: 2400 },
-    { name: "Page 2", uv: 300, pv: 1398, amt: 2210 },
-    { name: "Page 3", uv: 200, pv: 9800, amt: 2290 },
-    { name: "Page 4", uv: 278, pv: 3908, amt: 2000 },
-    { name: "Page 5", uv: 189, pv: 4800, amt: 2181 },
-  ];
-
-  // Sample data for the pie chart
-  const pieData = [
-    { name: "Category A", value: 200 },
-    { name: "Category B", value: 300 },
-    { name: "Category C", value: 500 },
-    { name: "Category D", value: 100 },
-  ];
-
+const Dashboard: React.FC<DashboardProps> = ({ cardTitles, chartData }) => {
   function createData(
     id: number,
     date: string,
@@ -100,12 +71,29 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
     ),
   ];
 
+  // get data
+  const barData = chartData.chartData.flatMap((data) => {
+    return data.barData;
+  });
+
+  const lineData = chartData.chartData.flatMap((data) => {
+    return data.lineData;
+  });
+
+  const pieData = chartData.chartData.flatMap((data) => {
+    return data.pieData;
+  });
+
+  const gaugeData = chartData.chartData.flatMap((data) => {
+    return data.gaugeData;
+  });
+
   return (
     <>
       <Header title="Financial Dashboard - Income Statement" />
       <Grid container spacing={1.5}>
         {/* Doughnut charts */}
-        {data.length > 0 && (
+        {cardTitles.length > 0 && (
           <Grid item xs={12}>
             <Card sx={{ borderRadius: 3 }}>
               <CardContent style={{ textAlign: "center" }}>
@@ -156,23 +144,26 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
           </Grid>
         )}
         {/* Bar chart */}
-        {data.length > 1 && (
+        {cardTitles.length > 1 && (
           <Grid item xs={12} sm={6} md={4}>
             <Card sx={{ borderRadius: 3 }} style={{ height: "100%" }}>
               <CardContent>
-                <BarchartComponent title={data[1].title} barData={barData} />
+                <BarchartComponent
+                  title={cardTitles[1].title}
+                  barData={barData}
+                />
               </CardContent>
             </Card>
           </Grid>
         )}
         {/* Pie Chart*/}
-        {data.length > 2 && (
+        {cardTitles.length > 2 && (
           <Grid item xs={12} sm={6} md={4}>
             <Card sx={{ borderRadius: 3 }} style={{ height: "100%" }}>
               <CardContent>
                 <PrimaryPieChartComponent
                   pieData={pieData}
-                  title={data[2].title}
+                  title={cardTitles[2].title}
                 />
               </CardContent>
             </Card>
@@ -180,7 +171,7 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
         )}
         {/* Income Statement Table */}
         {/* Table*/}
-        {data.length > 3 && (
+        {cardTitles.length > 3 && (
           <Grid item xs={12} sm={6} md={4}>
             <Card sx={{ borderRadius: 3 }} style={{ height: "100%" }}>
               <CardContent>
@@ -190,7 +181,7 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
                   fontWeight="bold"
                   padding={1}
                 >
-                  {data[3].title}
+                  {cardTitles[3].title}
                 </Typography>
                 <IncomeStatementTable data={rows} />
               </CardContent>
@@ -198,13 +189,13 @@ const Dashboard: React.FC<DashboardProps> = ({ data }) => {
           </Grid>
         )}
         {/* Composed Chart*/}
-        {data.length > 4 && (
+        {cardTitles.length > 4 && (
           <Grid item xs={12}>
             <Card sx={{ borderRadius: 3 }}>
               <CardContent>
                 <ComposedChartComponent
                   lineData={lineData}
-                  title={data[4].title}
+                  title={cardTitles[4].title}
                 />
               </CardContent>
             </Card>

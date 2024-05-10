@@ -1,4 +1,4 @@
-export default interface OperatingExpenses {
+interface OperatingExpenses {
   advertising: number | null;
   association_dues: number | null;
   commissions: number | null;
@@ -24,4 +24,17 @@ export default interface OperatingExpenses {
   transportation_and_travel: number | null;
   utilities: number | null;
   others_operating_expenses: number | null;
+}
+
+interface FinancialData {
+  CONSOLIDATED_NIAT: { value: number };
+  PARENT_NIAT: { value: number | null };
+  GPM: { value: number };
+  OPEX_RATIO: { value: number };
+  NP_MARGIN: { value: number };
+  OperatingExpenses: OperatingExpenses;
+}
+
+export default interface companyDataInterface {
+  [key: string]: FinancialData;
 }

@@ -9,13 +9,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-
-interface rowDataInterface {
-  name: string;
-  uv: number;
-  pv: number;
-  amt: number;
-}
+import rowDataInterface from "../../../../common/interfaces/data/objects/forms/multipleValuesRowDataInterface";
 
 interface barDataInterface {
   barData: rowDataInterface[];

@@ -1,17 +1,10 @@
 import { Box, Typography } from "@mui/material";
 import { Gauge, gaugeClasses } from "@mui/x-charts/Gauge";
-
-interface rowDataInterface {
-  name: string;
-  value: number;
-}
+import titleStringInterface from "../../../../common/interfaces/components/titleStringInterface";
+import singleValueRowDataInterface from "../../../../common/interfaces/data/objects/forms/singleValueRowDataInterface";
 
 interface gaugeDataInterface {
-  gaugeData: rowDataInterface[];
-}
-
-interface titleStringInterface {
-  title: string | null;
+  gaugeData: singleValueRowDataInterface[];
 }
 
 const GaugeComponent = ({

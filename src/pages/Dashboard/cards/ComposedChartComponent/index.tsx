@@ -10,20 +10,11 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-
-interface rowDataInterface {
-  name: string;
-  uv: number;
-  pv: number;
-  amt: number;
-}
+import multipleValuesRowDataInterface from "../../../../common/interfaces/data/objects/forms/multipleValuesRowDataInterface";
+import titleStringInterface from "../../../../common/interfaces/components/titleStringInterface";
 
 interface lineDataInterface {
-  lineData: rowDataInterface[];
-}
-
-interface titleStringInterface {
-  title: string | null;
+  lineData: multipleValuesRowDataInterface[];
 }
 
 const ComposedChartComponent = ({

@@ -7,18 +7,11 @@ import {
   ResponsiveContainer,
   Tooltip,
 } from "recharts";
-
-interface rowDataInterface {
-  name: string;
-  value: number;
-}
+import singleValueRowDataInterface from "../../../../common/interfaces/data/objects/forms/singleValueRowDataInterface";
+import titleStringInterface from "../../../../common/interfaces/components/titleStringInterface";
 
 interface pieDataInterface {
-  pieData: rowDataInterface[];
-}
-
-interface titleStringInterface {
-  title: string | null;
+  pieData: singleValueRowDataInterface[];
 }
 
 const COLORS = ["#3FB3E5", "#D777C3", "#84E48D", "#85C7EE"];
