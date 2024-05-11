@@ -8,6 +8,11 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import FilterComponent from "./FilterComponent";
 import "../../../App.css";
+
+interface SidebarProps {
+  onCheckboxClick: () => void; // Callback function to handle checkbox click
+}
+
 interface ItemProps {
   title: string;
   to: string;
@@ -40,8 +45,9 @@ const Item: React.FC<ItemProps> = ({
   );
 };
 
-const SidebarComponent = () => {
+const SidebarComponent: React.FC<SidebarProps> = ({ onCheckboxClick }) => {
   const [selected, setSelected] = useState("Income Statement");
+
   return (
     <Box
       sx={{
@@ -101,7 +107,8 @@ const SidebarComponent = () => {
               marginLeft: "25px",
             }}
           >
-            <FilterComponent />
+            {/* Pass the onCheckboxClick callback to the FilterComponent */}
+            <FilterComponent onCheckboxClick={onCheckboxClick} />
           </Box>
         </Menu>
       </ProSidebar>
