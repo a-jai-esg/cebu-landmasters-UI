@@ -8,10 +8,12 @@ import dataReadAndCalculation from "./data/dataCalculation";
 
 const App: React.FC = () => {
   const [reloadDashboard, setReloadDashboard] = useState(false);
+  const [filteredEntity, setFilteredEntity] = useState("CLI");
 
   // Function to trigger dashboard reload
-  const handleReloadDashboard = () => {
+  const handleReloadDashboard = (data: string | null) => {
     setReloadDashboard(!reloadDashboard);
+    data != null ? setFilteredEntity(data) : setFilteredEntity("CLI");
   };
 
   const cardTitles = [
@@ -66,6 +68,7 @@ const App: React.FC = () => {
           cardTitles={cardTitles}
           chartData={chartData}
           reload={reloadDashboard}
+          entityFilter={filteredEntity}
         />
       </div>
     </div>

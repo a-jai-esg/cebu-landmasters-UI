@@ -42,10 +42,10 @@ const StyledFormControlLabel = styled(FormControlLabel)(({}) => ({
 }));
 
 interface FilterProps {
-  onCheckboxClick: () => void; // Callback function to handle checkbox click
+  onCheckboxChange: (selectedEntity: string | null) => void; // Callback function to handle checkbox change
 }
 
-const FilterComponent: React.FC<FilterProps> = ({ onCheckboxClick }) => {
+const FilterComponent: React.FC<FilterProps> = ({ onCheckboxChange }) => {
   const [state, setState] = React.useState({
     CLI: true,
     CPH: false,
@@ -57,26 +57,24 @@ const FilterComponent: React.FC<FilterProps> = ({ onCheckboxClick }) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = event.target;
 
-    // Update state to deselect all checkboxes except the one being clicked
-    setState(
-      (prevState) =>
-        ({
-          ...Object.fromEntries(
-            Object.keys(prevState).map((key) => [
-              key,
-              key === name ? checked : false,
-            ])
-          ),
-        } as {
-          CLI: boolean;
-          CPH: boolean;
-          CPM: boolean;
-          ASF: boolean;
-          BLCBP: boolean;
-        })
-    );
+    // Update state
+    setState((prevState) => ({
+      ...(Object.fromEntries(
+        Object.keys(prevState).map((key) => [
+          key,
+          key === name ? checked : false,
+        ])
+      ) as {
+        CLI: boolean;
+        CPH: boolean;
+        CPM: boolean;
+        ASF: boolean;
+        BLCBP: boolean;
+      }),
+    }));
 
-    onCheckboxClick(); // Call the provided callback function when checkbox is clicked
+    // Call the provided callback function when checkbox is clicked
+    onCheckboxChange(checked ? name : null);
   };
 
   return (

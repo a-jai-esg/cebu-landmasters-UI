@@ -16,14 +16,14 @@ interface DashboardProps {
   }[];
   chartData: chartDataInterface;
   reload: boolean;
+  entityFilter: string;
 }
-
-const filter: string | null = localStorage.getItem("filter");
 
 const Dashboard: React.FC<DashboardProps> = ({
   cardTitles,
   chartData,
   reload,
+  entityFilter,
 }) => {
   const [reloadKey, setReloadKey] = useState<number>(0);
 
@@ -106,7 +106,7 @@ const Dashboard: React.FC<DashboardProps> = ({
       return data.gaugeData.flatMap((result) => {
         return result.filter(
           (item): item is singleValueRowDataInterface =>
-            item.name === `${filter}`
+            item.name === `${entityFilter}`
         );
       });
     }
