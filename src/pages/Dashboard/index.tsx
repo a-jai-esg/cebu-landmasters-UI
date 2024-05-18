@@ -95,7 +95,7 @@ const Dashboard: React.FC<DashboardProps> = ({ cardTitles, chartData }) => {
         {/* Doughnut charts */}
         {cardTitles.length > 0 && (
           <Grid item xs={12}>
-            <Card sx={{ borderRadius: 3 }}>
+            <Card sx={{ borderRadius: 3, boxShadow: 6 }}>
               <CardContent style={{ textAlign: "center" }}>
                 <Grid container spacing={2} justifyContent="center">
                   <Grid item xs={2}>
@@ -146,7 +146,7 @@ const Dashboard: React.FC<DashboardProps> = ({ cardTitles, chartData }) => {
         {/* Bar chart */}
         {cardTitles.length > 1 && (
           <Grid item xs={12} sm={6} md={4}>
-            <Card sx={{ borderRadius: 3 }} style={{ height: "100%" }}>
+            <Card sx={{ borderRadius: 3, boxShadow: 6 }} style={{ height: "100%" }}>
               <CardContent>
                 <BarchartComponent
                   title={cardTitles[1].title}
@@ -159,7 +159,7 @@ const Dashboard: React.FC<DashboardProps> = ({ cardTitles, chartData }) => {
         {/* Pie Chart*/}
         {cardTitles.length > 2 && (
           <Grid item xs={12} sm={6} md={4}>
-            <Card sx={{ borderRadius: 3 }} style={{ height: "100%" }}>
+            <Card sx={{ borderRadius: 3, boxShadow: 6 }} style={{ height: "100%" }}>
               <CardContent>
                 <PrimaryPieChartComponent
                   pieData={pieData}
@@ -173,7 +173,7 @@ const Dashboard: React.FC<DashboardProps> = ({ cardTitles, chartData }) => {
         {/* Table*/}
         {cardTitles.length > 3 && (
           <Grid item xs={12} sm={6} md={4}>
-            <Card sx={{ borderRadius: 3 }} style={{ height: "100%" }}>
+            <Card sx={{ borderRadius: 3, boxShadow: 6 }} style={{ height: "100%" }}>
               <CardContent>
                 <Typography
                   fontSize={20}
@@ -191,7 +191,7 @@ const Dashboard: React.FC<DashboardProps> = ({ cardTitles, chartData }) => {
         {/* Composed Chart*/}
         {cardTitles.length > 4 && (
           <Grid item xs={12}>
-            <Card sx={{ borderRadius: 3 }}>
+            <Card sx={{ borderRadius: 3, boxShadow: 6 }}>
               <CardContent>
                 <ComposedChartComponent
                   lineData={lineData}
