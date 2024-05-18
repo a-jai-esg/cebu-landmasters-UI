@@ -2,10 +2,10 @@
   {
     "CLI": {
       "CONSOLIDATED_NIAT": {
-        "value": 64
+        "value": 0
       },
       "PARENT_NIAT": {
-        "value": 64
+        "value": 0
       },
       "GPM": {
         "value": 48
@@ -180,6 +180,52 @@
         "transportation_and_travel": 75070,
         "utilities": null,
         "others_operating_expenses": 114688
+      }
+    }
+  },
+  {
+    "YES": {
+      "CONSOLIDATED_NIAT": {
+        "value": 75
+      },
+      "PARENT_NIAT": {
+        "value": null
+      },
+      "GPM": {
+        "value": 38
+      },
+      "OPEX_RATIO": {
+        "value": -90
+      },
+      "NP_MARGIN": {
+        "value": -95
+      },
+      "OperatingExpenses": {
+        "advertising": 375085,
+        "association_dues": 285994,
+        "commissions": 2740054,
+        "communications": 29275,
+        "depreciation_and_amortization": 229369,
+        "donations": null,
+        "fuel_and_lubricants": null,
+        "impairment_losses": null,
+        "insurance": null,
+        "management_fee_expense": 8433166,
+        "move_in_fees_cost_of_services": null,
+        "penalties": null,
+        "professional_and_legal_fees": 797491,
+        "rent": null,
+        "repairs_and_maintenance": 742783,
+        "representation_and_entertainment": 61685,
+        "salaries_and_employee_benefits": null,
+        "security_and_janitorial_services": 1385669,
+        "subscription_and_membership_dues": 319065,
+        "supplies": 154973,
+        "taxes_and_licenses": 14825413,
+        "trainings_and_seminars": 500,
+        "transportation_and_travel": 456448,
+        "utilities": 1995374,
+        "others_operating_expenses": 255264
       }
     }
   },

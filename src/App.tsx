@@ -3,8 +3,8 @@ import "./App.css";
 import SidebarComponent from "./components/global/Sidebar";
 import Dashboard from "../src/pages/Dashboard";
 import chartDataInterface from "./common/interfaces/data/charts/chartDataInterface";
-import dataSource from "./data/dataSource.json";
-import dataReadAndCalculation from "./data-calculation/dataCalculation";
+import dataSource2021 from "./data/dataSource2021.json";
+import gaugeDataCalculation from "./data-calculation/gaugeDataCalculation";
 
 const App: React.FC = () => {
   const [reloadDashboard, setReloadDashboard] = useState(false);
@@ -24,16 +24,18 @@ const App: React.FC = () => {
     { title: "GPM PER ENTITY" },
   ];
 
-  const calculation = new dataReadAndCalculation(dataSource);
+  // data calculation goes here:
+  const gaugeDataCalc = new gaugeDataCalculation(dataSource2021); // gauge data
+
   const chartData: chartDataInterface = {
     chartData: [
       {
         gaugeData: [
-          calculation.getGPM(),
-          calculation.getOpexRatio(),
-          calculation.getNpMargin(),
-          calculation.getConsolidatedNIAT(),
-          calculation.getParentNIAT(),
+          gaugeDataCalc.getGPM(),
+          gaugeDataCalc.getOpexRatio(),
+          gaugeDataCalc.getNpMargin(),
+          gaugeDataCalc.getConsolidatedNIAT(),
+          gaugeDataCalc.getParentNIAT(),
         ],
         barData: [
           { name: "Page A", uv: 4000, pv: 2400, amt: 2400 },
