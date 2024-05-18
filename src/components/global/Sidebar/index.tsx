@@ -28,7 +28,7 @@ const SidebarComponent: React.FC<SidebarProps> = ({ onCheckboxClick }) => {
   return (
     <Box
       sx={{
-        height: "screen",
+        height: "98vh",
         display: "flex",
         flexDirection: "column",
         color: "#c1c5de",

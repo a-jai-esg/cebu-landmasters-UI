@@ -3,6 +3,21 @@ import { Gauge, gaugeClasses } from "@mui/x-charts/Gauge";
 import titleStringInterface from "../../../../common/interfaces/components/titleStringInterface";
 import singleValueRowDataInterface from "../../../../common/interfaces/data/objects/forms/singleValueRowDataInterface";
 import * as _ from "lodash";
+import { keyframes } from "@emotion/react";
+import { styled } from "@mui/system";
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
+
+const AnimatedBox = styled(Box)(({}) => ({
+  animation: `${fadeIn} 1s ease-in-out`,
+}));
 
 interface gaugeDataInterface {
   gaugeData: singleValueRowDataInterface | null;
@@ -22,7 +37,7 @@ const GaugeComponent = ({
   };
 
   return (
-    <Box>
+    <AnimatedBox>
       <Box
         sx={{
           marginBottom: "18px",
@@ -65,7 +80,7 @@ const GaugeComponent = ({
           {title}
         </Typography>
       </Box>
-    </Box>
+    </AnimatedBox>
   );
 };
 

@@ -11,8 +11,28 @@ import {
   FormGroup,
 } from "@mui/material";
 import { styled } from "@mui/system";
+import { keyframes } from "@emotion/react";
+
+const appear = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
+
+const scaleUp = keyframes`
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.1);
+  }
+`;
 
 const StyledDatePicker = styled(DatePicker)(({}) => ({
+  animation: `${appear} 1s ease-in-out`,
   "& .MuiSvgIcon-root": {
     color: "#c1c5de",
   },
@@ -39,6 +59,17 @@ const StyledDatePicker = styled(DatePicker)(({}) => ({
 
 const StyledFormControlLabel = styled(FormControlLabel)(({}) => ({
   color: "#c1c5de", // Change label text color
+  animation: `${appear} 1s ease-in-out`,
+  "& .MuiCheckbox-root": {
+    transition: "transform 0.05s",
+    "&:active": {
+      animation: `${scaleUp} 0.05s forwards`,
+    },
+  },
+}));
+
+const AnimatedTypography = styled(Typography)(({}) => ({
+  animation: `${appear} 1s ease-in-out`,
 }));
 
 interface FilterProps {
@@ -90,7 +121,7 @@ const FilterComponent: React.FC<FilterProps> = ({ onCheckboxChange }) => {
             fontWeight: 600,
           }}
         />
-        <Typography
+        <AnimatedTypography
           variant="h5"
           sx={{
             color: "#c1c5de",
@@ -99,7 +130,7 @@ const FilterComponent: React.FC<FilterProps> = ({ onCheckboxChange }) => {
           }}
         >
           Filters
-        </Typography>
+        </AnimatedTypography>
       </div>
 
       {/* Date Filters */}
@@ -110,9 +141,14 @@ const FilterComponent: React.FC<FilterProps> = ({ onCheckboxChange }) => {
           margin: "40px 0 15px 25px",
         }}
       >
-        <Typography variant="h6" color="#c1c5de" fontWeight="600" fontSize={14}>
+        <AnimatedTypography
+          variant="h6"
+          color="#c1c5de"
+          fontWeight="600"
+          fontSize={14}
+        >
           DATE
-        </Typography>
+        </AnimatedTypography>
       </div>
 
       <div
@@ -156,9 +192,14 @@ const FilterComponent: React.FC<FilterProps> = ({ onCheckboxChange }) => {
           margin: "40px 0 15px 25px",
         }}
       >
-        <Typography variant="h6" color="#c1c5de" fontWeight="600" fontSize={14}>
+        <AnimatedTypography
+          variant="h6"
+          color="#c1c5de"
+          fontWeight="600"
+          fontSize={14}
+        >
           ENTITY
-        </Typography>
+        </AnimatedTypography>
       </div>
       <div
         style={{ marginTop: "10px", marginLeft: "25px", marginRight: "25px" }}
