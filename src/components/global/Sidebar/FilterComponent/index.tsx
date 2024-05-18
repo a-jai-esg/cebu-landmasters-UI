@@ -74,13 +74,9 @@ const AnimatedTypography = styled(Typography)(({}) => ({
 
 interface FilterProps {
   onCheckboxChange: (selectedEntity: string | null) => void; // Callback function to handle checkbox change
-  isVisible: boolean | null;
 }
 
-const FilterComponent: React.FC<FilterProps> = ({
-  onCheckboxChange,
-  isVisible,
-}) => {
+const FilterComponent: React.FC<FilterProps> = ({ onCheckboxChange }) => {
   const [state, setState] = React.useState({
     CLI: true,
     BLCBP: false,

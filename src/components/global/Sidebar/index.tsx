@@ -95,10 +95,7 @@ const SidebarComponent: React.FC<SidebarProps> = ({ onCheckboxClick }) => {
               }}
             >
               {/* Pass the onCheckboxClick callback to the FilterComponent */}
-              <FilterComponent
-                onCheckboxChange={onCheckboxClick}
-                isVisible={isFilterVisible}
-              />
+              <FilterComponent onCheckboxChange={onCheckboxClick} />
             </Box>
           )}
         </Menu>
