@@ -41,23 +41,41 @@ const StyledFormControlLabel = styled(FormControlLabel)(({}) => ({
   color: "#c1c5de", // Change label text color
 }));
 
-const FilterComponent = () => {
+interface FilterProps {
+  onCheckboxChange: (selectedEntity: string | null) => void; // Callback function to handle checkbox change
+}
+
+const FilterComponent: React.FC<FilterProps> = ({ onCheckboxChange }) => {
   const [state, setState] = React.useState({
     CLI: true,
     CPH: false,
     CPM: false,
     ASF: false,
-    BLCBP: true,
+    BLCBP: false,
   });
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setState({
-      ...state,
-      [event.target.name]: event.target.checked,
-    });
-  };
+    const { name, checked } = event.target;
 
-  const { CLI, CPH, CPM, ASF, BLCBP } = state;
+    // Update state
+    setState((prevState) => ({
+      ...(Object.fromEntries(
+        Object.keys(prevState).map((key) => [
+          key,
+          key === name ? checked : false,
+        ])
+      ) as {
+        CLI: boolean;
+        CPH: boolean;
+        CPM: boolean;
+        ASF: boolean;
+        BLCBP: boolean;
+      }),
+    }));
+
+    // Call the provided callback function when checkbox is clicked
+    onCheckboxChange(checked ? name : null);
+  };
 
   return (
     <>
@@ -155,7 +173,7 @@ const FilterComponent = () => {
               <StyledFormControlLabel
                 control={
                   <Checkbox
-                    checked={CLI}
+                    checked={state.CLI}
                     onChange={handleChange}
                     name="CLI"
                     sx={{
@@ -171,7 +189,7 @@ const FilterComponent = () => {
               <StyledFormControlLabel
                 control={
                   <Checkbox
-                    checked={CPH}
+                    checked={state.CPH}
                     onChange={handleChange}
                     name="CPH"
                     sx={{
@@ -187,7 +205,7 @@ const FilterComponent = () => {
               <StyledFormControlLabel
                 control={
                   <Checkbox
-                    checked={CPM}
+                    checked={state.CPM}
                     onChange={handleChange}
                     name="CPM"
                     sx={{
@@ -203,7 +221,7 @@ const FilterComponent = () => {
               <StyledFormControlLabel
                 control={
                   <Checkbox
-                    checked={ASF}
+                    checked={state.ASF}
                     onChange={handleChange}
                     name="ASF"
                     sx={{
@@ -219,7 +237,7 @@ const FilterComponent = () => {
               <StyledFormControlLabel
                 control={
                   <Checkbox
-                    checked={BLCBP}
+                    checked={state.BLCBP}
                     onChange={handleChange}
                     name="BLCBP"
                     sx={{

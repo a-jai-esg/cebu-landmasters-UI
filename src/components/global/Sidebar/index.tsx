@@ -1,53 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import { ProSidebar, MenuItem, Menu } from "react-pro-sidebar";
 import "react-pro-sidebar/dist/css/styles.css";
 import LogoComponent from "./LogoComponent";
 import CurrencyExchangeOutlined from "@mui/icons-material/CurrencyExchangeOutlined";
 import { Box, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
-import { useState } from "react";
 import FilterComponent from "./FilterComponent";
 import "../../../App.css";
-interface ItemProps {
-  title: string;
-  to: string;
-  icon: JSX.Element;
-  selected: string;
-  setSelected: React.Dispatch<React.SetStateAction<string>>;
+
+interface SidebarProps {
+  onCheckboxClick: (selectedEntity: string | null) => void; // Callback function to handle checkbox click
 }
 
-const Item: React.FC<ItemProps> = ({
-  title,
-  to,
-  icon,
-  selected,
-  setSelected,
-}) => {
-  return (
-    <MenuItem
-      active={selected === title}
-      style={{
-        color: "#24274c",
-        fontWeight: selected === title ? 600 : "normal", // Setting font weight based on selected state
-      }}
-      onClick={() => setSelected(title)}
-      icon={icon}
-      className="sidebar-item"
-    >
-      <Typography>{title}</Typography>
-      <Link to={to} />
-    </MenuItem>
-  );
-};
-
-const SidebarComponent = () => {
-  const [selected, setSelected] = useState("Income Statement");
+const SidebarComponent: React.FC<SidebarProps> = ({ onCheckboxClick }) => {
+  const [selected, setSelected] = useState("Income Statement"); // income statement button
   return (
     <Box
       sx={{
         height: "screen",
         display: "flex",
         flexDirection: "column",
+        color: "#c1c5de",
         "& .pro-sidebar-inner": {
           borderRadius: "12.5px",
           background: `${`#24274c`} !important`,
@@ -86,13 +59,19 @@ const SidebarComponent = () => {
               paddingTop: "30px",
             }}
           >
-            <Item
-              title="Income Statement"
-              to="/dashboard"
+            <MenuItem
+              active={selected === "Income Statement"}
+              style={{
+                color: "#24274c",
+                fontWeight: selected === "Income Statement" ? 600 : "normal", // Setting font weight based on selected state
+              }}
+              onClick={() => setSelected("Income Statement")}
               icon={<CurrencyExchangeOutlined />}
-              selected={selected}
-              setSelected={setSelected}
-            />
+              className="sidebar-item"
+            >
+              <Typography>Income Statement</Typography>
+              <Link to="/dashboard" />
+            </MenuItem>
           </Box>
           {/* Filter Component */}
           <Box
@@ -101,7 +80,8 @@ const SidebarComponent = () => {
               marginLeft: "25px",
             }}
           >
-            <FilterComponent />
+            {/* Pass the onCheckboxClick callback to the FilterComponent */}
+            <FilterComponent onCheckboxChange={onCheckboxClick} />
           </Box>
         </Menu>
       </ProSidebar>

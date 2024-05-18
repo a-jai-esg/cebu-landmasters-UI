@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../components/global/Header";
 import { Card, CardContent, Typography, Grid } from "@mui/material";
 import GaugeComponent from "./cards/GaugeComponent";
@@ -7,16 +7,26 @@ import BarchartComponent from "./cards/BarchartComponent";
 import PrimaryPieChartComponent from "./cards/PieChartComponent";
 import ComposedChartComponent from "./cards/ComposedChartComponent";
 import chartDataInterface from "../../common/interfaces/data/charts/chartDataInterface";
+import * as _ from "lodash";
+import singleValueRowDataInterface from "../../common/interfaces/data/objects/forms/singleValueRowDataInterface";
 
 interface DashboardProps {
   cardTitles: {
     title: string | null;
   }[];
-
   chartData: chartDataInterface;
+  reload: boolean;
+  entityFilter: string;
 }
 
-const Dashboard: React.FC<DashboardProps> = ({ cardTitles, chartData }) => {
+const Dashboard: React.FC<DashboardProps> = ({
+  cardTitles,
+  chartData,
+  reload,
+  entityFilter,
+}) => {
+  const [reloadKey, setReloadKey] = useState<number>(0);
+
   function createData(
     id: number,
     date: string,
@@ -71,6 +81,13 @@ const Dashboard: React.FC<DashboardProps> = ({ cardTitles, chartData }) => {
     ),
   ];
 
+  useEffect(() => {
+    if (reload) {
+      // Reload logic here
+      setReloadKey((prevKey) => prevKey + 1);
+    }
+  }, [reload]);
+
   // get data
   const barData = chartData.chartData.flatMap((data) => {
     return data.barData;
@@ -84,14 +101,21 @@ const Dashboard: React.FC<DashboardProps> = ({ cardTitles, chartData }) => {
     return data.pieData;
   });
 
-  const gaugeData = chartData.chartData.flatMap((data) => {
-    return data.gaugeData;
-  });
+  const gaugeData: singleValueRowDataInterface[] = chartData.chartData.flatMap(
+    (data) => {
+      return data.gaugeData.flatMap((result) => {
+        return result.filter(
+          (item): item is singleValueRowDataInterface =>
+            item.name === `${entityFilter}`
+        );
+      });
+    }
+  );
 
   return (
     <>
       <Header title="Financial Dashboard - Income Statement" />
-      <Grid container spacing={1.5}>
+      <Grid container spacing={1.5} key={reloadKey}>
         {/* Doughnut charts */}
         {cardTitles.length > 0 && (
           <Grid item xs={12}>
@@ -101,7 +125,7 @@ const Dashboard: React.FC<DashboardProps> = ({ cardTitles, chartData }) => {
                   <Grid item xs={2}>
                     <div style={{ display: "flex", justifyContent: "center" }}>
                       <GaugeComponent
-                        gaugeData={gaugeData}
+                        gaugeData={gaugeData[0]}
                         title="Gross Profit Margin"
                       />
                     </div>
@@ -109,7 +133,7 @@ const Dashboard: React.FC<DashboardProps> = ({ cardTitles, chartData }) => {
                   <Grid item xs={2}>
                     <div style={{ display: "flex", justifyContent: "center" }}>
                       <GaugeComponent
-                        gaugeData={gaugeData}
+                        gaugeData={gaugeData[1]}
                         title="Opex Ratio"
                       />
                     </div>
@@ -117,7 +141,7 @@ const Dashboard: React.FC<DashboardProps> = ({ cardTitles, chartData }) => {
                   <Grid item xs={2}>
                     <div style={{ display: "flex", justifyContent: "center" }}>
                       <GaugeComponent
-                        gaugeData={gaugeData}
+                        gaugeData={gaugeData[2]}
                         title="EBITDA Margin"
                       />
                     </div>
@@ -125,7 +149,7 @@ const Dashboard: React.FC<DashboardProps> = ({ cardTitles, chartData }) => {
                   <Grid item xs={2}>
                     <div style={{ display: "flex", justifyContent: "center" }}>
                       <GaugeComponent
-                        gaugeData={gaugeData}
+                        gaugeData={gaugeData[3]}
                         title="Conso NIAT"
                       />
                     </div>
@@ -133,7 +157,7 @@ const Dashboard: React.FC<DashboardProps> = ({ cardTitles, chartData }) => {
                   <Grid item xs={2}>
                     <div style={{ display: "flex", justifyContent: "center" }}>
                       <GaugeComponent
-                        gaugeData={gaugeData}
+                        gaugeData={gaugeData[4]}
                         title="Parent NIAT"
                       />
                     </div>

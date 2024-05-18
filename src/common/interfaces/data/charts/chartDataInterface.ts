@@ -3,7 +3,7 @@ import singleValueRowDataInterface from "../objects/forms/singleValueRowDataInte
 
 export default interface chartDataInterface {
   chartData: {
-    gaugeData: singleValueRowDataInterface[];
+    gaugeData: singleValueRowDataInterface[][];
     barData: multipleValuesRowDataInterface[];
     lineData: multipleValuesRowDataInterface[];
     pieData: singleValueRowDataInterface[];
