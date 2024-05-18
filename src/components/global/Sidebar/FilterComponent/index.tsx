@@ -48,10 +48,8 @@ interface FilterProps {
 const FilterComponent: React.FC<FilterProps> = ({ onCheckboxChange }) => {
   const [state, setState] = React.useState({
     CLI: true,
-    CPH: false,
-    CPM: false,
-    ASF: false,
     BLCBP: false,
+    YES: false,
   });
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,10 +64,8 @@ const FilterComponent: React.FC<FilterProps> = ({ onCheckboxChange }) => {
         ])
       ) as {
         CLI: boolean;
-        CPH: boolean;
-        CPM: boolean;
-        ASF: boolean;
         BLCBP: boolean;
+        YES: boolean;
       }),
     }));
 
@@ -189,54 +185,6 @@ const FilterComponent: React.FC<FilterProps> = ({ onCheckboxChange }) => {
               <StyledFormControlLabel
                 control={
                   <Checkbox
-                    checked={state.CPH}
-                    onChange={handleChange}
-                    name="CPH"
-                    sx={{
-                      color: "#c1c5de",
-                      "&.Mui-checked": {
-                        color: "#c1c5de",
-                      },
-                    }}
-                  />
-                }
-                label="CPH"
-              />
-              <StyledFormControlLabel
-                control={
-                  <Checkbox
-                    checked={state.CPM}
-                    onChange={handleChange}
-                    name="CPM"
-                    sx={{
-                      color: "#c1c5de",
-                      "&.Mui-checked": {
-                        color: "#c1c5de",
-                      },
-                    }}
-                  />
-                }
-                label="CPM"
-              />
-              <StyledFormControlLabel
-                control={
-                  <Checkbox
-                    checked={state.ASF}
-                    onChange={handleChange}
-                    name="ASF"
-                    sx={{
-                      color: "#c1c5de",
-                      "&.Mui-checked": {
-                        color: "#c1c5de",
-                      },
-                    }}
-                  />
-                }
-                label="ASF"
-              />
-              <StyledFormControlLabel
-                control={
-                  <Checkbox
                     checked={state.BLCBP}
                     onChange={handleChange}
                     name="BLCBP"
@@ -249,6 +197,22 @@ const FilterComponent: React.FC<FilterProps> = ({ onCheckboxChange }) => {
                   />
                 }
                 label="BLCBP"
+              />
+              <StyledFormControlLabel
+                control={
+                  <Checkbox
+                    checked={state.YES}
+                    onChange={handleChange}
+                    name="YES"
+                    sx={{
+                      color: "#c1c5de",
+                      "&.Mui-checked": {
+                        color: "#c1c5de",
+                      },
+                    }}
+                  />
+                }
+                label="YES"
               />
             </FormGroup>
           </FormControl>
