@@ -3,8 +3,8 @@ import "./App.css";
 import SidebarComponent from "./components/global/Sidebar";
 import Dashboard from "../src/pages/Dashboard";
 import chartDataInterface from "./common/interfaces/data/charts/chartDataInterface";
-import dataSource from "../dataSource.json";
-import dataReadAndCalculation from "./data/dataCalculation";
+import dataSource from "./data/dataSource.json";
+import dataReadAndCalculation from "./data-calculation/dataCalculation";
 
 const App: React.FC = () => {
   const [reloadDashboard, setReloadDashboard] = useState(false);
