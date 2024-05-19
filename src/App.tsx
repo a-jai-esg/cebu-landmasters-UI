@@ -3,7 +3,7 @@ import "./App.css";
 import SidebarComponent from "./components/global/Sidebar";
 import Dashboard from "../src/pages/Dashboard";
 import chartDataInterface from "./common/interfaces/data/charts/chartDataInterface";
-import dataSource2021 from "./data/dataSource2021.json";
+import dataSource2021 from "./data/incomeStatementDataSource2021.json";
 import gaugeDataCalculation from "./data-calculation/gaugeDataCalculation";
 
 const App: React.FC = () => {
