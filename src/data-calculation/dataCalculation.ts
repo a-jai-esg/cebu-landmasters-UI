@@ -45,6 +45,16 @@ export default class gaugeDataCalculation {
     return data;
   };
 
+  getRevenue = (): singleValueRowDataInterface[] => {
+    const data: singleValueRowDataInterface[] = this.dataset.map((data) => {
+      const name: string | null = Object.keys(data)[0];
+      const value: number | null = data[name].TOTAL_REVENUE.value;
+
+      return { name, value }; // Removed backticks
+    });
+    return data;
+  };
+
   getOpexRatio = (): singleValueRowDataInterface[] => {
     const data: singleValueRowDataInterface[] = this.dataset.map((data) => {
       const name: string | null = Object.keys(data)[0];

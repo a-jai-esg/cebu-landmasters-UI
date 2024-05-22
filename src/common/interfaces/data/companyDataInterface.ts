@@ -27,6 +27,25 @@ interface OperatingExpenses {
 }
 
 interface FinancialData {
+  TOTAL_REVENUE: { value: number };
+  TOTAL_COS: { value: number };
+  TOTAL_GROSS_PROFIT: { value: number };
+  TOTAL_OPERATING_EXPENSES: { value: number };
+  OTHER_OPERATING_INCOME: { value: number };
+  NET_OPERATING_INCOME: { value: number };
+  TOTAL_OTHER_INCOME_OR_EXPENSE: { value: number };
+  NET_PROFIT_BEFORE_TAX: {
+    value: number;
+  };
+  TOTAL_NET_INCOME: {
+    value: number;
+  };
+  TOTAL_NCI: {
+    value: number;
+  };
+  TOTAL_NET_INCOME_ATTRIBUTABLE_TO_PARENT: {
+    value: number;
+  };
   CONSOLIDATED_NIAT: { value: number };
   PARENT_NIAT: { value: number | null };
   GPM: { value: number };

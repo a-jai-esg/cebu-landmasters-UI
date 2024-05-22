@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Header from "../../components/global/Header";
-import { Card, CardContent, Typography, Grid } from "@mui/material";
+import { Card, CardContent, Typography, Grid, Box } from "@mui/material";
 import GaugeComponent from "./cards/GaugeComponent";
 import IncomeStatementTable from "./cards/IncomeStatementTableComponent";
 import BarchartComponent from "./cards/BarchartComponent";
@@ -93,9 +93,12 @@ const Dashboard: React.FC<DashboardProps> = ({
     return data.barData;
   });
 
-  const lineData = chartData.chartData.flatMap((data) => {
-    return data.lineData;
-  });
+  const composedChartData: singleValueRowDataInterface[] =
+    chartData.chartData.flatMap((data) => {
+      return data.composedChartData.flatMap((result) => {
+        return result;
+      });
+    });
 
   const pieData = chartData.chartData.flatMap((data) => {
     return data.pieData;
@@ -113,120 +116,147 @@ const Dashboard: React.FC<DashboardProps> = ({
   );
 
   return (
-    <>
+    <Box
+      sx={{
+        marginTop: "auto",
+        height: "94vh",
+        marginLeft: "1.5vh",
+      }}
+    >
       <Header title="Financial Dashboard - Income Statement" />
-      <Grid container spacing={1.5} key={reloadKey}>
-        {/* Doughnut charts */}
-        {cardTitles.length > 0 && (
-          <Grid item xs={12}>
-            <Card sx={{ borderRadius: 3, boxShadow: 6 }}>
-              <CardContent style={{ textAlign: "center" }}>
-                <Grid container spacing={2} justifyContent="center">
-                  <Grid item xs={2}>
-                    <div style={{ display: "flex", justifyContent: "center" }}>
-                      <GaugeComponent
-                        gaugeData={gaugeData[0]}
-                        title="Gross Profit Margin"
-                      />
-                    </div>
+      <Box>
+        <Grid container spacing={1.5} key={reloadKey}>
+          {/* Doughnut charts */}
+          {cardTitles.length > 0 && (
+            <Grid item xs={12}>
+              <Card sx={{ borderRadius: 3, boxShadow: 6 }}>
+                <CardContent style={{ textAlign: "center" }}>
+                  <Grid container spacing={2} justifyContent="center">
+                    <Grid item xs={2}>
+                      <div
+                        style={{ display: "flex", justifyContent: "center" }}
+                      >
+                        <GaugeComponent
+                          gaugeData={gaugeData[0]}
+                          title="Gross Profit Margin"
+                        />
+                      </div>
+                    </Grid>
+                    <Grid item xs={2}>
+                      <div
+                        style={{ display: "flex", justifyContent: "center" }}
+                      >
+                        <GaugeComponent
+                          gaugeData={gaugeData[1]}
+                          title="Opex Ratio"
+                        />
+                      </div>
+                    </Grid>
+                    <Grid item xs={2}>
+                      <div
+                        style={{ display: "flex", justifyContent: "center" }}
+                      >
+                        <GaugeComponent
+                          gaugeData={gaugeData[2]}
+                          title="EBITDA Margin"
+                        />
+                      </div>
+                    </Grid>
+                    <Grid item xs={2}>
+                      <div
+                        style={{ display: "flex", justifyContent: "center" }}
+                      >
+                        <GaugeComponent
+                          gaugeData={gaugeData[3]}
+                          title="Conso NIAT"
+                        />
+                      </div>
+                    </Grid>
+                    <Grid item xs={2}>
+                      <div
+                        style={{ display: "flex", justifyContent: "center" }}
+                      >
+                        <GaugeComponent
+                          gaugeData={gaugeData[4]}
+                          title="Parent NIAT"
+                        />
+                      </div>
+                    </Grid>
                   </Grid>
-                  <Grid item xs={2}>
-                    <div style={{ display: "flex", justifyContent: "center" }}>
-                      <GaugeComponent
-                        gaugeData={gaugeData[1]}
-                        title="Opex Ratio"
-                      />
-                    </div>
-                  </Grid>
-                  <Grid item xs={2}>
-                    <div style={{ display: "flex", justifyContent: "center" }}>
-                      <GaugeComponent
-                        gaugeData={gaugeData[2]}
-                        title="EBITDA Margin"
-                      />
-                    </div>
-                  </Grid>
-                  <Grid item xs={2}>
-                    <div style={{ display: "flex", justifyContent: "center" }}>
-                      <GaugeComponent
-                        gaugeData={gaugeData[3]}
-                        title="Conso NIAT"
-                      />
-                    </div>
-                  </Grid>
-                  <Grid item xs={2}>
-                    <div style={{ display: "flex", justifyContent: "center" }}>
-                      <GaugeComponent
-                        gaugeData={gaugeData[4]}
-                        title="Parent NIAT"
-                      />
-                    </div>
-                  </Grid>
-                </Grid>
-              </CardContent>
-            </Card>
-          </Grid>
-        )}
-        {/* Bar chart */}
-        {cardTitles.length > 1 && (
-          <Grid item xs={12} sm={6} md={4}>
-            <Card sx={{ borderRadius: 3, boxShadow: 6 }} style={{ height: "100%" }}>
-              <CardContent>
-                <BarchartComponent
-                  title={cardTitles[1].title}
-                  barData={barData}
-                />
-              </CardContent>
-            </Card>
-          </Grid>
-        )}
-        {/* Pie Chart*/}
-        {cardTitles.length > 2 && (
-          <Grid item xs={12} sm={6} md={4}>
-            <Card sx={{ borderRadius: 3, boxShadow: 6 }} style={{ height: "100%" }}>
-              <CardContent>
-                <PrimaryPieChartComponent
-                  pieData={pieData}
-                  title={cardTitles[2].title}
-                />
-              </CardContent>
-            </Card>
-          </Grid>
-        )}
-        {/* Income Statement Table */}
-        {/* Table*/}
-        {cardTitles.length > 3 && (
-          <Grid item xs={12} sm={6} md={4}>
-            <Card sx={{ borderRadius: 3, boxShadow: 6 }} style={{ height: "100%" }}>
-              <CardContent>
-                <Typography
-                  fontSize={20}
-                  color="#333"
-                  fontWeight="bold"
-                  padding={1}
-                >
-                  {cardTitles[3].title}
-                </Typography>
-                <IncomeStatementTable data={rows} />
-              </CardContent>
-            </Card>
-          </Grid>
-        )}
-        {/* Composed Chart*/}
-        {cardTitles.length > 4 && (
-          <Grid item xs={12}>
-            <Card sx={{ borderRadius: 3, boxShadow: 6 }}>
-              <CardContent>
-                <ComposedChartComponent
-                  lineData={lineData}
-                  title={cardTitles[4].title}
-                />
-              </CardContent>
-            </Card>
-          </Grid>
-        )}
-      </Grid>
-    </>
+                </CardContent>
+              </Card>
+            </Grid>
+          )}
+          {/* Bar chart */}
+          {cardTitles.length > 1 && (
+            <Grid item xs={12} sm={6} md={4}>
+              <Card
+                sx={{ borderRadius: 3, boxShadow: 6 }}
+                style={{ height: "100%" }}
+              >
+                <CardContent>
+                  <BarchartComponent
+                    title={cardTitles[1].title}
+                    barData={barData}
+                  />
+                </CardContent>
+              </Card>
+            </Grid>
+          )}
+          {/* Pie Chart*/}
+          {cardTitles.length > 2 && (
+            <Grid item xs={12} sm={6} md={4}>
+              <Card
+                sx={{ borderRadius: 3, boxShadow: 6 }}
+                style={{ height: "100%" }}
+              >
+                <CardContent>
+                  <PrimaryPieChartComponent
+                    pieData={pieData}
+                    title={cardTitles[2].title}
+                  />
+                </CardContent>
+              </Card>
+            </Grid>
+          )}
+          {/* Income Statement Table */}
+          {/* Table*/}
+          {cardTitles.length > 3 && (
+            <Grid item xs={12} sm={6} md={4}>
+              <Card
+                sx={{ borderRadius: 3, boxShadow: 6 }}
+                style={{ height: "100%" }}
+              >
+                <CardContent>
+                  <Typography
+                    fontSize={20}
+                    color="#333"
+                    fontWeight="bold"
+                    padding={1}
+                  >
+                    {cardTitles[3].title}
+                  </Typography>
+                  <IncomeStatementTable data={rows} />
+                </CardContent>
+              </Card>
+            </Grid>
+          )}
+          {/* Composed Chart*/}
+          {cardTitles.length > 4 && (
+            <Grid item xs={12}>
+              <Card sx={{ borderRadius: 3, boxShadow: 6 }}>
+                <CardContent>
+                  <ComposedChartComponent
+                    composedChartData={composedChartData}
+                    title={cardTitles[4].title}
+                  />
+                </CardContent>
+              </Card>
+            </Grid>
+          )}
+        </Grid>
+      </Box>
+    </Box>
   );
 };
 

@@ -5,7 +5,7 @@ export default interface chartDataInterface {
   chartData: {
     gaugeData: singleValueRowDataInterface[][];
     barData: multipleValuesRowDataInterface[];
-    lineData: multipleValuesRowDataInterface[];
+    composedChartData: singleValueRowDataInterface[][];
     pieData: singleValueRowDataInterface[];
   }[];
 }

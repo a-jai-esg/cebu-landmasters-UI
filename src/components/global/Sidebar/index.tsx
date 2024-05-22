@@ -36,7 +36,7 @@ const SidebarComponent: React.FC<SidebarProps> = ({ onCheckboxClick }) => {
         flexDirection: "column",
         color: "#c1c5de",
         "& .pro-sidebar-inner": {
-          borderRadius: "12.5px",
+          //borderRadius: "12.5px",
           background: `${`#24274c`} !important`,
           color: "#c1c5de",
         },

@@ -1,4 +1,5 @@
 import { Typography, Box } from "@mui/material";
+import "../../../App.css";
 
 interface HeaderProps {
   title: string;
@@ -6,11 +7,11 @@ interface HeaderProps {
 
 const Header = ({ title }: HeaderProps): JSX.Element => {
   return (
-    <Box mb="10px;">
+    <Box mb="5px;">
       <Typography
         variant="h5"
         color="#333"
-        fontWeight="bold"
+        fontWeight="600"
         sx={{ marginBottom: "auto" }}
       >
         {title}
