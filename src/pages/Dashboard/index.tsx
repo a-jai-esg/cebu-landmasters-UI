@@ -30,55 +30,91 @@ const Dashboard: React.FC<DashboardProps> = ({
 
   function createData(
     id: number,
-    date: string,
     name: string,
-    shipTo: string,
-    paymentMethod: string,
-    amount: number
+    currentYear: number,
+    percentage: number,
   ) {
-    return { id, date, name, shipTo, paymentMethod, amount };
+    return { id, name, currentYear, percentage };
   }
 
   const rows = [
     createData(
       0,
-      "16 Mar, 2019",
-      "Elvis Presley",
-      "Tupelo, MS",
-      "VISA ⠀•••• 3719",
-      312.44
+      "Revenue",
+      0,
+      0,
     ),
     createData(
       1,
-      "16 Mar, 2019",
-      "Paul McCartney",
-      "London, UK",
-      "VISA ⠀•••• 2574",
-      866.99
+      "COGS",
+      0,
+      0,
     ),
     createData(
       2,
-      "16 Mar, 2019",
-      "Tom Scholz",
-      "Boston, MA",
-      "MC ⠀•••• 1253",
-      100.81
+      "Gross Profit",
+      0,
+      0,
     ),
     createData(
       3,
-      "16 Mar, 2019",
-      "Michael Jackson",
-      "Gary, IN",
-      "AMEX ⠀•••• 2000",
-      654.39
+      "OPEX",
+      0,
+      0,
     ),
     createData(
       4,
-      "15 Mar, 2019",
-      "Bruce Springsteen",
-      "Long Branch, NJ",
-      "VISA ⠀•••• 5919",
-      212.79
+      "Sales",
+      0,
+      0,
+    ),
+    createData(
+      5,
+      "Marketing",
+      0,
+      0,
+    ),
+    createData(
+      6,
+      "IT",
+      0,
+      0,
+    ),
+    createData(
+      7,
+      "General and Admin",
+      0,
+      0,
+    ),
+    createData(
+      8,
+      "Other Income",
+      0,
+      0,
+    ),
+    createData(
+      9,
+      "Other Expenses",
+      0,
+      0,
+    ),
+    createData(
+      10,
+      "EBIT",
+      0,
+      0,
+    ),
+    createData(
+      11,
+      "Interest and Tax",
+      0,
+      0,
+    ),
+    createData(
+      12,
+      "Net Profit",
+      0,
+      0,
     ),
   ];
 
