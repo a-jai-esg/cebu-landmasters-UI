@@ -32,90 +32,25 @@ const Dashboard: React.FC<DashboardProps> = ({
     id: number,
     name: string,
     currentYear: number,
-    percentage: number,
+    percentage: number
   ) {
     return { id, name, currentYear, percentage };
   }
 
   const rows = [
-    createData(
-      0,
-      "Revenue",
-      0,
-      0,
-    ),
-    createData(
-      1,
-      "COGS",
-      0,
-      0,
-    ),
-    createData(
-      2,
-      "Gross Profit",
-      0,
-      0,
-    ),
-    createData(
-      3,
-      "OPEX",
-      0,
-      0,
-    ),
-    createData(
-      4,
-      "Sales",
-      0,
-      0,
-    ),
-    createData(
-      5,
-      "Marketing",
-      0,
-      0,
-    ),
-    createData(
-      6,
-      "IT",
-      0,
-      0,
-    ),
-    createData(
-      7,
-      "General and Admin",
-      0,
-      0,
-    ),
-    createData(
-      8,
-      "Other Income",
-      0,
-      0,
-    ),
-    createData(
-      9,
-      "Other Expenses",
-      0,
-      0,
-    ),
-    createData(
-      10,
-      "EBIT",
-      0,
-      0,
-    ),
-    createData(
-      11,
-      "Interest and Tax",
-      0,
-      0,
-    ),
-    createData(
-      12,
-      "Net Profit",
-      0,
-      0,
-    ),
+    createData(0, "Revenue", 0, 0),
+    createData(1, "COGS", 0, 0),
+    createData(2, "Gross Profit", 0, 0),
+    createData(3, "OPEX", 0, 0),
+    createData(4, "Sales", 0, 0),
+    createData(5, "Marketing", 0, 0),
+    createData(6, "IT", 0, 0),
+    createData(7, "General and Admin", 0, 0),
+    createData(8, "Other Income", 0, 0),
+    createData(9, "Other Expenses", 0, 0),
+    createData(10, "EBIT", 0, 0),
+    createData(11, "Interest and Tax", 0, 0),
+    createData(12, "Net Profit", 0, 0),
   ];
 
   useEffect(() => {
@@ -238,10 +173,7 @@ const Dashboard: React.FC<DashboardProps> = ({
           {/* Bar chart */}
           {cardTitles.length > 1 && (
             <Grid item xs={12} sm={6} md={4}>
-              <Card
-                sx={{ borderRadius: 3, boxShadow: 6 }}
-                style={{ height: "100%" }}
-              >
+              <Card sx={{ borderRadius: 3, boxShadow: 6, height: "35vh" }}>
                 <CardContent>
                   <BarchartComponent
                     barData={barData}
@@ -254,10 +186,7 @@ const Dashboard: React.FC<DashboardProps> = ({
           {/* Pie Chart*/}
           {cardTitles.length > 2 && (
             <Grid item xs={12} sm={6} md={4}>
-              <Card
-                sx={{ borderRadius: 3, boxShadow: 6 }}
-                style={{ height: "100%" }}
-              >
+              <Card sx={{ borderRadius: 3, boxShadow: 6, height: "35vh" }}>
                 <CardContent>
                   <PrimaryPieChartComponent
                     pieData={pieData}
@@ -271,14 +200,9 @@ const Dashboard: React.FC<DashboardProps> = ({
           {/* Table*/}
           {cardTitles.length > 3 && (
             <Grid item xs={12} sm={6} md={4}>
-              <Card sx={{ borderRadius: 3, boxShadow: 6, height: "100%" }}>
+              <Card sx={{ borderRadius: 3, boxShadow: 6, height: "35vh" }}>
                 <CardContent>
-                  <Typography
-                    fontSize={20}
-                    color="#333"
-                    fontWeight="bold"
-                    padding={1}
-                  >
+                  <Typography fontSize={20} color="#333" fontWeight="bold">
                     {cardTitles[3].title}
                   </Typography>
                   <IncomeStatementTable data={rows} />

@@ -3,6 +3,8 @@ import companyDataInterface from "../common/interfaces/data/companyDataInterface
 import singleValueRowDataInterface from "../common/interfaces/data/objects/forms/singleValueRowDataInterface";
 import operatingExpenseDataInterface from "../common/interfaces/data/objects/forms/graph-related/operatingExpenseDataInterface";
 import operatingExpenseInterface from "../common/interfaces/data/objects/forms/graph-related/operatingExpenseInterface";
+import revenueDataInterface from "../common/interfaces/data/objects/forms/graph-related/revenueDataInterface";
+import revenueInterface from "../common/interfaces/data/objects/forms/graph-related/revenueInterface";
 // this is the data calculation class
 
 export default class dataCalculation {
@@ -50,14 +52,32 @@ export default class dataCalculation {
     return data;
   };
 
-  getTotalRevenuePerBU = (): singleValueRowDataInterface[] => {
-    const data: singleValueRowDataInterface[] = this.dataset.map((data) => {
+  getRevenuePerBU = (): revenueDataInterface[] => {
+    const revenue: revenueDataInterface[] = this.dataset.map((data) => {
       const name: string | null = Object.keys(data)[0];
-      const value: number | null = data[name].TOTAL_REVENUE.value;
 
-      return { name, value }; // Removed backticks
+      const dataCommissions: number | null =
+        data[name].OPERATING_EXPENSES.commissions;
+      const managementFeeExpense: number | null =
+        data[name].OPERATING_EXPENSES.management_fee_expense;
+      const professionalAndLegalFees: number | null =
+        data[name].OPERATING_EXPENSES.professional_and_legal_fees;
+      const securityAndJanitorialFees: number | null =
+        data[name].OPERATING_EXPENSES.security_and_janitorial_services;
+      const taxesAndLicenses: number | null =
+        data[name].OPERATING_EXPENSES.taxes_and_licenses;
+
+      const expenses: revenueInterface = {
+        commissions: dataCommissions,
+        management_fee_expense: managementFeeExpense,
+        professional_and_legal_fees: professionalAndLegalFees,
+        security_and_janitorial_services: securityAndJanitorialFees,
+        taxes_and_licenses: taxesAndLicenses,
+      };
+
+      return { name, expenses }; // Removed backticks
     });
-    return data;
+    return revenue;
   };
 
   // this applies only per entity

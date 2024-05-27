@@ -4,9 +4,8 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { ResponsiveContainer } from "recharts";
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'; // decrease
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp'; // increase
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown"; // decrease
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp"; // increase
 
 interface incomeStatementData {
   id: number;
@@ -23,7 +22,7 @@ const IncomeStatementTable = ({ data }: dataObjects): JSX.Element => {
   return (
     <>
       <React.Fragment>
-        <ResponsiveContainer width="auto" height="auto">
+        <div style={{ height: "300px", overflow: "auto" }}>
           <Table size="small">
             <TableHead>
               <TableRow>
@@ -77,14 +76,16 @@ const IncomeStatementTable = ({ data }: dataObjects): JSX.Element => {
                   <TableRow key={row.id}>
                     <TableCell>{row.name}</TableCell>
                     <TableCell>{row.currentYear}</TableCell>
-                    <TableCell><ArrowDropDownIcon sx={{ color: 'red' }} /></TableCell>
+                    <TableCell>
+                      <ArrowDropDownIcon sx={{ color: "red" }} />
+                    </TableCell>
                     <TableCell>{row.percentage}</TableCell>
                   </TableRow>
                 )
               )}
             </TableBody>
           </Table>
-        </ResponsiveContainer>
+        </div>
       </React.Fragment>
     </>
   );
