@@ -5,14 +5,14 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { ResponsiveContainer } from "recharts";
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'; // decrease
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp'; // increase
 
 interface incomeStatementData {
   id: number;
-  date: string;
   name: string;
-  shipTo: string;
-  paymentMethod: string;
-  amount: number;
+  currentYear: number;
+  percentage: number;
 }
 
 interface dataObjects {
@@ -27,29 +27,16 @@ const IncomeStatementTable = ({ data }: dataObjects): JSX.Element => {
           <Table size="small">
             <TableHead>
               <TableRow>
-                <TableCell>Date</TableCell>
-                <TableCell>Name</TableCell>
-                <TableCell>Ship To</TableCell>
-                <TableCell>Payment Method</TableCell>
-                <TableCell align="right">Sale Amount</TableCell>
+                <TableCell>Income Statement</TableCell>
+                <TableCell>Current Year</TableCell>
+                <TableCell>vs PY</TableCell>
+                <TableCell>Percentage</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {data.map(
                 (row: {
                   id: React.Key | null | undefined;
-                  date:
-                    | string
-                    | number
-                    | boolean
-                    | React.ReactElement<
-                        any,
-                        string | React.JSXElementConstructor<any>
-                      >
-                    | Iterable<React.ReactNode>
-                    | React.ReactPortal
-                    | null
-                    | undefined;
                   name:
                     | string
                     | number
@@ -62,7 +49,7 @@ const IncomeStatementTable = ({ data }: dataObjects): JSX.Element => {
                     | React.ReactPortal
                     | null
                     | undefined;
-                  shipTo:
+                  currentYear:
                     | string
                     | number
                     | boolean
@@ -74,7 +61,7 @@ const IncomeStatementTable = ({ data }: dataObjects): JSX.Element => {
                     | React.ReactPortal
                     | null
                     | undefined;
-                  paymentMethod:
+                  percentage:
                     | string
                     | number
                     | boolean
@@ -86,14 +73,12 @@ const IncomeStatementTable = ({ data }: dataObjects): JSX.Element => {
                     | React.ReactPortal
                     | null
                     | undefined;
-                  amount: any;
                 }) => (
                   <TableRow key={row.id}>
-                    <TableCell>{row.date}</TableCell>
                     <TableCell>{row.name}</TableCell>
-                    <TableCell>{row.shipTo}</TableCell>
-                    <TableCell>{row.paymentMethod}</TableCell>
-                    <TableCell align="right">{`$${row.amount}`}</TableCell>
+                    <TableCell>{row.currentYear}</TableCell>
+                    <TableCell><ArrowDropDownIcon sx={{ color: 'red' }} /></TableCell>
+                    <TableCell>{row.percentage}</TableCell>
                   </TableRow>
                 )
               )}
