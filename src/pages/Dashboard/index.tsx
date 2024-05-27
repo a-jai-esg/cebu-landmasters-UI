@@ -9,6 +9,7 @@ import ComposedChartComponent from "./cards/ComposedChartComponent";
 import chartDataInterface from "../../common/interfaces/data/charts/chartDataInterface";
 import * as _ from "lodash";
 import singleValueRowDataInterface from "../../common/interfaces/data/objects/forms/singleValueRowDataInterface";
+import operatingExpenseDataInterface from "../../common/interfaces/data/operatingExpenseDataInterface";
 
 interface DashboardProps {
   cardTitles: {
@@ -100,9 +101,16 @@ const Dashboard: React.FC<DashboardProps> = ({
       });
     });
 
-  const pieData = chartData.chartData.flatMap((data) => {
-    return data.pieData;
-  });
+  const pieData: operatingExpenseDataInterface[] = chartData.chartData.flatMap(
+    (data) => {
+      return data.pieData.flatMap((result) => {
+        return result.filter(
+          (item): item is operatingExpenseDataInterface =>
+            item.name === `${entityFilter}`
+        );
+      });
+    }
+  );
 
   const gaugeData: singleValueRowDataInterface[] = chartData.chartData.flatMap(
     (data) => {
