@@ -1,11 +1,11 @@
 import _ from "lodash";
 import companyDataInterface from "../common/interfaces/data/companyDataInterface";
 import singleValueRowDataInterface from "../common/interfaces/data/objects/forms/singleValueRowDataInterface";
-import operatingExpenseDataInterface from "../common/interfaces/data/operatingExpenseDataInterface";
-import operatingExpenseInterface from "../common/interfaces/data/operatingExpenseInterface";
+import operatingExpenseDataInterface from "../common/interfaces/data/objects/forms/graph-related/operatingExpenseDataInterface";
+import operatingExpenseInterface from "../common/interfaces/data/objects/forms/graph-related/operatingExpenseInterface";
 // this is the data calculation class
 
-export default class gaugeDataCalculation {
+export default class dataCalculation {
   dataset: companyDataInterface[];
 
   // receive the dataset through this constructor and everything gets calculated by each methods in this class.
@@ -44,6 +44,16 @@ export default class gaugeDataCalculation {
     const data: singleValueRowDataInterface[] = this.dataset.map((data) => {
       const name: string | null = Object.keys(data)[0];
       const value: number | null = data[name].GPM.value;
+
+      return { name, value }; // Removed backticks
+    });
+    return data;
+  };
+
+  getTotalRevenuePerBU = (): singleValueRowDataInterface[] => {
+    const data: singleValueRowDataInterface[] = this.dataset.map((data) => {
+      const name: string | null = Object.keys(data)[0];
+      const value: number | null = data[name].TOTAL_REVENUE.value;
 
       return { name, value }; // Removed backticks
     });
