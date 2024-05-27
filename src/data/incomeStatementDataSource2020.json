@@ -1,11 +1,30 @@
 [
   {
     "CLI": {
+      "REVENUES": {
+        "sale_of_real_estates": 4331384237,
+        "rental": 51619187,
+        "management_fees": 35633886,
+        "hotel_operations": null
+      },
       "TOTAL_REVENUE": {
         "value": 4418637310
       },
+      "COS": {
+        "cos_real_estates": -2252230581,
+        "cos_depreciation": -15638001,
+        "cos_taxes": null,
+        "cos_salaries_and_other_benefits": null,
+        "cos_hotel": null
+      },
       "TOTAL_COS": {
         "value": -2267868582
+      },
+      "GROSS_PROFIT": {
+        "gp_sale_of_real_estates": 2079153657,
+        "gp_rental": 35981186,
+        "gp_management_fees": 35633886,
+        "gp_hotel": null
       },
       "TOTAL_GROSS_PROFIT": {
         "value": 2150768729
@@ -78,14 +97,33 @@
   },
   {
     "BLCBP": {
+      "REVENUES": {
+        "sale_of_real_estates": 12183568,
+        "rental": null,
+        "management_fees": null,
+        "hotel_operations": null
+      },
       "TOTAL_REVENUE": {
         "value": 12183568
+      },
+      "COS": {
+        "cos_real_estates": -33107321,
+        "cos_depreciation": null,
+        "cos_taxes": null,
+        "cos_salaries_and_other_benefits": null,
+        "cos_hotel": null
       },
       "TOTAL_COS": {
         "value": 33107321
       },
+      "GROSS_PROFIT": {
+        "gp_sale_of_real_estates": -20923754,
+        "gp_rental": null,
+        "gp_management_fees": null,
+        "gp_hotel": null
+      },
       "TOTAL_GROSS_PROFIT": {
-        "value": 20923754
+        "value": -20923754
       },
       "TOTAL_OPERATING_EXPENSES": {
         "value": 10555823
@@ -155,11 +193,30 @@
   },
   {
     "YES": {
+      "REVENUES": {
+        "sale_of_real_estates": 156096807,
+        "rental": null,
+        "management_fees": null,
+        "hotel_operations": null
+      },
       "TOTAL_REVENUE": {
         "value": 156096807
       },
+      "COS": {
+        "cos_real_estates": -107121351,
+        "cos_depreciation": null,
+        "cos_taxes": null,
+        "cos_salaries_and_other_benefits": null,
+        "cos_hotel": null
+      },
       "TOTAL_COS": {
         "value": -107121351
+      },
+      "GROSS_PROFIT": {
+        "gp_sale_of_real_estates": 48975456,
+        "gp_rental": null,
+        "gp_management_fees": null,
+        "gp_hotel": null
       },
       "TOTAL_GROSS_PROFIT": {
         "value": 48975456
