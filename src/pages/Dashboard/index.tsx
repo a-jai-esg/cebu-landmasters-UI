@@ -235,10 +235,7 @@ const Dashboard: React.FC<DashboardProps> = ({
           {/* Table*/}
           {cardTitles.length > 3 && (
             <Grid item xs={12} sm={6} md={4}>
-              <Card
-                sx={{ borderRadius: 3, boxShadow: 6 }}
-                style={{ height: "100%" }}
-              >
+              <Card sx={{ borderRadius: 3, boxShadow: 6, height: "100%" }}>
                 <CardContent>
                   <Typography
                     fontSize={20}
