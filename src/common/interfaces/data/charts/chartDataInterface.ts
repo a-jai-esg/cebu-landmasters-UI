@@ -1,11 +1,10 @@
-import multipleValuesRowDataInterface from "../objects/forms/multipleValuesRowDataInterface";
 import singleValueRowDataInterface from "../objects/forms/singleValueRowDataInterface";
-import operatingExpenseDataInterface from "../operatingExpenseDataInterface";
+import operatingExpenseDataInterface from "../objects/forms/graph-related/operatingExpenseDataInterface";
 
 export default interface chartDataInterface {
   chartData: {
     gaugeData: singleValueRowDataInterface[][];
-    barData: multipleValuesRowDataInterface[];
+    barData: singleValueRowDataInterface[][];
     composedChartData: singleValueRowDataInterface[][];
     pieData: operatingExpenseDataInterface[][];
   }[];

@@ -9,10 +9,9 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import rowDataInterface from "../../../../common/interfaces/data/objects/forms/multipleValuesRowDataInterface";
-
+import singleValueRowDataInterface from "../../../../common/interfaces/data/objects/forms/singleValueRowDataInterface";
 interface barDataInterface {
-  barData: rowDataInterface[];
+  barData: singleValueRowDataInterface[];
 }
 
 interface titleStringInterface {
@@ -31,7 +30,7 @@ const BarchartComponent = ({
       <ResponsiveContainer width="100%" height={250}>
         <BarChart
           data={barData}
-          margin={{ top: 30, right: 20 }}
+          margin={{ left: 45, top: 30, right: 40 }}
           style={{ backgroundColor: "#E4F4FA" }}
         >
           <XAxis dataKey="name" />
@@ -40,19 +39,9 @@ const BarchartComponent = ({
           <Legend />
           {/* <Bar dataKey="value" fill="#8884d8" /> */}
           <Bar
-            dataKey="pv"
+            dataKey="value"
             fill="#2BA9DF"
             activeBar={<Rectangle fill="pink" stroke="blue" />}
-          />
-          <Bar
-            dataKey="uv"
-            fill="#85C7EE"
-            activeBar={<Rectangle fill="gold" stroke="purple" />}
-          />
-          <Bar
-            dataKey="amt"
-            fill="#99D8E9"
-            activeBar={<Rectangle fill="orange" stroke="red" />}
           />
         </BarChart>
       </ResponsiveContainer>

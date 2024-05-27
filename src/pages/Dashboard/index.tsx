@@ -9,7 +9,7 @@ import ComposedChartComponent from "./cards/ComposedChartComponent";
 import chartDataInterface from "../../common/interfaces/data/charts/chartDataInterface";
 import * as _ from "lodash";
 import singleValueRowDataInterface from "../../common/interfaces/data/objects/forms/singleValueRowDataInterface";
-import operatingExpenseDataInterface from "../../common/interfaces/data/operatingExpenseDataInterface";
+import operatingExpenseDataInterface from "../../common/interfaces/data/objects/forms/graph-related/operatingExpenseDataInterface";
 
 interface DashboardProps {
   cardTitles: {
@@ -90,9 +90,13 @@ const Dashboard: React.FC<DashboardProps> = ({
   }, [reload]);
 
   // get data
-  const barData = chartData.chartData.flatMap((data) => {
-    return data.barData;
-  });
+  const barData: singleValueRowDataInterface[] = chartData.chartData.flatMap(
+    (data) => {
+      return data.barData.flatMap((result) => {
+        return result;
+      });
+    }
+  );
 
   const composedChartData: singleValueRowDataInterface[] =
     chartData.chartData.flatMap((data) => {
@@ -204,8 +208,8 @@ const Dashboard: React.FC<DashboardProps> = ({
               >
                 <CardContent>
                   <BarchartComponent
-                    title={cardTitles[1].title}
                     barData={barData}
+                    title={cardTitles[1].title}
                   />
                 </CardContent>
               </Card>
