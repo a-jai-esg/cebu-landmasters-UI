@@ -24,7 +24,7 @@ const transformData = (
     if (entry.expenses) {
       return Object.entries(entry.expenses).map(([key, value]) => ({
         name: key.replace(/_/g, " "), // Optional: replace underscores with spaces for better readability
-        value: value < 0 ? (value *= -1) : 0, // Ensure that null values are treated as 0
+        value: value < 0 ? (value *= -1) : 0, // Ensure that null values are treated as signed integers
       }));
     }
     return [];

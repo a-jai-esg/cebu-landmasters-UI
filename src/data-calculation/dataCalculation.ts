@@ -8,11 +8,16 @@ import revenueInterface from "../common/interfaces/data/objects/forms/graph-rela
 // this is the data calculation class
 
 export default class dataCalculation {
-  dataset: companyDataInterface[];
+  previousDataset: companyDataInterface[];
+  currentDataset: companyDataInterface[];
 
-  // receive the dataset through this constructor and everything gets calculated by each methods in this class.
-  constructor(dataset: any[]) {
-    this.dataset = this.parseDataSource(dataset);
+  CURRENT: string = "current";
+  PREVIOUS: string = "previous";
+
+  // receive the datasets through this constructor and everything gets calculated by each methods in this class.
+  constructor(previousDataset: any[], currentDataset: any[]) {
+    this.previousDataset = this.parseDataSource(previousDataset);
+    this.currentDataset = this.parseDataSource(currentDataset);
   }
 
   private parseDataSource = (data: any[]): companyDataInterface[] => {
@@ -23,109 +28,218 @@ export default class dataCalculation {
     });
   };
 
-  getConsolidatedNIAT = (): singleValueRowDataInterface[] => {
-    const data: singleValueRowDataInterface[] = this.dataset.map((data) => {
-      const name: string | null = Object.keys(data)[0];
-      const value: number | null = data[name].CONSOLIDATED_NIAT.value;
+  // the key (string) signifies as to what data is to be gathered:
+  getConsolidatedNIAT = (key: string): singleValueRowDataInterface[] | null => {
+    let data: singleValueRowDataInterface[];
+    if (key === this.CURRENT || key === this.CURRENT.toUpperCase()) {
+      // get only the current data
+      data = this.currentDataset.map((data) => {
+        const name: string | null = Object.keys(data)[0];
+        const value: number | null = data[name].CONSOLIDATED_NIAT.value;
 
-      return { name, value }; // Removed backticks
-    });
+        return { name, value }; // Removed backticks
+      });
+    } else if (key === this.PREVIOUS || key === this.PREVIOUS.toUpperCase()) {
+      data = this.previousDataset.map((data) => {
+        const name: string | null = Object.keys(data)[0];
+        const value: number | null = data[name].CONSOLIDATED_NIAT.value;
+
+        return { name, value }; // Removed backticks
+      });
+    } else {
+      return null;
+    }
     return data;
   };
 
-  getParentNIAT = (): singleValueRowDataInterface[] => {
-    const data: singleValueRowDataInterface[] = this.dataset.map((data) => {
-      const name: string | null = Object.keys(data)[0];
-      const value: number | null = data[name].PARENT_NIAT.value;
-      return { name, value }; // Removed backticks
-    });
+  getParentNIAT = (key: string): singleValueRowDataInterface[] | null => {
+    let data: singleValueRowDataInterface[];
+    if (key === this.CURRENT || key === this.CURRENT.toUpperCase()) {
+      data = this.currentDataset.map((data) => {
+        const name: string | null = Object.keys(data)[0];
+        const value: number | null = data[name].PARENT_NIAT.value;
+        return { name, value }; // Removed backticks
+      });
+    } else if (key === this.PREVIOUS || key === this.PREVIOUS.toUpperCase()) {
+      data = this.previousDataset.map((data) => {
+        const name: string | null = Object.keys(data)[0];
+        const value: number | null = data[name].PARENT_NIAT.value;
+        return { name, value }; // Removed backticks
+      });
+    } else {
+      return null;
+    }
     return data;
   };
 
-  getGPM = (): singleValueRowDataInterface[] => {
-    const data: singleValueRowDataInterface[] = this.dataset.map((data) => {
-      const name: string | null = Object.keys(data)[0];
-      const value: number | null = data[name].GPM.value;
-
-      return { name, value }; // Removed backticks
-    });
+  getGPM = (key: string): singleValueRowDataInterface[] | null => {
+    let data: singleValueRowDataInterface[];
+    if (key === this.CURRENT || key === this.CURRENT.toUpperCase()) {
+      data = this.currentDataset.map((data) => {
+        const name: string | null = Object.keys(data)[0];
+        const value: number | null = data[name].GPM.value;
+        return { name, value }; // Removed backticks
+      });
+    } else if (key === this.PREVIOUS || key === this.PREVIOUS.toLowerCase()) {
+      data = this.previousDataset.map((data) => {
+        const name: string | null = Object.keys(data)[0];
+        const value: number | null = data[name].GPM.value;
+        return { name, value };
+      });
+    } else {
+      return null;
+    }
     return data;
   };
 
-  getRevenuePerBU = (): revenueDataInterface[] => {
-    const revenue: revenueDataInterface[] = this.dataset.map((data) => {
-      const name: string | null = Object.keys(data)[0];
+  getRevenuePerBU = (key: string): revenueDataInterface[] | null => {
+    let data: revenueDataInterface[];
+    if (key === this.CURRENT || key === this.CURRENT.toUpperCase()) {
+      data = this.currentDataset.map((data) => {
+        const name: string | null = Object.keys(data)[0];
 
-      const dataCommissions: number | null =
-        data[name].OPERATING_EXPENSES.commissions;
-      const managementFeeExpense: number | null =
-        data[name].OPERATING_EXPENSES.management_fee_expense;
-      const professionalAndLegalFees: number | null =
-        data[name].OPERATING_EXPENSES.professional_and_legal_fees;
-      const securityAndJanitorialFees: number | null =
-        data[name].OPERATING_EXPENSES.security_and_janitorial_services;
-      const taxesAndLicenses: number | null =
-        data[name].OPERATING_EXPENSES.taxes_and_licenses;
+        const saleOfRealEstates: number | null =
+          data[name].REVENUES.sale_of_real_estates;
+        const rental: number | null = data[name].REVENUES.rental;
+        const managementFees: number | null =
+          data[name].REVENUES.management_fees;
+        const hotelOperations: number | null =
+          data[name].REVENUES.hotel_operations;
 
-      const expenses: revenueInterface = {
-        commissions: dataCommissions,
-        management_fee_expense: managementFeeExpense,
-        professional_and_legal_fees: professionalAndLegalFees,
-        security_and_janitorial_services: securityAndJanitorialFees,
-        taxes_and_licenses: taxesAndLicenses,
-      };
+        const revenues: revenueInterface = {
+          sale_of_real_estates: saleOfRealEstates,
+          rental: rental,
+          management_fees: managementFees,
+          hotel_operations: hotelOperations,
+        };
+        return { name, revenues }; // Removed backticks
+      });
+    } else if (key === this.PREVIOUS || key === this.PREVIOUS.toUpperCase()) {
+      data = this.previousDataset.map((data) => {
+        const name: string | null = Object.keys(data)[0];
 
-      return { name, expenses }; // Removed backticks
-    });
-    return revenue;
+        const saleOfRealEstates: number | null =
+          data[name].REVENUES.sale_of_real_estates;
+        const rental: number | null = data[name].REVENUES.rental;
+        const managementFees: number | null =
+          data[name].REVENUES.management_fees;
+        const hotelOperations: number | null =
+          data[name].REVENUES.hotel_operations;
+
+        const revenues: revenueInterface = {
+          sale_of_real_estates: saleOfRealEstates,
+          rental: rental,
+          management_fees: managementFees,
+          hotel_operations: hotelOperations,
+        };
+        return { name, revenues }; // Removed backticks
+      });
+    } else {
+      return null;
+    }
+    return data;
   };
 
   // this applies only per entity
-  getOpexPerEntity = (): operatingExpenseDataInterface[] => {
-    const opex: operatingExpenseDataInterface[] = this.dataset.map((data) => {
-      const name: string | null = Object.keys(data)[0];
+  getOpexPerEntity = (key: string): operatingExpenseDataInterface[] | null => {
+    let data: operatingExpenseDataInterface[];
+    if (key === this.CURRENT || key === this.CURRENT.toUpperCase()) {
+      data = this.currentDataset.map((data) => {
+        const name: string | null = Object.keys(data)[0];
 
-      const dataCommissions: number | null =
-        data[name].OPERATING_EXPENSES.commissions;
-      const managementFeeExpense: number | null =
-        data[name].OPERATING_EXPENSES.management_fee_expense;
-      const professionalAndLegalFees: number | null =
-        data[name].OPERATING_EXPENSES.professional_and_legal_fees;
-      const securityAndJanitorialFees: number | null =
-        data[name].OPERATING_EXPENSES.security_and_janitorial_services;
-      const taxesAndLicenses: number | null =
-        data[name].OPERATING_EXPENSES.taxes_and_licenses;
+        const dataCommissions: number | null =
+          data[name].OPERATING_EXPENSES.commissions;
+        const managementFeeExpense: number | null =
+          data[name].OPERATING_EXPENSES.management_fee_expense;
+        const professionalAndLegalFees: number | null =
+          data[name].OPERATING_EXPENSES.professional_and_legal_fees;
+        const securityAndJanitorialFees: number | null =
+          data[name].OPERATING_EXPENSES.security_and_janitorial_services;
+        const taxesAndLicenses: number | null =
+          data[name].OPERATING_EXPENSES.taxes_and_licenses;
 
-      const expenses: operatingExpenseInterface = {
-        commissions: dataCommissions,
-        management_fee_expense: managementFeeExpense,
-        professional_and_legal_fees: professionalAndLegalFees,
-        security_and_janitorial_services: securityAndJanitorialFees,
-        taxes_and_licenses: taxesAndLicenses,
-      };
+        const expenses: operatingExpenseInterface = {
+          commissions: dataCommissions,
+          management_fee_expense: managementFeeExpense,
+          professional_and_legal_fees: professionalAndLegalFees,
+          security_and_janitorial_services: securityAndJanitorialFees,
+          taxes_and_licenses: taxesAndLicenses,
+        };
 
-      return { name, expenses }; // Removed backticks
-    });
-    return opex;
-  };
+        return { name, expenses }; // Removed backticks
+      });
+    } else if (key === this.CURRENT || key === this.PREVIOUS.toUpperCase()) {
+      data = this.previousDataset.map((data) => {
+        const name: string | null = Object.keys(data)[0];
 
-  getOpexRatio = (): singleValueRowDataInterface[] => {
-    const data: singleValueRowDataInterface[] = this.dataset.map((data) => {
-      const name: string | null = Object.keys(data)[0];
-      const value: number | null = data[name].OPEX_RATIO.value;
+        const dataCommissions: number | null =
+          data[name].OPERATING_EXPENSES.commissions;
+        const managementFeeExpense: number | null =
+          data[name].OPERATING_EXPENSES.management_fee_expense;
+        const professionalAndLegalFees: number | null =
+          data[name].OPERATING_EXPENSES.professional_and_legal_fees;
+        const securityAndJanitorialFees: number | null =
+          data[name].OPERATING_EXPENSES.security_and_janitorial_services;
+        const taxesAndLicenses: number | null =
+          data[name].OPERATING_EXPENSES.taxes_and_licenses;
 
-      return { name, value }; // Removed backticks
-    });
+        const expenses: operatingExpenseInterface = {
+          commissions: dataCommissions,
+          management_fee_expense: managementFeeExpense,
+          professional_and_legal_fees: professionalAndLegalFees,
+          security_and_janitorial_services: securityAndJanitorialFees,
+          taxes_and_licenses: taxesAndLicenses,
+        };
+
+        return { name, expenses }; // Removed backticks
+      });
+    } else {
+      return null;
+    }
     return data;
   };
 
-  getNpMargin = (): singleValueRowDataInterface[] => {
-    const data: singleValueRowDataInterface[] = this.dataset.map((data) => {
-      const name: string | null = Object.keys(data)[0];
-      const value: number | null = data[name].NP_MARGIN.value;
+  getOpexRatio = (key: string): singleValueRowDataInterface[] | null => {
+    let data: singleValueRowDataInterface[];
+    if (key === this.CURRENT || key === this.CURRENT.toUpperCase()) {
+      data = this.currentDataset.map((data) => {
+        const name: string | null = Object.keys(data)[0];
+        const value: number | null = data[name].OPEX_RATIO.value;
 
-      return { name, value }; // Removed backticks
-    });
+        return { name, value }; // Removed backticks
+      });
+    } else if (key === this.PREVIOUS || key === this.PREVIOUS.toUpperCase()) {
+      data = this.previousDataset.map((data) => {
+        const name: string | null = Object.keys(data)[0];
+        const value: number | null = data[name].OPEX_RATIO.value;
+
+        return { name, value }; // Removed backticks
+      });
+    } else {
+      return null;
+    }
+    return data;
+  };
+
+  getNpMargin = (key: string): singleValueRowDataInterface[] | null => {
+    let data: singleValueRowDataInterface[];
+    if (key === this.CURRENT || key === this.CURRENT.toUpperCase()) {
+      data = this.currentDataset.map((data) => {
+        const name: string | null = Object.keys(data)[0];
+        const value: number | null = data[name].NP_MARGIN.value;
+
+        return { name, value }; // Removed backticks
+      });
+    } else if (key === this.PREVIOUS || key === this.PREVIOUS.toUpperCase()) {
+      data = this.previousDataset.map((data) => {
+        const name: string | null = Object.keys(data)[0];
+        const value: number | null = data[name].NP_MARGIN.value;
+
+        return { name, value }; // Removed backticks
+      });
+    } else {
+      return null;
+    }
     return data;
   };
 }

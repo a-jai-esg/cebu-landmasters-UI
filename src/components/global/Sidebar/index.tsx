@@ -7,21 +7,32 @@ import { Box, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import FilterComponent from "./FilterComponent";
 import "../../../App.css";
+import { Dayjs } from "dayjs";
 
 interface SidebarProps {
-  onCheckboxClick: (selectedEntity: string | null) => void; // Callback function to handle checkbox click
+  onCheckboxClick: (selectedEntity: string | null) => void;
+  startDate: Dayjs | null;
+  endDate: Dayjs | null;
+  onStartDateChange: (date: Dayjs | null) => void;
+  onEndDateChange: (date: Dayjs | null) => void;
 }
 
-const SidebarComponent: React.FC<SidebarProps> = ({ onCheckboxClick }) => {
-  const [selected, setSelected] = useState("Income Statement"); // Track selected menu item
-  const [isFilterVisible, setIsFilterVisible] = useState(false); // Track visibility of filter component
+const SidebarComponent: React.FC<SidebarProps> = ({
+  onCheckboxClick,
+  startDate,
+  endDate,
+  onStartDateChange,
+  onEndDateChange,
+}) => {
+  const [selected, setSelected] = useState("Income Statement");
+  const [isFilterVisible, setIsFilterVisible] = useState(true);
 
   const handleMenuItemClick = (menuItem: string) => {
     setSelected(menuItem);
     if (menuItem === "Income Statement") {
-      setIsFilterVisible((prevState) => !prevState); // Toggle filter visibility
+      setIsFilterVisible((prevState) => !prevState);
     } else {
-      setIsFilterVisible(false); // Hide filter if another menu item is selected
+      setIsFilterVisible(false);
     }
   };
 
@@ -36,7 +47,6 @@ const SidebarComponent: React.FC<SidebarProps> = ({ onCheckboxClick }) => {
         flexDirection: "column",
         color: "#c1c5de",
         "& .pro-sidebar-inner": {
-          //borderRadius: "12.5px",
           background: `${`#24274c`} !important`,
           color: "#c1c5de",
         },
@@ -55,7 +65,7 @@ const SidebarComponent: React.FC<SidebarProps> = ({ onCheckboxClick }) => {
             color: "#333 !important",
             fontSize: "16px",
             fontWeight: 800,
-            backgroundColor: "#c1c5de", // Change to desired background color when hovered or clicked
+            backgroundColor: "#c1c5de",
           },
         },
         "& .pro-menu-item.active": {
@@ -79,7 +89,7 @@ const SidebarComponent: React.FC<SidebarProps> = ({ onCheckboxClick }) => {
               active={selected === "Income Statement"}
               style={{
                 color: "#24274c",
-                fontWeight: selected === "Income Statement" ? 600 : "normal", // Setting font weight based on selected state
+                fontWeight: selected === "Income Statement" ? 600 : "normal",
               }}
               onClick={() => handleMenuItemClick("Income Statement")}
               icon={<CurrencyExchangeOutlined />}
@@ -97,8 +107,13 @@ const SidebarComponent: React.FC<SidebarProps> = ({ onCheckboxClick }) => {
                 marginLeft: "25px",
               }}
             >
-              {/* Pass the onCheckboxClick callback to the FilterComponent */}
-              <FilterComponent onCheckboxChange={onCheckboxClick} />
+              <FilterComponent
+                onCheckboxChange={onCheckboxClick}
+                startDate={startDate}
+                endDate={endDate}
+                onStartDateChange={onStartDateChange}
+                onEndDateChange={onEndDateChange}
+              />
             </Box>
           )}
         </Menu>

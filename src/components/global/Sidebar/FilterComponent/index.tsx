@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/system";
 import { keyframes } from "@emotion/react";
+import { Dayjs } from "dayjs";
 
 const appear = keyframes`
   from {
@@ -73,15 +74,30 @@ const AnimatedTypography = styled(Typography)(({}) => ({
 }));
 
 interface FilterProps {
-  onCheckboxChange: (selectedEntity: string | null) => void; // Callback function to handle checkbox change
+  onCheckboxChange: (selectedEntity: string | null) => void;
+  startDate: Dayjs | null;
+  endDate: Dayjs | null;
+  onStartDateChange: (date: Dayjs | null) => void;
+  onEndDateChange: (date: Dayjs | null) => void;
 }
 
-const FilterComponent: React.FC<FilterProps> = ({ onCheckboxChange }) => {
+const FilterComponent: React.FC<FilterProps> = ({
+  onCheckboxChange,
+  startDate,
+  endDate,
+  onStartDateChange,
+  onEndDateChange,
+}) => {
   const [state, setState] = React.useState({
     CLI: true,
     BLCBP: false,
     YES: false,
   });
+
+  const nullifyValues = () => {
+    onStartDateChange(null);
+    onEndDateChange(null);
+  };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = event.target;
@@ -102,6 +118,26 @@ const FilterComponent: React.FC<FilterProps> = ({ onCheckboxChange }) => {
 
     // Call the provided callback function when checkbox is clicked
     onCheckboxChange(checked ? name : null);
+  };
+
+  const handleStartDateChange = (newValue: unknown) => {
+    const date = (newValue as Dayjs)?.startOf("day") || null;
+    if (date && endDate && date.isAfter(endDate)) {
+      alert("Start date must be lesser than or equal to end date");
+      nullifyValues();
+    } else {
+      onStartDateChange(date);
+    }
+  };
+
+  const handleEndDateChange = (newValue: unknown) => {
+    const date = (newValue as Dayjs)?.startOf("day") || null;
+    if (date && startDate && date.isBefore(startDate)) {
+      alert("End date must be greater than or equal to start date");
+      nullifyValues();
+    } else {
+      onEndDateChange(date);
+    }
   };
 
   return (
@@ -165,6 +201,8 @@ const FilterComponent: React.FC<FilterProps> = ({ onCheckboxChange }) => {
             <StyledDatePicker
               label="Start Date"
               slotProps={{ textField: { variant: "outlined" } }}
+              value={startDate}
+              onChange={handleStartDateChange}
             />
           </LocalizationProvider>
         </Box>
@@ -179,6 +217,8 @@ const FilterComponent: React.FC<FilterProps> = ({ onCheckboxChange }) => {
             <StyledDatePicker
               label="End Date"
               slotProps={{ textField: { variant: "outlined" } }}
+              value={endDate}
+              onChange={handleEndDateChange}
             />
           </LocalizationProvider>
         </Box>

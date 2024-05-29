@@ -10,6 +10,7 @@ import chartDataInterface from "../../common/interfaces/data/charts/chartDataInt
 import * as _ from "lodash";
 import singleValueRowDataInterface from "../../common/interfaces/data/objects/forms/singleValueRowDataInterface";
 import operatingExpenseDataInterface from "../../common/interfaces/data/objects/forms/graph-related/operatingExpenseDataInterface";
+import revenueDataInterface from "../../common/interfaces/data/objects/forms/graph-related/revenueDataInterface";
 
 interface DashboardProps {
   cardTitles: {
@@ -61,7 +62,7 @@ const Dashboard: React.FC<DashboardProps> = ({
   }, [reload]);
 
   // get data
-  const barData: singleValueRowDataInterface[] = chartData.chartData.flatMap(
+  const barData: revenueDataInterface[] = chartData.chartData.flatMap(
     (data) => {
       return data.barData.flatMap((result) => {
         return result;
