@@ -6,19 +6,14 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown"; // decrease
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp"; // increase
-
-interface incomeStatementData {
-  id: number;
-  name: string;
-  currentYear: number;
-  percentage: number;
-}
+import incomeStatementRowDataInterface from "../../../../common/interfaces/data/charts/incomeStatementRowDataInterface";
 
 interface dataObjects {
-  data: incomeStatementData[];
+  data: incomeStatementRowDataInterface[];
 }
 
 const IncomeStatementTable = ({ data }: dataObjects): JSX.Element => {
+  console.log(data);
   return (
     <>
       <React.Fragment>

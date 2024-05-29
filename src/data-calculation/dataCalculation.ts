@@ -92,6 +92,62 @@ export default class dataCalculation {
     return data;
   };
 
+  getRevenueComparison = (key: string): number => {
+    let comparison: number = 0;
+    if (key === this.CURRENT || key === this.CURRENT.toUpperCase()) {
+      // Get the revenue for the current year of each entity
+      const currentYearRevenue: singleValueRowDataInterface[] =
+        this.currentDataset.flatMap((data) => {
+          const name: string | null = Object.keys(data)[0];
+          const value: number | null = data[name].TOTAL_REVENUE.value;
+          return { name, value };
+        });
+
+      const previousYearRevenue: singleValueRowDataInterface[] =
+        this.previousDataset.flatMap((data) => {
+          const name: string | null = Object.keys(data)[0];
+          const value: number | null = data[name].TOTAL_REVENUE.value;
+          return { name, value };
+        });
+
+      // Retain the values and filter out nulls
+      const currentYearRevenueValue: number[] = currentYearRevenue.flatMap(
+        (data) => {
+          return data.value || 0; // Replace null with 0
+        }
+      );
+
+      const previousYearRevenueValue: number[] = previousYearRevenue.flatMap(
+        (data) => {
+          return data.value || 0; // Replace null with 0
+        }
+      );
+
+      // Calculate the total revenue for the current and previous year
+      const totalCurrentYearRevenue: number = currentYearRevenueValue.reduce(
+        (acc, val) => acc + val,
+        0
+      );
+      const totalPreviousYearRevenue: number = previousYearRevenueValue.reduce(
+        (acc, val) => acc + val,
+        0
+      );
+
+      // Calculate the difference between the new value and the old value
+      const difference: number =
+        totalCurrentYearRevenue - totalPreviousYearRevenue;
+
+      // Calculate the percentage increase
+      const percentageIncrease: number =
+        (difference / totalPreviousYearRevenue) * 100;
+
+      comparison = percentageIncrease;
+    }
+
+    return comparison;
+  };
+
+  // for different entities
   getRevenuePerBU = (key: string): revenueDataInterface[] | null => {
     let data: revenueDataInterface[];
     if (key === this.CURRENT || key === this.CURRENT.toUpperCase()) {

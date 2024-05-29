@@ -11,6 +11,7 @@ import * as _ from "lodash";
 import singleValueRowDataInterface from "../../common/interfaces/data/objects/forms/singleValueRowDataInterface";
 import operatingExpenseDataInterface from "../../common/interfaces/data/objects/forms/graph-related/operatingExpenseDataInterface";
 import revenueDataInterface from "../../common/interfaces/data/objects/forms/graph-related/revenueDataInterface";
+import incomeStatementRowDataInterface from "../../common/interfaces/data/charts/incomeStatementRowDataInterface";
 
 interface DashboardProps {
   cardTitles: {
@@ -28,32 +29,6 @@ const Dashboard: React.FC<DashboardProps> = ({
   entityFilter,
 }) => {
   const [reloadKey, setReloadKey] = useState<number>(0);
-
-  function createData(
-    id: number,
-    name: string,
-    currentYear: number,
-    percentage: number
-  ) {
-    return { id, name, currentYear, percentage };
-  }
-
-  const rows = [
-    createData(0, "Revenue", 0, 0),
-    createData(1, "COGS", 0, 0),
-    createData(2, "Gross Profit", 0, 0),
-    createData(3, "OPEX", 0, 0),
-    createData(4, "Sales", 0, 0),
-    createData(5, "Marketing", 0, 0),
-    createData(6, "IT", 0, 0),
-    createData(7, "General and Admin", 0, 0),
-    createData(8, "Other Income", 0, 0),
-    createData(9, "Other Expenses", 0, 0),
-    createData(10, "EBIT", 0, 0),
-    createData(11, "Interest and Tax", 0, 0),
-    createData(12, "Net Profit", 0, 0),
-  ];
-
   useEffect(() => {
     if (reload) {
       // Reload logic here
@@ -61,44 +36,76 @@ const Dashboard: React.FC<DashboardProps> = ({
     }
   }, [reload]);
 
-  // get data
-  const barData: revenueDataInterface[] = chartData.chartData.flatMap(
+  // get bar data
+  const barData: (revenueDataInterface | null)[] = chartData.chartData.flatMap(
     (data) => {
-      return data.barData.flatMap((result) => {
-        return result;
-      });
+      return data.barData ? data.barData.flatMap((result) => result ?? []) : [];
     }
   );
 
-  const composedChartData: singleValueRowDataInterface[] =
+  const barDataFiltered: revenueDataInterface[] = barData.filter(
+    (data) => data !== null
+  );
+
+  // get gauge data
+  const gaugeData: (singleValueRowDataInterface | null)[] =
     chartData.chartData.flatMap((data) => {
-      return data.composedChartData.flatMap((result) => {
-        return result;
-      });
+      return data.gaugeData
+        ? data.gaugeData.flatMap((result) => {
+            return result.filter(
+              (item): item is singleValueRowDataInterface =>
+                item.name === `${entityFilter}`
+            );
+          })
+        : [];
     });
 
-  const pieData: operatingExpenseDataInterface[] = chartData.chartData.flatMap(
-    (data) => {
-      return data.pieData.flatMap((result) => {
-        return result.filter(
-          (item): item is operatingExpenseDataInterface =>
-            item.name === `${entityFilter}`
-        );
-      });
-    }
+  // get composed chart data
+  const composedChartData: (singleValueRowDataInterface | null)[] =
+    chartData.chartData.flatMap((data) => {
+      return data.composedChartData
+        ? data.composedChartData.flatMap((result) => {
+            return result;
+          })
+        : [];
+    });
+
+  const composedChartFiltered: singleValueRowDataInterface[] =
+    composedChartData.filter((data) => data !== null);
+
+  // get pie data
+  const pieData: (operatingExpenseDataInterface | null)[] =
+    chartData.chartData.flatMap((data) => {
+      return data.pieData
+        ? data.pieData.flatMap((result) => {
+            return result.filter(
+              (item): item is operatingExpenseDataInterface =>
+                item.name === `${entityFilter}`
+            );
+          })
+        : [];
+    });
+
+  const pieDataFiltered: operatingExpenseDataInterface[] = pieData.filter(
+    (data) => data !== null
   );
 
-  const gaugeData: singleValueRowDataInterface[] = chartData.chartData.flatMap(
-    (data) => {
-      return data.gaugeData.flatMap((result) => {
-        return result.filter(
-          (item): item is singleValueRowDataInterface =>
-            item.name === `${entityFilter}`
-        );
-      });
-    }
-  );
+  // get income statement table data
+  const incomeStatementData: (incomeStatementRowDataInterface | null)[] =
+    chartData.chartData.flatMap((data) => {
+      return data.incomeStatementTableData
+        ? data.incomeStatementTableData.flatMap((result) => {
+            // return result.filter(
+            //   (item): item is incomeStatementRowDataInterface =>
+            //     item.name === `${entityFilter}`
+            // );
+            return result;
+          })
+        : [];
+    });
 
+  const incomeStatementDataFiltered: incomeStatementRowDataInterface[] =
+    incomeStatementData.filter((data) => data !== null);
   return (
     <Box
       sx={{
@@ -177,7 +184,7 @@ const Dashboard: React.FC<DashboardProps> = ({
               <Card sx={{ borderRadius: 3, boxShadow: 6, height: "35vh" }}>
                 <CardContent>
                   <BarchartComponent
-                    barData={barData}
+                    barData={barDataFiltered}
                     title={cardTitles[1].title}
                   />
                 </CardContent>
@@ -190,7 +197,7 @@ const Dashboard: React.FC<DashboardProps> = ({
               <Card sx={{ borderRadius: 3, boxShadow: 6, height: "35vh" }}>
                 <CardContent>
                   <PrimaryPieChartComponent
-                    pieData={pieData}
+                    pieData={pieDataFiltered}
                     title={cardTitles[2].title}
                   />
                 </CardContent>
@@ -206,7 +213,7 @@ const Dashboard: React.FC<DashboardProps> = ({
                   <Typography fontSize={20} color="#333" fontWeight="bold">
                     {cardTitles[3].title}
                   </Typography>
-                  <IncomeStatementTable data={rows} />
+                  <IncomeStatementTable data={incomeStatementDataFiltered} />
                 </CardContent>
               </Card>
             </Grid>
@@ -217,7 +224,7 @@ const Dashboard: React.FC<DashboardProps> = ({
               <Card sx={{ borderRadius: 3, boxShadow: 6 }}>
                 <CardContent>
                   <ComposedChartComponent
-                    composedChartData={composedChartData}
+                    composedChartData={composedChartFiltered}
                     title={cardTitles[4].title}
                   />
                 </CardContent>
