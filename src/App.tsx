@@ -20,6 +20,13 @@ const App: React.FC = () => {
   const [dateDataSource, setDateDataSource] = useState<string>("current");
   const [filteredEntity, setFilteredEntity] = useState<string>("CLI");
 
+  const checkComparison = (
+    currentValue: number,
+    previousValue: number
+  ): boolean => {
+    return currentValue > previousValue;
+  };
+
   const handleReloadDashboard = (data: string | null) => {
     setReloadDashboard(!reloadDashboard);
     data !== null ? setFilteredEntity(data) : setFilteredEntity("CLI");
@@ -50,47 +57,84 @@ const App: React.FC = () => {
     id: number,
     name: string,
     currentYear: number,
+    vsPreviousYear: boolean,
     percentage: number
   ): incomeStatementRowDataInterface => {
-    return { id, name, currentYear, percentage };
+    return { id, name, currentYear, vsPreviousYear, percentage };
   };
 
   // get income statement row data
+
+  // --------- Revenue-related --------- //
   const revenuePercentageData: singleValueRowDataInterface[] | null =
     data.getRevenuePercentage(dateDataSource);
-
-  const cosPercentageData: singleValueRowDataInterface[] | null =
-    data.getCosPercentage(dateDataSource);
-  // const currentRevenueData: singleValueRowDataInterface[] | null =
-  //   data.getCurrentRevenueValue();
-
-  // const previousRevenueData: singleValueRowDataInterface[] | null =
-  //   data.getPreviousRevenueValue();
+  const currentRevenueData: singleValueRowDataInterface[] | null =
+    data.getCurrentRevenueValue();
+  const previousRevenueData: singleValueRowDataInterface[] | null =
+    data.getPreviousRevenueValue();
 
   // extract results from objects
   const revenuePercentageResult: singleValueRowDataInterface | null =
     (revenuePercentageData
       ? _.find(revenuePercentageData, { name: filteredEntity })
       : null) || null;
+  const currentRevenueResult: singleValueRowDataInterface | null =
+    (revenuePercentageData
+      ? _.find(currentRevenueData, { name: filteredEntity })
+      : null) || null;
+  const previousRevenueResult: singleValueRowDataInterface | null =
+    (revenuePercentageData
+      ? _.find(previousRevenueData, { name: filteredEntity })
+      : null) || null;
 
+  // --------- End Revenue-related --------//
+
+  // --------- COS-related --------- //
+  const cosPercentageData: singleValueRowDataInterface[] | null =
+    data.getCosPercentage(dateDataSource);
+  const currentCosData: singleValueRowDataInterface[] | null =
+    data.getCurrentCosValue();
+  const previousCosData: singleValueRowDataInterface[] | null =
+    data.getPreviousCosValue();
+
+  // extract results from objects
   const cosPercentageResult: singleValueRowDataInterface | null =
     (cosPercentageData
       ? _.find(cosPercentageData, { name: filteredEntity })
       : null) || null;
+  const currentCosResult: singleValueRowDataInterface | null =
+    (cosPercentageData
+      ? _.find(currentCosData, { name: filteredEntity })
+      : null) || null;
+  const previousCosResult: singleValueRowDataInterface | null =
+    (cosPercentageData
+      ? _.find(previousCosData, { name: filteredEntity })
+      : null) || null;
 
-  // get comparisons
+  // --------- End COS-related --------- //
 
   const rows: incomeStatementRowDataInterface[] = [
+    // revenue
     createIncomeStatementRowData(
       0,
       "Revenue",
-      0,
+      currentRevenueResult?.value != null ? currentRevenueResult.value : 0,
+      checkComparison(
+        currentRevenueResult?.value != null ? currentRevenueResult.value : 0,
+        previousRevenueResult?.value != null ? previousRevenueResult.value : 0
+      ),
       revenuePercentageResult?.value != null ? revenuePercentageResult.value : 0
     ),
+
+    // COGS / COS
     createIncomeStatementRowData(
       1,
       "COGS",
-      0,
+      currentCosResult?.value != null ? currentCosResult.value : 0,
+      checkComparison(
+        currentCosResult?.value != null ? currentCosResult.value : 0,
+        previousCosResult?.value != null ? previousCosResult.value : 0
+      ),
       cosPercentageResult?.value != null ? cosPercentageResult.value : 0
     ),
     // createIncomeStatementRowData(2, "Gross Profit", 0, null),

@@ -95,7 +95,6 @@ export default class dataCalculation {
   };
 
   // ------------------ Revenue ---------------- //
-
   // get the current revenue value
   getCurrentRevenueValue = (): singleValueRowDataInterface[] | null => {
     const currentYearRevenue: singleValueRowDataInterface[] =
@@ -213,6 +212,28 @@ export default class dataCalculation {
   // ------------------ End Revenue ---------------- //
 
   // ------------------ COS ---------------- //
+  // get the current revenue value
+  getCurrentCosValue = (): singleValueRowDataInterface[] | null => {
+    const currentYearCos: singleValueRowDataInterface[] =
+      this.currentDataset.flatMap((data) => {
+        const name: string | null = Object.keys(data)[0];
+        const value: number | null = data[name].TOTAL_COS.value;
+        return { name, value };
+      });
+    return currentYearCos;
+  };
+
+  // get the previous revenue value
+  getPreviousCosValue = (): singleValueRowDataInterface[] | null => {
+    const previousYearCos: singleValueRowDataInterface[] =
+      this.previousDataset.flatMap((data) => {
+        const name: string | null = Object.keys(data)[0];
+        const value: number | null = data[name].TOTAL_COS.value;
+        return { name, value };
+      });
+    return previousYearCos;
+  };
+
   getCosPercentage = (key: string): singleValueRowDataInterface[] | null => {
     let percentage: singleValueRowDataInterface[] | null = null;
     if (key === this.CURRENT || key === this.CURRENT.toUpperCase()) {

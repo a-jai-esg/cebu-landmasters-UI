@@ -55,6 +55,18 @@ const IncomeStatementTable = ({ data }: dataObjects): JSX.Element => {
                     | React.ReactPortal
                     | null
                     | undefined;
+                  vsPreviousYear:
+                    | string
+                    | number
+                    | boolean
+                    | React.ReactElement<
+                        any,
+                        string | React.JSXElementConstructor<any>
+                      >
+                    | Iterable<React.ReactNode>
+                    | React.ReactPortal
+                    | null
+                    | undefined;
                   percentage:
                     | string
                     | number
@@ -72,7 +84,11 @@ const IncomeStatementTable = ({ data }: dataObjects): JSX.Element => {
                     <TableCell>{row.name}</TableCell>
                     <TableCell>{row.currentYear}</TableCell>
                     <TableCell>
-                      <ArrowDropDownIcon sx={{ color: "red" }} />
+                      {row.vsPreviousYear ? (
+                        <ArrowDropUpIcon sx={{ color: "green" }} />
+                      ) : (
+                        <ArrowDropDownIcon sx={{ color: "red" }} />
+                      )}
                     </TableCell>
                     <TableCell>{row.percentage}</TableCell>
                   </TableRow>
