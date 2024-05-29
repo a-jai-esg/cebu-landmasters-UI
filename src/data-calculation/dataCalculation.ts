@@ -5,6 +5,8 @@ import operatingExpenseDataInterface from "../common/interfaces/data/objects/for
 import operatingExpenseInterface from "../common/interfaces/data/objects/forms/graph-related/operatingExpenseInterface";
 import revenueDataInterface from "../common/interfaces/data/objects/forms/graph-related/revenueDataInterface";
 import revenueInterface from "../common/interfaces/data/objects/forms/graph-related/revenueInterface";
+import cosInterface from "../common/interfaces/data/objects/forms/graph-related/cosInterface";
+import cosDataInterface from "../common/interfaces/data/objects/forms/graph-related/cosDataInterface";
 // this is the data calculation class
 
 export default class dataCalculation {
@@ -92,62 +94,74 @@ export default class dataCalculation {
     return data;
   };
 
-  getRevenueComparison = (key: string): number => {
-    let comparison: number = 0;
-    if (key === this.CURRENT || key === this.CURRENT.toUpperCase()) {
-      // Get the revenue for the current year of each entity
-      const currentYearRevenue: singleValueRowDataInterface[] =
-        this.currentDataset.flatMap((data) => {
-          const name: string | null = Object.keys(data)[0];
-          const value: number | null = data[name].TOTAL_REVENUE.value;
-          return { name, value };
-        });
+  // ------------------ Revenue ---------------- //
 
-      const previousYearRevenue: singleValueRowDataInterface[] =
-        this.previousDataset.flatMap((data) => {
-          const name: string | null = Object.keys(data)[0];
-          const value: number | null = data[name].TOTAL_REVENUE.value;
-          return { name, value };
-        });
-
-      // Retain the values and filter out nulls
-      const currentYearRevenueValue: number[] = currentYearRevenue.flatMap(
-        (data) => {
-          return data.value || 0; // Replace null with 0
-        }
-      );
-
-      const previousYearRevenueValue: number[] = previousYearRevenue.flatMap(
-        (data) => {
-          return data.value || 0; // Replace null with 0
-        }
-      );
-
-      // Calculate the total revenue for the current and previous year
-      const totalCurrentYearRevenue: number = currentYearRevenueValue.reduce(
-        (acc, val) => acc + val,
-        0
-      );
-      const totalPreviousYearRevenue: number = previousYearRevenueValue.reduce(
-        (acc, val) => acc + val,
-        0
-      );
-
-      // Calculate the difference between the new value and the old value
-      const difference: number =
-        totalCurrentYearRevenue - totalPreviousYearRevenue;
-
-      // Calculate the percentage increase
-      const percentageIncrease: number =
-        (difference / totalPreviousYearRevenue) * 100;
-
-      comparison = percentageIncrease;
-    }
-
-    return comparison;
+  // get the current revenue value
+  getCurrentRevenueValue = (): singleValueRowDataInterface[] | null => {
+    const currentYearRevenue: singleValueRowDataInterface[] =
+      this.currentDataset.flatMap((data) => {
+        const name: string | null = Object.keys(data)[0];
+        const value: number | null = data[name].TOTAL_REVENUE.value;
+        return { name, value };
+      });
+    return currentYearRevenue;
   };
 
-  // for different entities
+  // get the previous revenue value
+  getPreviousRevenueValue = (): singleValueRowDataInterface[] | null => {
+    const previousYearRevenue: singleValueRowDataInterface[] =
+      this.previousDataset.flatMap((data) => {
+        const name: string | null = Object.keys(data)[0];
+        const value: number | null = data[name].TOTAL_REVENUE.value;
+        return { name, value };
+      });
+    return previousYearRevenue;
+  };
+
+  // get the revenue percentage value
+  getRevenuePercentage = (
+    key: string
+  ): singleValueRowDataInterface[] | null => {
+    let percentage: singleValueRowDataInterface[] | null = null;
+    if (key === this.CURRENT || key === this.CURRENT.toUpperCase()) {
+      // Get the revenue for the current year of each entity
+      const currentYearRevenue: singleValueRowDataInterface[] | null =
+        this.getCurrentRevenueValue();
+
+      const previousYearRevenue: singleValueRowDataInterface[] | null =
+        this.getPreviousRevenueValue();
+
+      // calculate percentage
+      percentage = _.map(currentYearRevenue, (currentItem) => {
+        const previousItem = _.find(previousYearRevenue, {
+          name: currentItem.name,
+        });
+
+        const previousValue: number | null =
+          previousItem != null ? previousItem.value : 0;
+
+        const difference: number | null =
+          currentItem.value != null
+            ? currentItem.value - (previousValue != null ? previousValue : 0)
+            : null;
+
+        const percentageIncrease =
+          previousValue !== 0
+            ? ((difference != null ? difference : 0) /
+                (previousValue != null ? previousValue : 0)) *
+              100
+            : 0;
+
+        return {
+          name: currentItem.name,
+          value: percentageIncrease,
+        };
+      });
+    }
+    return percentage;
+  };
+
+  // get revenue for different entities
   getRevenuePerBU = (key: string): revenueDataInterface[] | null => {
     let data: revenueDataInterface[];
     if (key === this.CURRENT || key === this.CURRENT.toUpperCase()) {
@@ -195,6 +209,110 @@ export default class dataCalculation {
     }
     return data;
   };
+
+  // ------------------ End Revenue ---------------- //
+
+  // ------------------ COS ---------------- //
+  getCosPercentage = (key: string): singleValueRowDataInterface[] | null => {
+    let percentage: singleValueRowDataInterface[] | null = null;
+    if (key === this.CURRENT || key === this.CURRENT.toUpperCase()) {
+      // Get the revenue for the current year of each entity
+      const currentYearCos: singleValueRowDataInterface[] =
+        this.currentDataset.flatMap((data) => {
+          const name: string | null = Object.keys(data)[0];
+          const value: number | null = data[name].TOTAL_COS.value;
+          return { name, value };
+        });
+
+      const previousYearCos: singleValueRowDataInterface[] =
+        this.previousDataset.flatMap((data) => {
+          const name: string | null = Object.keys(data)[0];
+          const value: number | null = data[name].TOTAL_COS.value;
+          return { name, value };
+        });
+
+      // calculate percentage
+      percentage = _.map(currentYearCos, (currentItem) => {
+        const previousItem = _.find(previousYearCos, {
+          name: currentItem.name,
+        });
+
+        const previousValue: number | null =
+          previousItem != null ? previousItem.value : 0;
+
+        const difference: number | null =
+          currentItem.value != null
+            ? currentItem.value - (previousValue != null ? previousValue : 0)
+            : null;
+
+        const percentageIncrease =
+          previousValue !== 0
+            ? ((difference != null ? difference : 0) /
+                (previousValue != null ? previousValue : 0)) *
+              100
+            : 0;
+
+        return {
+          name: currentItem.name,
+          value: percentageIncrease,
+        };
+      });
+    }
+    return percentage;
+  };
+
+  // for different entities
+  getCosPerBU = (key: string): cosDataInterface[] | null => {
+    let data: cosDataInterface[];
+    if (key === this.CURRENT || key === this.CURRENT.toUpperCase()) {
+      data = this.currentDataset.map((data) => {
+        const name: string | null = Object.keys(data)[0];
+
+        const cosRealEstates: number | null =
+          data[name].REVENUES.sale_of_real_estates;
+        const cosDepreciation: number | null = data[name].REVENUES.rental;
+        const cosTaxes: number | null = data[name].REVENUES.management_fees;
+        const cosSalariesAndOtherBenefits: number | null =
+          data[name].REVENUES.hotel_operations;
+        const cosHotel: number | null = data[name].REVENUES.hotel_operations;
+
+        const cos: cosInterface = {
+          cos_real_estates: cosRealEstates,
+          cos_depreciation: cosDepreciation,
+          cos_taxes: cosTaxes,
+          cos_salaries_and_other_benefits: cosSalariesAndOtherBenefits,
+          cos_hotel: cosHotel,
+        };
+        return { name, cos }; // Removed backticks
+      });
+    } else if (key === this.PREVIOUS || key === this.PREVIOUS.toUpperCase()) {
+      data = this.previousDataset.map((data) => {
+        const name: string | null = Object.keys(data)[0];
+
+        const cosRealEstates: number | null =
+          data[name].REVENUES.sale_of_real_estates;
+        const cosDepreciation: number | null = data[name].REVENUES.rental;
+        const cosTaxes: number | null = data[name].REVENUES.management_fees;
+        const cosSalariesAndOtherBenefits: number | null =
+          data[name].REVENUES.hotel_operations;
+        const cosHotel: number | null = data[name].REVENUES.hotel_operations;
+
+        const cos: cosInterface = {
+          cos_real_estates: cosRealEstates,
+          cos_depreciation: cosDepreciation,
+          cos_taxes: cosTaxes,
+          cos_salaries_and_other_benefits: cosSalariesAndOtherBenefits,
+          cos_hotel: cosHotel,
+        };
+        return { name, cos }; // Removed backticks
+      });
+    } else {
+      return null;
+    }
+    return data;
+  };
+
+  // ------------------ End COS ---------------- //
 
   // this applies only per entity
   getOpexPerEntity = (key: string): operatingExpenseDataInterface[] | null => {

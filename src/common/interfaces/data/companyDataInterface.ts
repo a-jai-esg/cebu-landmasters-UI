@@ -1,7 +1,9 @@
+import cosInterface from "./objects/forms/graph-related/cosInterface";
 import OperatingExpensesInterface from "./objects/forms/graph-related/operatingExpenseInterface";
 import revenueInterface from "./objects/forms/graph-related/revenueInterface";
 interface FinancialData {
   REVENUES: revenueInterface;
+  COS: cosInterface;
   TOTAL_REVENUE: { value: number };
   TOTAL_COS: { value: number };
   TOTAL_GROSS_PROFIT: { value: number };
