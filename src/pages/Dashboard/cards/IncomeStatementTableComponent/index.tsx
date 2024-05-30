@@ -7,13 +7,13 @@ import TableRow from "@mui/material/TableRow";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown"; // decrease
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp"; // increase
 import incomeStatementRowDataInterface from "../../../../common/interfaces/data/charts/incomeStatementRowDataInterface";
-
+import commonFunctions from "../../../../common/functions/commonFunctions";
 interface dataObjects {
   data: incomeStatementRowDataInterface[];
 }
 
 const IncomeStatementTable = ({ data }: dataObjects): JSX.Element => {
-  console.log(data);
+  const commonFunc = new commonFunctions();
   return (
     <>
       <React.Fragment>
@@ -43,18 +43,17 @@ const IncomeStatementTable = ({ data }: dataObjects): JSX.Element => {
                     | React.ReactPortal
                     | null
                     | undefined;
-                  currentYear:
-                    | string
-                    | number
-                    | boolean
-                    | React.ReactElement<
-                        any,
-                        string | React.JSXElementConstructor<any>
-                      >
-                    | Iterable<React.ReactNode>
-                    | React.ReactPortal
-                    | null
-                    | undefined;
+                  currentYear: // | string
+                  | number
+                    // | boolean
+                    // | React.ReactElement<
+                    //     any,
+                    //     string | React.JSXElementConstructor<any>
+                    //   >
+                    // | Iterable<React.ReactNode>
+                    // | React.ReactPortal
+                    | null;
+                  // | undefined;
                   vsPreviousYear:
                     | string
                     | number
@@ -67,22 +66,23 @@ const IncomeStatementTable = ({ data }: dataObjects): JSX.Element => {
                     | React.ReactPortal
                     | null
                     | undefined;
-                  percentage:
-                    | string
-                    | number
-                    | boolean
-                    | React.ReactElement<
-                        any,
-                        string | React.JSXElementConstructor<any>
-                      >
-                    | Iterable<React.ReactNode>
-                    | React.ReactPortal
-                    | null
-                    | undefined;
+                  percentage: // | string
+                  | number
+                    // | boolean
+                    // | React.ReactElement<
+                    //     any,
+                    //     string | React.JSXElementConstructor<any>
+                    //   >
+                    // | Iterable<React.ReactNode>
+                    // | React.ReactPortal
+                    | null;
+                  // | undefined;
                 }) => (
                   <TableRow key={row.id}>
                     <TableCell>{row.name}</TableCell>
-                    <TableCell>{row.currentYear}</TableCell>
+                    <TableCell>
+                      {commonFunc.formatCurrencyToPHP(row.currentYear)}
+                    </TableCell>
                     <TableCell>
                       {row.vsPreviousYear ? (
                         <ArrowDropUpIcon sx={{ color: "green" }} />
@@ -90,7 +90,9 @@ const IncomeStatementTable = ({ data }: dataObjects): JSX.Element => {
                         <ArrowDropDownIcon sx={{ color: "red" }} />
                       )}
                     </TableCell>
-                    <TableCell>{row.percentage}</TableCell>
+                    <TableCell>
+                      {commonFunc.formatNumberToTwo(row.percentage)}
+                    </TableCell>
                   </TableRow>
                 )
               )}

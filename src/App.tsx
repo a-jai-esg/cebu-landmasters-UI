@@ -12,6 +12,7 @@ import dataSource2020 from "./data/incomeStatementDataSource2020.json";
 import incomeStatementRowDataInterface from "./common/interfaces/data/charts/incomeStatementRowDataInterface";
 import singleValueRowDataInterface from "./common/interfaces/data/objects/forms/singleValueRowDataInterface";
 import _ from "lodash";
+import commonFunctions from "./common/functions/commonFunctions";
 
 const App: React.FC = () => {
   const [reloadDashboard, setReloadDashboard] = useState<boolean>(false);
@@ -19,13 +20,6 @@ const App: React.FC = () => {
   const [endDate, setEndDate] = useState<Dayjs | null>(null);
   const [dateDataSource, setDateDataSource] = useState<string>("current");
   const [filteredEntity, setFilteredEntity] = useState<string>("CLI");
-
-  const checkComparison = (
-    currentValue: number,
-    previousValue: number
-  ): boolean => {
-    return currentValue > previousValue;
-  };
 
   const handleReloadDashboard = (data: string | null) => {
     setReloadDashboard(!reloadDashboard);
@@ -50,6 +44,7 @@ const App: React.FC = () => {
     { title: "GPM PER ENTITY" },
   ];
 
+  const commonFunc = new commonFunctions();
   const data = new dataCalculation(dataSource2020, dataSource2021); // load datasource/dataset from FY 2020 and 2021
 
   // create Income Statement Row Data Function
@@ -86,7 +81,6 @@ const App: React.FC = () => {
     (revenuePercentageData
       ? _.find(previousRevenueData, { name: filteredEntity })
       : null) || null;
-
   // --------- End Revenue-related --------//
 
   // --------- COS-related --------- //
@@ -110,16 +104,61 @@ const App: React.FC = () => {
     (cosPercentageData
       ? _.find(previousCosData, { name: filteredEntity })
       : null) || null;
-
   // --------- End COS-related --------- //
 
+  // --------- Gross-profit-related --------- //
+  const grossProfitPercentageData: singleValueRowDataInterface[] | null =
+    data.getGrossProfitPercentage(dateDataSource);
+  const currentGrossProfitData: singleValueRowDataInterface[] | null =
+    data.getCurrentGrossProfitValue();
+  const previousGrossProfitData: singleValueRowDataInterface[] | null =
+    data.getPreviousGrossProfitValue();
+
+  // extract results from objects
+  const grossProfitPercentageResult: singleValueRowDataInterface | null =
+    (grossProfitPercentageData
+      ? _.find(grossProfitPercentageData, { name: filteredEntity })
+      : null) || null;
+  const currentGrossProfitResult: singleValueRowDataInterface | null =
+    (grossProfitPercentageData
+      ? _.find(currentGrossProfitData, { name: filteredEntity })
+      : null) || null;
+  const previousGrossProfitResult: singleValueRowDataInterface | null =
+    (grossProfitPercentageData
+      ? _.find(previousGrossProfitData, { name: filteredEntity })
+      : null) || null;
+  // --------- End Revenue-related --------//
+
+  // --------- Opex-related --------- //
+  const opexPercentageData: singleValueRowDataInterface[] | null =
+    data.getOpexPercentage(dateDataSource);
+  const opexCurrentData: singleValueRowDataInterface[] | null =
+    data.getCurrentOpexValue();
+  const opexPreviousData: singleValueRowDataInterface[] | null =
+    data.getPreviousOpexValue();
+
+  // extract results from objects
+  const opexPercentageResult: singleValueRowDataInterface | null =
+    (opexPercentageData
+      ? _.find(opexPercentageData, { name: filteredEntity })
+      : null) || null;
+  const currentOpexResult: singleValueRowDataInterface | null =
+    (opexPercentageData
+      ? _.find(opexCurrentData, { name: filteredEntity })
+      : null) || null;
+  const previousOpexResult: singleValueRowDataInterface | null =
+    (opexPercentageData
+      ? _.find(opexPreviousData, { name: filteredEntity })
+      : null) || null;
+  // --------- End Revenue-related --------//
+
   const rows: incomeStatementRowDataInterface[] = [
-    // revenue
+    // Revenue
     createIncomeStatementRowData(
       0,
       "Revenue",
       currentRevenueResult?.value != null ? currentRevenueResult.value : 0,
-      checkComparison(
+      commonFunc.checkComparison(
         currentRevenueResult?.value != null ? currentRevenueResult.value : 0,
         previousRevenueResult?.value != null ? previousRevenueResult.value : 0
       ),
@@ -131,13 +170,45 @@ const App: React.FC = () => {
       1,
       "COGS",
       currentCosResult?.value != null ? currentCosResult.value : 0,
-      checkComparison(
+      commonFunc.checkComparison(
         currentCosResult?.value != null ? currentCosResult.value : 0,
         previousCosResult?.value != null ? previousCosResult.value : 0
       ),
       cosPercentageResult?.value != null ? cosPercentageResult.value : 0
     ),
-    // createIncomeStatementRowData(2, "Gross Profit", 0, null),
+
+    // Gross Profit
+    createIncomeStatementRowData(
+      1,
+      "Gross Profit",
+      currentGrossProfitResult?.value != null
+        ? currentGrossProfitResult.value
+        : 0,
+      commonFunc.checkComparison(
+        currentGrossProfitResult?.value != null
+          ? currentGrossProfitResult.value
+          : 0,
+        previousGrossProfitResult?.value != null
+          ? previousGrossProfitResult.value
+          : 0
+      ),
+      grossProfitPercentageResult?.value != null
+        ? grossProfitPercentageResult.value
+        : 0
+    ),
+
+    // OPEX
+    createIncomeStatementRowData(
+      1,
+      "OPEX",
+      currentOpexResult?.value != null ? currentOpexResult.value : 0,
+      commonFunc.checkComparison(
+        currentOpexResult?.value != null ? currentOpexResult.value : 0,
+        previousOpexResult?.value != null ? previousOpexResult.value : 0
+      ),
+      opexPercentageResult?.value != null ? opexPercentageResult.value : 0
+    ),
+
     // createIncomeStatementRowData(3, "OPEX", 0, null),
     // createIncomeStatementRowData(4, "Sales", 0, null),
     // createIncomeStatementRowData(5, "Marketing", 0, null),
@@ -162,7 +233,7 @@ const App: React.FC = () => {
         ],
         barData: [data.getRevenuePerBU(dateDataSource) || []],
         composedChartData: [data.getGPM(dateDataSource) || []],
-        pieData: [data.getOpexPerEntity(dateDataSource) || []],
+        pieData: [data.getOpexPerBU(dateDataSource) || []],
         incomeStatementTableData: [rows || []],
       },
     ],

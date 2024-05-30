@@ -7,6 +7,8 @@ import revenueDataInterface from "../common/interfaces/data/objects/forms/graph-
 import revenueInterface from "../common/interfaces/data/objects/forms/graph-related/template-interfaces/revenueInterface";
 import cosInterface from "../common/interfaces/data/objects/forms/graph-related/template-interfaces/cosInterface";
 import cosDataInterface from "../common/interfaces/data/objects/forms/graph-related/data-interfaces/cosDataInterface";
+import grossProfitDataInterface from "../common/interfaces/data/objects/forms/graph-related/data-interfaces/grossProfitDataInterface";
+import grossProfitInterface from "../common/interfaces/data/objects/forms/graph-related/template-interfaces/grossProfitInterface";
 // this is the data calculation class
 
 export default class dataCalculation {
@@ -212,7 +214,7 @@ export default class dataCalculation {
   // ------------------ End Revenue ---------------- //
 
   // ------------------ COS ---------------- //
-  // get the current revenue value
+  // get the current COS value
   getCurrentCosValue = (): singleValueRowDataInterface[] | null => {
     const currentYearCos: singleValueRowDataInterface[] =
       this.currentDataset.flatMap((data) => {
@@ -223,7 +225,7 @@ export default class dataCalculation {
     return currentYearCos;
   };
 
-  // get the previous revenue value
+  // get the previous COS value
   getPreviousCosValue = (): singleValueRowDataInterface[] | null => {
     const previousYearCos: singleValueRowDataInterface[] =
       this.previousDataset.flatMap((data) => {
@@ -238,19 +240,11 @@ export default class dataCalculation {
     let percentage: singleValueRowDataInterface[] | null = null;
     if (key === this.CURRENT || key === this.CURRENT.toUpperCase()) {
       // Get the revenue for the current year of each entity
-      const currentYearCos: singleValueRowDataInterface[] =
-        this.currentDataset.flatMap((data) => {
-          const name: string | null = Object.keys(data)[0];
-          const value: number | null = data[name].TOTAL_COS.value;
-          return { name, value };
-        });
+      const currentYearCos: singleValueRowDataInterface[] | null =
+        this.getCurrentCosValue();
 
-      const previousYearCos: singleValueRowDataInterface[] =
-        this.previousDataset.flatMap((data) => {
-          const name: string | null = Object.keys(data)[0];
-          const value: number | null = data[name].TOTAL_COS.value;
-          return { name, value };
-        });
+      const previousYearCos: singleValueRowDataInterface[] | null =
+        this.getPreviousCosValue();
 
       // calculate percentage
       percentage = _.map(currentYearCos, (currentItem) => {
@@ -289,13 +283,12 @@ export default class dataCalculation {
       data = this.currentDataset.map((data) => {
         const name: string | null = Object.keys(data)[0];
 
-        const cosRealEstates: number | null =
-          data[name].REVENUES.sale_of_real_estates;
-        const cosDepreciation: number | null = data[name].REVENUES.rental;
-        const cosTaxes: number | null = data[name].REVENUES.management_fees;
+        const cosRealEstates: number | null = data[name].COS.cos_real_estates;
+        const cosDepreciation: number | null = data[name].COS.cos_depreciation;
+        const cosTaxes: number | null = data[name].COS.cos_taxes;
         const cosSalariesAndOtherBenefits: number | null =
-          data[name].REVENUES.hotel_operations;
-        const cosHotel: number | null = data[name].REVENUES.hotel_operations;
+          data[name].COS.cos_salaries_and_other_benefits;
+        const cosHotel: number | null = data[name].COS.cos_hotel;
 
         const cos: cosInterface = {
           cos_real_estates: cosRealEstates,
@@ -310,13 +303,12 @@ export default class dataCalculation {
       data = this.previousDataset.map((data) => {
         const name: string | null = Object.keys(data)[0];
 
-        const cosRealEstates: number | null =
-          data[name].REVENUES.sale_of_real_estates;
-        const cosDepreciation: number | null = data[name].REVENUES.rental;
-        const cosTaxes: number | null = data[name].REVENUES.management_fees;
+        const cosRealEstates: number | null = data[name].COS.cos_real_estates;
+        const cosDepreciation: number | null = data[name].COS.cos_depreciation;
+        const cosTaxes: number | null = data[name].COS.cos_taxes;
         const cosSalariesAndOtherBenefits: number | null =
-          data[name].REVENUES.hotel_operations;
-        const cosHotel: number | null = data[name].REVENUES.hotel_operations;
+          data[name].COS.cos_salaries_and_other_benefits;
+        const cosHotel: number | null = data[name].COS.cos_hotel;
 
         const cos: cosInterface = {
           cos_real_estates: cosRealEstates,
@@ -332,11 +324,190 @@ export default class dataCalculation {
     }
     return data;
   };
-
   // ------------------ End COS ---------------- //
 
+  // ------------------ Gross profit-related ---------------- //
+  // get the current Gross Profit value
+  getCurrentGrossProfitValue = (): singleValueRowDataInterface[] | null => {
+    const currentYearGrossProfit: singleValueRowDataInterface[] =
+      this.currentDataset.flatMap((data) => {
+        const name: string | null = Object.keys(data)[0];
+        const value: number | null = data[name].TOTAL_GROSS_PROFIT.value;
+        return { name, value };
+      });
+    return currentYearGrossProfit;
+  };
+
+  // get the previous Gross Profit value
+  getPreviousGrossProfitValue = (): singleValueRowDataInterface[] | null => {
+    const previousYearGrossProfit: singleValueRowDataInterface[] =
+      this.previousDataset.flatMap((data) => {
+        const name: string | null = Object.keys(data)[0];
+        const value: number | null = data[name].TOTAL_GROSS_PROFIT.value;
+        return { name, value };
+      });
+    return previousYearGrossProfit;
+  };
+
+  getGrossProfitPercentage = (
+    key: string
+  ): singleValueRowDataInterface[] | null => {
+    let percentage: singleValueRowDataInterface[] | null = null;
+    if (key === this.CURRENT || key === this.CURRENT.toUpperCase()) {
+      // Get the revenue for the current year of each entity
+      const currentYearGrossProfit: singleValueRowDataInterface[] | null =
+        this.getCurrentGrossProfitValue();
+
+      const previousYearGrossProfit: singleValueRowDataInterface[] | null =
+        this.getPreviousGrossProfitValue();
+
+      // calculate percentage
+      percentage = _.map(currentYearGrossProfit, (currentItem) => {
+        const previousItem = _.find(previousYearGrossProfit, {
+          name: currentItem.name,
+        });
+
+        const previousValue: number | null =
+          previousItem != null ? previousItem.value : 0;
+
+        const difference: number | null =
+          currentItem.value != null
+            ? currentItem.value - (previousValue != null ? previousValue : 0)
+            : null;
+
+        const percentageIncrease =
+          previousValue !== 0
+            ? ((difference != null ? difference : 0) /
+                (previousValue != null ? previousValue : 0)) *
+              100
+            : 0;
+
+        return {
+          name: currentItem.name,
+          value: percentageIncrease,
+        };
+      });
+    }
+    return percentage;
+  };
+
+  // for different entities
+  getGrossProfitPerBU = (key: string): grossProfitDataInterface[] | null => {
+    let data: grossProfitDataInterface[];
+    if (key === this.CURRENT || key === this.CURRENT.toUpperCase()) {
+      data = this.currentDataset.map((data) => {
+        const name: string | null = Object.keys(data)[0];
+
+        const grossProfitSaleOfRealEstates: number | null =
+          data[name].GROSS_PROFIT.gp_sale_of_real_estates;
+        const grossProfitRental: number | null =
+          data[name].GROSS_PROFIT.gp_rental;
+        const grossProfitManagementFees: number | null =
+          data[name].GROSS_PROFIT.gp_management_fees;
+        const grossProfitHotelOperations: number | null =
+          data[name].GROSS_PROFIT.gp_hotel_operations;
+
+        const grossProfit: grossProfitInterface = {
+          gp_sale_of_real_estates: grossProfitSaleOfRealEstates,
+          gp_rental: grossProfitRental,
+          gp_management_fees: grossProfitManagementFees,
+          gp_hotel_operations: grossProfitHotelOperations,
+        };
+        return { name, grossProfit }; // Removed backticks
+      });
+    } else if (key === this.PREVIOUS || key === this.PREVIOUS.toUpperCase()) {
+      data = this.previousDataset.map((data) => {
+        const name: string | null = Object.keys(data)[0];
+
+        const grossProfitSaleOfRealEstates: number | null =
+          data[name].GROSS_PROFIT.gp_sale_of_real_estates;
+        const grossProfitRental: number | null =
+          data[name].GROSS_PROFIT.gp_rental;
+        const grossProfitManagementFees: number | null =
+          data[name].GROSS_PROFIT.gp_management_fees;
+        const grossProfitHotelOperations: number | null =
+          data[name].GROSS_PROFIT.gp_hotel_operations;
+
+        const grossProfit: grossProfitInterface = {
+          gp_sale_of_real_estates: grossProfitSaleOfRealEstates,
+          gp_rental: grossProfitRental,
+          gp_management_fees: grossProfitManagementFees,
+          gp_hotel_operations: grossProfitHotelOperations,
+        };
+        return { name, grossProfit }; // Removed backticks // Removed backticks
+      });
+    } else {
+      return null;
+    }
+    return data;
+  };
+  // ------------------ End Gross profit-related ---------------- //
+
+  // ------------------ OPEX-related ------------------ //
+  // get the current Gross Profit value
+  getCurrentOpexValue = (): singleValueRowDataInterface[] | null => {
+    const currentYearOpex: singleValueRowDataInterface[] =
+      this.currentDataset.flatMap((data) => {
+        const name: string | null = Object.keys(data)[0];
+        const value: number | null = data[name].TOTAL_OPERATING_EXPENSES.value;
+        return { name, value };
+      });
+    return currentYearOpex;
+  };
+
+  // get the previous Gross Profit value
+  getPreviousOpexValue = (): singleValueRowDataInterface[] | null => {
+    const previousYearOpex: singleValueRowDataInterface[] =
+      this.previousDataset.flatMap((data) => {
+        const name: string | null = Object.keys(data)[0];
+        const value: number | null = data[name].TOTAL_OPERATING_EXPENSES.value;
+        return { name, value };
+      });
+    return previousYearOpex;
+  };
+
+  getOpexPercentage = (key: string): singleValueRowDataInterface[] | null => {
+    let percentage: singleValueRowDataInterface[] | null = null;
+    if (key === this.CURRENT || key === this.CURRENT.toUpperCase()) {
+      // Get the revenue for the current year of each entity
+      const currentYearOpex: singleValueRowDataInterface[] | null =
+        this.getCurrentOpexValue();
+
+      const previousYearOpex: singleValueRowDataInterface[] | null =
+        this.getPreviousOpexValue();
+
+      // calculate percentage
+      percentage = _.map(currentYearOpex, (currentItem) => {
+        const previousItem = _.find(previousYearOpex, {
+          name: currentItem.name,
+        });
+
+        const previousValue: number | null =
+          previousItem != null ? previousItem.value : 0;
+
+        const difference: number | null =
+          currentItem.value != null
+            ? currentItem.value - (previousValue != null ? previousValue : 0)
+            : null;
+
+        const percentageIncrease =
+          previousValue !== 0
+            ? ((difference != null ? difference : 0) /
+                (previousValue != null ? previousValue : 0)) *
+              100
+            : 0;
+
+        return {
+          name: currentItem.name,
+          value: percentageIncrease,
+        };
+      });
+    }
+    return percentage;
+  };
+
   // this applies only per entity
-  getOpexPerEntity = (key: string): operatingExpenseDataInterface[] | null => {
+  getOpexPerBU = (key: string): operatingExpenseDataInterface[] | null => {
     let data: operatingExpenseDataInterface[];
     if (key === this.CURRENT || key === this.CURRENT.toUpperCase()) {
       data = this.currentDataset.map((data) => {
@@ -415,6 +586,8 @@ export default class dataCalculation {
     }
     return data;
   };
+
+  // ------------------ End OPEX ------------------ //
 
   getNpMargin = (key: string): singleValueRowDataInterface[] | null => {
     let data: singleValueRowDataInterface[];
