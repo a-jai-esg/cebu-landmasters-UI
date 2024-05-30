@@ -199,8 +199,8 @@ const Dashboard: React.FC<DashboardProps> = ({
           )}
           {/* Bar chart */}
           {cardTitles.length > 1 && (
-            <Grid item sm={12} md={4}>
-              <Card sx={{ borderRadius: 3, boxShadow: 6, width: "100%" }}>
+            <Grid item xs={12} sm={6} md={4}>
+              <Card sx={{ borderRadius: 3, boxShadow: 6, height: "fit" }}>
                 <CardContent>
                   <BarchartComponent
                     barData={barDataFiltered}
@@ -224,8 +224,8 @@ const Dashboard: React.FC<DashboardProps> = ({
           )}
           {/* Pie Chart*/}
           {cardTitles.length > 2 && (
-            <Grid item sm={12} md={4}>
-              <Card sx={{ borderRadius: 3, boxShadow: 6 }}>
+            <Grid item xs={12} sm={6} md={4}>
+              <Card sx={{ borderRadius: 3, boxShadow: 6, height: "fit" }}>
                 <CardContent>
                   <PrimaryPieChartComponent
                     pieData={pieDataFiltered}
@@ -257,8 +257,8 @@ const Dashboard: React.FC<DashboardProps> = ({
           {/* Income Statement Table */}
           {/* Table*/}
           {cardTitles.length > 3 && (
-            <Grid item sm={12} md={4}>
-              <Card sx={{ borderRadius: 3, boxShadow: 6 }}>
+            <Grid item xs={12} sm={6} md={4}>
+              <Card sx={{ borderRadius: 3, boxShadow: 6, height: "fit" }}>
                 <CardContent>
                   <Typography fontSize={20} color="#333" fontWeight="bold">
                     {cardTitles[3].title}
