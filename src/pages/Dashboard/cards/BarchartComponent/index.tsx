@@ -31,6 +31,11 @@ const transformData = (data: revenueDataInterface[]) => {
   }));
 };
 
+// Function to format numbers with commas
+const formatNumberWithCommas = (number: number) => {
+  return number.toLocaleString();
+};
+
 const BarchartComponent = ({
   barData,
   title,
@@ -49,7 +54,7 @@ const BarchartComponent = ({
         >
           <XAxis dataKey="name" />
           <YAxis />
-          <Tooltip />
+          <Tooltip formatter={formatNumberWithCommas} />
           <Legend />
           {/* <Bar dataKey="value" fill="#8884d8" /> */}
           <Bar
