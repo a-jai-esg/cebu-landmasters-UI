@@ -40,9 +40,9 @@ const transformData = (data: revenueDataInterface[]) => {
   }));
 };
 
-// Function to format numbers with commas and 2 decimal places
-const formatNumberWithCommasAndDecimals = (number: number) => {
-  return number.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+// Function to format numbers with commas
+const formatNumberWithCommas = (number: number) => {
+  return number.toLocaleString();
 };
 
 const BarchartComponent = ({
@@ -63,7 +63,7 @@ const BarchartComponent = ({
         >
           <XAxis dataKey="name" />
           <YAxis />
-          <Tooltip formatter={formatNumberWithCommasAndDecimals} />
+          <Tooltip formatter={formatNumberWithCommas} />
           <Legend />
           <Bar
             dataKey="sale_of_real_estates"
