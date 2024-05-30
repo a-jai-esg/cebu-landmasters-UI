@@ -48,7 +48,7 @@ const PrimaryPieChartComponent = ({
             data={transformedData}
             dataKey="value"
             nameKey="name"
-            outerRadius={80}
+            outerRadius={62.5}
             fill="#8884d8"
             label
           >
