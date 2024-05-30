@@ -1,6 +1,6 @@
 import singleValueRowDataInterface from "../objects/forms/singleValueRowDataInterface";
-import operatingExpenseDataInterface from "../objects/forms/graph-related/operatingExpenseDataInterface";
-import revenueDataInterface from "../objects/forms/graph-related/revenueDataInterface";
+import operatingExpenseDataInterface from "../objects/forms/graph-related/data-interfaces/operatingExpenseDataInterface";
+import revenueDataInterface from "../objects/forms/graph-related/data-interfaces/revenueDataInterface";
 import incomeStatementRowDataInterface from "./incomeStatementRowDataInterface";
 
 export default interface chartDataInterface {

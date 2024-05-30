@@ -1,9 +1,11 @@
-import cosInterface from "./objects/forms/graph-related/cosInterface";
-import OperatingExpensesInterface from "./objects/forms/graph-related/operatingExpenseInterface";
-import revenueInterface from "./objects/forms/graph-related/revenueInterface";
+import cosInterface from "./objects/forms/graph-related/template-interfaces/cosInterface";
+import grossProfitInterface from "./objects/forms/graph-related/template-interfaces/grossProfitInterface";
+import OperatingExpensesInterface from "./objects/forms/graph-related/template-interfaces/operatingExpenseInterface";
+import revenueInterface from "./objects/forms/graph-related/template-interfaces/revenueInterface";
 interface FinancialData {
   REVENUES: revenueInterface;
   COS: cosInterface;
+  GROSS_PROFIT: grossProfitInterface;
   TOTAL_REVENUE: { value: number };
   TOTAL_COS: { value: number };
   TOTAL_GROSS_PROFIT: { value: number };

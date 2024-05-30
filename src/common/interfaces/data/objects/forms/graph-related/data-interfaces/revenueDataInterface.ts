@@ -1,4 +1,4 @@
-import revenueInterface from "./revenueInterface";
+import revenueInterface from "../template-interfaces/revenueInterface";
 
 export default interface revenueDataInterface {
   name: string | null;

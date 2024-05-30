@@ -9,7 +9,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import revenueDataInterface from "../../../../common/interfaces/data/objects/forms/graph-related/revenueDataInterface";
+import revenueDataInterface from "../../../../common/interfaces/data/objects/forms/graph-related/data-interfaces/revenueDataInterface";
 interface barDataInterface {
   barData: revenueDataInterface[];
 }

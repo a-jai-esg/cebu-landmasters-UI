@@ -8,7 +8,7 @@ import {
   Tooltip,
 } from "recharts";
 import TitleStringInterface from "../../../../common/interfaces/components/titleStringInterface";
-import OperatingExpenseDataInterface from "../../../../common/interfaces/data/objects/forms/graph-related/operatingExpenseDataInterface";
+import OperatingExpenseDataInterface from "../../../../common/interfaces/data/objects/forms/graph-related/data-interfaces/operatingExpenseDataInterface";
 
 interface PieDataInterface {
   pieData: OperatingExpenseDataInterface[];

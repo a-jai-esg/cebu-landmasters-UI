@@ -9,8 +9,8 @@ import ComposedChartComponent from "./cards/ComposedChartComponent";
 import chartDataInterface from "../../common/interfaces/data/charts/chartDataInterface";
 import * as _ from "lodash";
 import singleValueRowDataInterface from "../../common/interfaces/data/objects/forms/singleValueRowDataInterface";
-import operatingExpenseDataInterface from "../../common/interfaces/data/objects/forms/graph-related/operatingExpenseDataInterface";
-import revenueDataInterface from "../../common/interfaces/data/objects/forms/graph-related/revenueDataInterface";
+import operatingExpenseDataInterface from "../../common/interfaces/data/objects/forms/graph-related/data-interfaces/operatingExpenseDataInterface";
+import revenueDataInterface from "../../common/interfaces/data/objects/forms/graph-related/data-interfaces/revenueDataInterface";
 import incomeStatementRowDataInterface from "../../common/interfaces/data/charts/incomeStatementRowDataInterface";
 
 interface DashboardProps {
@@ -95,10 +95,6 @@ const Dashboard: React.FC<DashboardProps> = ({
     chartData.chartData.flatMap((data) => {
       return data.incomeStatementTableData
         ? data.incomeStatementTableData.flatMap((result) => {
-            // return result.filter(
-            //   (item): item is incomeStatementRowDataInterface =>
-            //     item.name === `${entityFilter}`
-            // );
             return result;
           })
         : [];

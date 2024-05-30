@@ -1,12 +1,12 @@
 import _ from "lodash";
 import companyDataInterface from "../common/interfaces/data/companyDataInterface";
 import singleValueRowDataInterface from "../common/interfaces/data/objects/forms/singleValueRowDataInterface";
-import operatingExpenseDataInterface from "../common/interfaces/data/objects/forms/graph-related/operatingExpenseDataInterface";
-import operatingExpenseInterface from "../common/interfaces/data/objects/forms/graph-related/operatingExpenseInterface";
-import revenueDataInterface from "../common/interfaces/data/objects/forms/graph-related/revenueDataInterface";
-import revenueInterface from "../common/interfaces/data/objects/forms/graph-related/revenueInterface";
-import cosInterface from "../common/interfaces/data/objects/forms/graph-related/cosInterface";
-import cosDataInterface from "../common/interfaces/data/objects/forms/graph-related/cosDataInterface";
+import operatingExpenseDataInterface from "../common/interfaces/data/objects/forms/graph-related/data-interfaces/operatingExpenseDataInterface";
+import operatingExpenseInterface from "../common/interfaces/data/objects/forms/graph-related/template-interfaces/operatingExpenseInterface";
+import revenueDataInterface from "../common/interfaces/data/objects/forms/graph-related/data-interfaces/revenueDataInterface";
+import revenueInterface from "../common/interfaces/data/objects/forms/graph-related/template-interfaces/revenueInterface";
+import cosInterface from "../common/interfaces/data/objects/forms/graph-related/template-interfaces/cosInterface";
+import cosDataInterface from "../common/interfaces/data/objects/forms/graph-related/data-interfaces/cosDataInterface";
 // this is the data calculation class
 
 export default class dataCalculation {
