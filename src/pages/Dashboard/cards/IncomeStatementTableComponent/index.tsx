@@ -21,10 +21,18 @@ const IncomeStatementTable = ({ data }: dataObjects): JSX.Element => {
           <Table size="small">
             <TableHead>
               <TableRow>
-                <TableCell>Income Statement</TableCell>
-                <TableCell>Current Year</TableCell>
-                <TableCell>vs PY</TableCell>
-                <TableCell>Percentage</TableCell>
+                <TableCell sx={{ fontWeight: 800, fontSize: "13px" }}>
+                  Income Statement
+                </TableCell>
+                <TableCell sx={{ fontWeight: 800, fontSize: "13px" }}>
+                  Current Year
+                </TableCell>
+                <TableCell sx={{ fontWeight: 800, fontSize: "13px" }}>
+                  vs PY
+                </TableCell>
+                <TableCell sx={{ fontWeight: 800, fontSize: "13px" }}>
+                  Percentage
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -33,16 +41,16 @@ const IncomeStatementTable = ({ data }: dataObjects): JSX.Element => {
                   id: React.Key | null | undefined;
                   name:
                     | string
-                    | number
-                    | boolean
-                    | React.ReactElement<
-                        any,
-                        string | React.JSXElementConstructor<any>
-                      >
-                    | Iterable<React.ReactNode>
-                    | React.ReactPortal
-                    | null
-                    | undefined;
+                    // | number
+                    // | boolean
+                    // | React.ReactElement<
+                    //     any,
+                    //     string | React.JSXElementConstructor<any>
+                    //   >
+                    // | Iterable<React.ReactNode>
+                    // | React.ReactPortal
+                    | null;
+                  // | undefined;
                   currentYear: // | string
                   | number
                     // | boolean
@@ -79,7 +87,18 @@ const IncomeStatementTable = ({ data }: dataObjects): JSX.Element => {
                   // | undefined;
                 }) => (
                   <TableRow key={row.id}>
-                    <TableCell>{row.name}</TableCell>
+                    {row.name === "Commissions" ||
+                    row.name === "Management Fee Expense" ||
+                    row.name === "Professional and Legal Fees" ||
+                    row.name === "Security and Janitorial" ||
+                    row.name === "Taxes and Licenses" ? (
+                      <TableCell sx={{ paddingLeft: 5, fontWeight: 300 }}>
+                        {row.name}
+                      </TableCell>
+                    ) : (
+                      <TableCell sx={{ fontWeight: 400 }}>{row.name}</TableCell>
+                    )}
+
                     <TableCell>
                       {commonFunc.formatCurrencyToPHP(row.currentYear)}
                     </TableCell>

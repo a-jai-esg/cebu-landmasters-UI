@@ -179,7 +179,7 @@ const App: React.FC = () => {
 
     // Gross Profit
     createIncomeStatementRowData(
-      1,
+      2,
       "Gross Profit",
       currentGrossProfitResult?.value != null
         ? currentGrossProfitResult.value
@@ -199,7 +199,7 @@ const App: React.FC = () => {
 
     // OPEX
     createIncomeStatementRowData(
-      1,
+      3,
       "OPEX",
       currentOpexResult?.value != null ? currentOpexResult.value : 0,
       commonFunc.checkComparison(
@@ -209,12 +209,11 @@ const App: React.FC = () => {
       opexPercentageResult?.value != null ? opexPercentageResult.value : 0
     ),
 
-    // createIncomeStatementRowData(3, "OPEX", 0, null),
-    // createIncomeStatementRowData(4, "Sales", 0, null),
-    // createIncomeStatementRowData(5, "Marketing", 0, null),
-    // createIncomeStatementRowData(6, "IT", 0, null),
-    // createIncomeStatementRowData(7, "General and Admin", 0, null),
-    // createIncomeStatementRowData(8, "Other Income", 0, null),
+    // createIncomeStatementRowData(4, "Commissions", 0, null),
+    // createIncomeStatementRowData(5, "Management Fee Expense", 0, null),
+    // createIncomeStatementRowData(6, "Professional and Legal Fees", 0, null),
+    // createIncomeStatementRowData(7, "Security and Janitorial", 0, null),
+    // createIncomeStatementRowData(8, "Taxes and Licenses", 0, null),
     // createIncomeStatementRowData(9, "Other Expenses", 0, null),
     // createIncomeStatementRowData(10, "EBIT", 0, null),
     // createIncomeStatementRowData(11, "Interest and Tax", 0, null),
