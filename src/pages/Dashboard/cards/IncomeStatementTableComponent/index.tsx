@@ -109,9 +109,12 @@ const IncomeStatementTable = ({ data }: dataObjects): JSX.Element => {
                         <ArrowDropDownIcon sx={{ color: "red" }} />
                       )}
                     </TableCell>
-                    <TableCell>
-                      {commonFunc.formatNumberToTwo(row.percentage)}
-                    </TableCell>
+                    
+                      {row.vsPreviousYear ? (<TableCell sx={{ color: "green" }}>{commonFunc.formatNumberToTwo(row.percentage)+"%"}</TableCell> )
+                      : (<TableCell sx={{ color: "red" }}>{commonFunc.formatNumberToTwo(row.percentage)+"%"}</TableCell>)
+                      } 
+
+                    
                   </TableRow>
                 )
               )}
