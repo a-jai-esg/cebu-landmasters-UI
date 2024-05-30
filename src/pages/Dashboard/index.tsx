@@ -7,8 +7,8 @@ import BarchartComponent from "./cards/BarchartComponent";
 import PrimaryPieChartComponent from "./cards/CustomPieChartComponent";
 import ComposedChartComponent from "./cards/ComposedChartComponent";
 import BarChartModal from "../../components/global/Modals/BarChartModal";
-import PieChartModal from "../../components/global/Modals/PieChartModal"; 
-import IncomeStatementTableModal from "../../components/global/Modals/IncomeStatementTableModal"; 
+import PieChartModal from "../../components/global/Modals/PieChartModal";
+import IncomeStatementTableModal from "../../components/global/Modals/IncomeStatementTableModal";
 import chartDataInterface from "../../common/interfaces/data/charts/chartDataInterface";
 import * as _ from "lodash";
 import singleValueRowDataInterface from "../../common/interfaces/data/objects/forms/singleValueRowDataInterface";
@@ -32,9 +32,12 @@ const Dashboard: React.FC<DashboardProps> = ({
   entityFilter,
 }) => {
   const [reloadKey, setReloadKey] = useState<number>(0);
-  const [isBarChartModalOpen, setIsBarChartModalOpen] = useState<boolean>(false);
-  const [isPieChartModalOpen, setIsPieChartModalOpen] = useState<boolean>(false);
-  const [isIncomeStatementTableModalOpen, setIsIncomeStatementTableModalOpen] = useState<boolean>(false);
+  const [isBarChartModalOpen, setIsBarChartModalOpen] =
+    useState<boolean>(false);
+  const [isPieChartModalOpen, setIsPieChartModalOpen] =
+    useState<boolean>(false);
+  const [isIncomeStatementTableModalOpen, setIsIncomeStatementTableModalOpen] =
+    useState<boolean>(false);
 
   useEffect(() => {
     if (reload) {
@@ -117,8 +120,10 @@ const Dashboard: React.FC<DashboardProps> = ({
   const handleOpenPieChartModal = () => setIsPieChartModalOpen(true);
   const handleClosePieChartModal = () => setIsPieChartModalOpen(false);
 
-  const handleOpenIncomeStatementTableModal = () => setIsIncomeStatementTableModalOpen(true);
-  const handleCloseIncomeStatementTableModal = () => setIsIncomeStatementTableModalOpen(false);
+  const handleOpenIncomeStatementTableModal = () =>
+    setIsIncomeStatementTableModalOpen(true);
+  const handleCloseIncomeStatementTableModal = () =>
+    setIsIncomeStatementTableModalOpen(false);
 
   return (
     <Box
@@ -138,7 +143,9 @@ const Dashboard: React.FC<DashboardProps> = ({
                 <CardContent style={{ textAlign: "center" }}>
                   <Grid container spacing={2} justifyContent="center">
                     <Grid item xs={6} sm={4} md={2}>
-                      <div style={{ display: "flex", justifyContent: "center" }}>
+                      <div
+                        style={{ display: "flex", justifyContent: "center" }}
+                      >
                         <GaugeComponent
                           gaugeData={gaugeData[0]}
                           title="Gross Profit Margin (%)"
@@ -146,7 +153,9 @@ const Dashboard: React.FC<DashboardProps> = ({
                       </div>
                     </Grid>
                     <Grid item xs={6} sm={4} md={2}>
-                      <div style={{ display: "flex", justifyContent: "center" }}>
+                      <div
+                        style={{ display: "flex", justifyContent: "center" }}
+                      >
                         <GaugeComponent
                           gaugeData={gaugeData[1]}
                           title="Opex Ratio (%)"
@@ -154,7 +163,9 @@ const Dashboard: React.FC<DashboardProps> = ({
                       </div>
                     </Grid>
                     <Grid item xs={6} sm={4} md={2}>
-                      <div style={{ display: "flex", justifyContent: "center" }}>
+                      <div
+                        style={{ display: "flex", justifyContent: "center" }}
+                      >
                         <GaugeComponent
                           gaugeData={gaugeData[2]}
                           title="EBITDA Margin (%)"
@@ -162,7 +173,9 @@ const Dashboard: React.FC<DashboardProps> = ({
                       </div>
                     </Grid>
                     <Grid item xs={6} sm={4} md={2}>
-                      <div style={{ display: "flex", justifyContent: "center" }}>
+                      <div
+                        style={{ display: "flex", justifyContent: "center" }}
+                      >
                         <GaugeComponent
                           gaugeData={gaugeData[3]}
                           title="Conso NIAT (%)"
@@ -170,7 +183,9 @@ const Dashboard: React.FC<DashboardProps> = ({
                       </div>
                     </Grid>
                     <Grid item xs={6} sm={4} md={2}>
-                      <div style={{ display: "flex", justifyContent: "center" }}>
+                      <div
+                        style={{ display: "flex", justifyContent: "center" }}
+                      >
                         <GaugeComponent
                           gaugeData={gaugeData[4]}
                           title="Parent NIAT (%)"
@@ -184,8 +199,8 @@ const Dashboard: React.FC<DashboardProps> = ({
           )}
           {/* Bar chart */}
           {cardTitles.length > 1 && (
-              <Grid item sm={12} md={4}>
-              <Card sx={{ borderRadius: 3, boxShadow: 6, width:"100%" }}>
+            <Grid item xs={12} sm={6} md={4}>
+              <Card sx={{ borderRadius: 3, boxShadow: 6, height: "fit" }}>
                 <CardContent>
                   <BarchartComponent
                     barData={barDataFiltered}
@@ -209,13 +224,19 @@ const Dashboard: React.FC<DashboardProps> = ({
           )}
           {/* Pie Chart*/}
           {cardTitles.length > 2 && (
-            <Grid item sm={12} md={4}>
-              <Card sx={{ borderRadius: 3, boxShadow: 6 }}>
+            <Grid item xs={12} sm={6} md={4}>
+              <Card sx={{ borderRadius: 3, boxShadow: 6, height: "fit" }}>
                 <CardContent>
                   <PrimaryPieChartComponent
                     pieData={pieDataFiltered}
                     title={cardTitles[2].title ?? "Pie Chart"}
-                    colors={["#3FB3E5", "#D777C3", "#84E48D", "#85C7EE", "#7B9BB1"]}
+                    colors={[
+                      "#3FB3E5",
+                      "#D777C3",
+                      "#84E48D",
+                      "#85C7EE",
+                      "#7B9BB1",
+                    ]}
                   />
                   <Typography
                     onClick={handleOpenPieChartModal}
@@ -236,8 +257,8 @@ const Dashboard: React.FC<DashboardProps> = ({
           {/* Income Statement Table */}
           {/* Table*/}
           {cardTitles.length > 3 && (
-            <Grid item sm={12} md={4}>
-              <Card sx={{ borderRadius: 3, boxShadow: 6 }}>
+            <Grid item xs={12} sm={6} md={4}>
+              <Card sx={{ borderRadius: 3, boxShadow: 6, height: "fit" }}>
                 <CardContent>
                   <Typography fontSize={20} color="#333" fontWeight="bold">
                     {cardTitles[3].title}
