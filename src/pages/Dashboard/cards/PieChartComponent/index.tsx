@@ -31,6 +31,11 @@ const transformData = (
   });
 };
 
+// Function to format numbers with commas
+const formatNumberWithCommas = (number: number) => {
+  return number.toLocaleString();
+};
+
 const PrimaryPieChartComponent = ({
   pieData,
   title,
@@ -50,7 +55,7 @@ const PrimaryPieChartComponent = ({
             nameKey="name"
             outerRadius={62.5}
             fill="#8884d8"
-            label
+            label={({ value }) => `${formatNumberWithCommas(value)}`}
           >
             {transformedData.map((_entry, index) => (
               <Cell
@@ -59,7 +64,7 @@ const PrimaryPieChartComponent = ({
               />
             ))}
           </Pie>
-          <Tooltip />
+          <Tooltip formatter={formatNumberWithCommas} />
           <Legend />
         </PieChart>
       </ResponsiveContainer>
