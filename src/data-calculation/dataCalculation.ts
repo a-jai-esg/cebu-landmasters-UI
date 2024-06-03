@@ -24,6 +24,62 @@ export default class dataCalculation {
     this.currentDataset = this.parseDataSource(currentDataset);
   }
 
+  public calculatePercentageFromTwoValues = (
+    current: number | null,
+    previous: number | null
+  ) => {
+    let currentData: number | null = current != null ? current : 0;
+    let previousData: number | null = previous != null ? previous : 0;
+
+    currentData < 0 ? (currentData *= -1) : currentData;
+    previousData < 0 ? (previousData *= -1) : previousData;
+
+    const difference: number | null =
+      (currentData != null ? currentData : 0) -
+      (previousData != null ? previousData : 0);
+
+    const percentage =
+      previousData !== 0
+        ? ((difference != null ? difference : 0) /
+            (previousData != null ? previousData : 0)) *
+          100
+        : 0;
+
+    return percentage;
+  };
+
+  // for internal usages only
+  private calculatePercentageFromDataset = (
+    current: singleValueRowDataInterface[] | null,
+    previous: singleValueRowDataInterface[] | null
+  ) => {
+    let percentage: singleValueRowDataInterface[] | null = null;
+    // Get the revenue for the current year of each entity
+    const currentData: singleValueRowDataInterface[] | null = current;
+    const previousData: singleValueRowDataInterface[] | null = previous;
+
+    // calculate percentage
+    percentage = _.map(currentData, (currentItem) => {
+      const previousItem = _.find(previousData, {
+        name: currentItem.name,
+      });
+
+      const previousValue: number | null =
+        previousItem != null ? previousItem.value : 0;
+
+      const percentageIncrease = this.calculatePercentageFromTwoValues(
+        currentItem.value,
+        previousValue
+      );
+
+      return {
+        name: currentItem.name,
+        value: percentageIncrease,
+      };
+    });
+    return percentage;
+  };
+
   private parseDataSource = (data: any[]): companyDataInterface[] => {
     return data.map((item) => {
       const key = Object.keys(item)[0]; // Extracting the company key
@@ -120,47 +176,11 @@ export default class dataCalculation {
   };
 
   // get the revenue percentage value
-  getRevenuePercentage = (
-    key: string
-  ): singleValueRowDataInterface[] | null => {
-    let percentage: singleValueRowDataInterface[] | null = null;
-    if (key === this.CURRENT || key === this.CURRENT.toUpperCase()) {
-      // Get the revenue for the current year of each entity
-      const currentYearRevenue: singleValueRowDataInterface[] | null =
-        this.getCurrentRevenueValue();
-
-      const previousYearRevenue: singleValueRowDataInterface[] | null =
-        this.getPreviousRevenueValue();
-
-      // calculate percentage
-      percentage = _.map(currentYearRevenue, (currentItem) => {
-        const previousItem = _.find(previousYearRevenue, {
-          name: currentItem.name,
-        });
-
-        const previousValue: number | null =
-          previousItem != null ? previousItem.value : 0;
-
-        const difference: number | null =
-          currentItem.value != null
-            ? currentItem.value - (previousValue != null ? previousValue : 0)
-            : null;
-
-        const percentageIncrease =
-          previousValue !== 0
-            ? ((difference != null ? difference : 0) /
-                (previousValue != null ? previousValue : 0)) *
-              100
-            : 0;
-
-        return {
-          name: currentItem.name,
-          value: percentageIncrease,
-        };
-      });
-    }
-    return percentage;
-  };
+  getRevenuePercentage = () =>
+    this.calculatePercentageFromDataset(
+      this.getCurrentRevenueValue(),
+      this.getPreviousRevenueValue()
+    );
 
   // get revenue for different entities
   getRevenuePerBU = (key: string): revenueDataInterface[] | null => {
@@ -210,7 +230,6 @@ export default class dataCalculation {
     }
     return data;
   };
-
   // ------------------ End Revenue ---------------- //
 
   // ------------------ COS ---------------- //
@@ -236,45 +255,11 @@ export default class dataCalculation {
     return previousYearCos;
   };
 
-  getCosPercentage = (key: string): singleValueRowDataInterface[] | null => {
-    let percentage: singleValueRowDataInterface[] | null = null;
-    if (key === this.CURRENT || key === this.CURRENT.toUpperCase()) {
-      // Get the revenue for the current year of each entity
-      const currentYearCos: singleValueRowDataInterface[] | null =
-        this.getCurrentCosValue();
-
-      const previousYearCos: singleValueRowDataInterface[] | null =
-        this.getPreviousCosValue();
-
-      // calculate percentage
-      percentage = _.map(currentYearCos, (currentItem) => {
-        const previousItem = _.find(previousYearCos, {
-          name: currentItem.name,
-        });
-
-        const previousValue: number | null =
-          previousItem != null ? previousItem.value : 0;
-
-        const difference: number | null =
-          currentItem.value != null
-            ? currentItem.value - (previousValue != null ? previousValue : 0)
-            : null;
-
-        const percentageIncrease =
-          previousValue !== 0
-            ? ((difference != null ? difference : 0) /
-                (previousValue != null ? previousValue : 0)) *
-              100
-            : 0;
-
-        return {
-          name: currentItem.name,
-          value: percentageIncrease,
-        };
-      });
-    }
-    return percentage;
-  };
+  getCosPercentage = () =>
+    this.calculatePercentageFromDataset(
+      this.getCurrentCosValue(),
+      this.getPreviousCosValue()
+    );
 
   // for different entities
   getCosPerBU = (key: string): cosDataInterface[] | null => {
@@ -349,47 +334,11 @@ export default class dataCalculation {
     return previousYearGrossProfit;
   };
 
-  getGrossProfitPercentage = (
-    key: string
-  ): singleValueRowDataInterface[] | null => {
-    let percentage: singleValueRowDataInterface[] | null = null;
-    if (key === this.CURRENT || key === this.CURRENT.toUpperCase()) {
-      // Get the revenue for the current year of each entity
-      const currentYearGrossProfit: singleValueRowDataInterface[] | null =
-        this.getCurrentGrossProfitValue();
-
-      const previousYearGrossProfit: singleValueRowDataInterface[] | null =
-        this.getPreviousGrossProfitValue();
-
-      // calculate percentage
-      percentage = _.map(currentYearGrossProfit, (currentItem) => {
-        const previousItem = _.find(previousYearGrossProfit, {
-          name: currentItem.name,
-        });
-
-        const previousValue: number | null =
-          previousItem != null ? previousItem.value : 0;
-
-        const difference: number | null =
-          currentItem.value != null
-            ? currentItem.value - (previousValue != null ? previousValue : 0)
-            : null;
-
-        const percentageIncrease =
-          previousValue !== 0
-            ? ((difference != null ? difference : 0) /
-                (previousValue != null ? previousValue : 0)) *
-              100
-            : 0;
-
-        return {
-          name: currentItem.name,
-          value: percentageIncrease,
-        };
-      });
-    }
-    return percentage;
-  };
+  getGrossProfitPercentage = () =>
+    this.calculatePercentageFromDataset(
+      this.getCurrentGrossProfitValue(),
+      this.getPreviousGrossProfitValue()
+    );
 
   // for different entities
   getGrossProfitPerBU = (key: string): grossProfitDataInterface[] | null => {
@@ -445,7 +394,7 @@ export default class dataCalculation {
 
   // ------------------ OPEX-related ------------------ //
   // get the current Gross Profit value
-  getCurrentOpexValue = (): singleValueRowDataInterface[] | null => {
+  getCurrentTotalOpexValue = (): singleValueRowDataInterface[] | null => {
     const currentYearOpex: singleValueRowDataInterface[] =
       this.currentDataset.flatMap((data) => {
         const name: string | null = Object.keys(data)[0];
@@ -456,7 +405,7 @@ export default class dataCalculation {
   };
 
   // get the previous Gross Profit value
-  getPreviousOpexValue = (): singleValueRowDataInterface[] | null => {
+  getPreviousTotalOpexValue = (): singleValueRowDataInterface[] | null => {
     const previousYearOpex: singleValueRowDataInterface[] =
       this.previousDataset.flatMap((data) => {
         const name: string | null = Object.keys(data)[0];
@@ -466,45 +415,11 @@ export default class dataCalculation {
     return previousYearOpex;
   };
 
-  getOpexPercentage = (key: string): singleValueRowDataInterface[] | null => {
-    let percentage: singleValueRowDataInterface[] | null = null;
-    if (key === this.CURRENT || key === this.CURRENT.toUpperCase()) {
-      // Get the revenue for the current year of each entity
-      const currentYearOpex: singleValueRowDataInterface[] | null =
-        this.getCurrentOpexValue();
-
-      const previousYearOpex: singleValueRowDataInterface[] | null =
-        this.getPreviousOpexValue();
-
-      // calculate percentage
-      percentage = _.map(currentYearOpex, (currentItem) => {
-        const previousItem = _.find(previousYearOpex, {
-          name: currentItem.name,
-        });
-
-        const previousValue: number | null =
-          previousItem != null ? previousItem.value : 0;
-
-        const difference: number | null =
-          currentItem.value != null
-            ? currentItem.value - (previousValue != null ? previousValue : 0)
-            : null;
-
-        const percentageIncrease =
-          previousValue !== 0
-            ? ((difference != null ? difference : 0) /
-                (previousValue != null ? previousValue : 0)) *
-              100
-            : 0;
-
-        return {
-          name: currentItem.name,
-          value: percentageIncrease,
-        };
-      });
-    }
-    return percentage;
-  };
+  getOpexPercentage = () =>
+    this.calculatePercentageFromDataset(
+      this.getCurrentTotalOpexValue(),
+      this.getPreviousTotalOpexValue()
+    );
 
   // this applies only per entity
   getOpexPerBU = (key: string): operatingExpenseDataInterface[] | null => {
@@ -588,6 +503,70 @@ export default class dataCalculation {
   };
 
   // ------------------ End OPEX ------------------ //
+
+  // ------------------ Other operating expenses-related ------------------ //
+  getCurrentOtherTotalOperatingExpenses = ():
+    | singleValueRowDataInterface[]
+    | null => {
+    const currentYearOtherTotalOperatingExpenses: singleValueRowDataInterface[] =
+      this.currentDataset.flatMap((data) => {
+        const name: string | null = Object.keys(data)[0];
+        const value: number | null =
+          data[name].TOTAL_OTHER_INCOME_OR_EXPENSE.value;
+        return { name, value };
+      });
+    return currentYearOtherTotalOperatingExpenses;
+  };
+
+  // get the previous Gross Profit value
+  getPreviousOtherTotalOperatingExpenses = ():
+    | singleValueRowDataInterface[]
+    | null => {
+    const previousYearOtherTotalOperatingExpenses: singleValueRowDataInterface[] =
+      this.previousDataset.flatMap((data) => {
+        const name: string | null = Object.keys(data)[0];
+        const value: number | null =
+          data[name].TOTAL_OTHER_INCOME_OR_EXPENSE.value;
+        return { name, value };
+      });
+    return previousYearOtherTotalOperatingExpenses;
+  };
+
+  getOtherTotalOpexPercentage = () =>
+    this.calculatePercentageFromDataset(
+      this.getCurrentOtherTotalOperatingExpenses(),
+      this.getPreviousOtherTotalOperatingExpenses()
+    );
+  // ------------------ end other operating expenses-related ------------------ //
+
+  // ------------------ Net profit before tax-related ------------------ //
+  getCurrentNetProfitBeforeTax = (): singleValueRowDataInterface[] | null => {
+    const currentYearNetProfitBeforeTax: singleValueRowDataInterface[] =
+      this.currentDataset.flatMap((data) => {
+        const name: string | null = Object.keys(data)[0];
+        const value: number | null = data[name].NET_PROFIT_BEFORE_TAX.value;
+        return { name, value };
+      });
+    return currentYearNetProfitBeforeTax;
+  };
+
+  // get the previous Gross Profit value
+  getPreviousNetProfitBeforeTax = (): singleValueRowDataInterface[] | null => {
+    const previousYearNetProfitBeforeTax: singleValueRowDataInterface[] =
+      this.previousDataset.flatMap((data) => {
+        const name: string | null = Object.keys(data)[0];
+        const value: number | null = data[name].NET_PROFIT_BEFORE_TAX.value;
+        return { name, value };
+      });
+    return previousYearNetProfitBeforeTax;
+  };
+
+  getNetProfitBeforeTaxPercentage = () =>
+    this.calculatePercentageFromDataset(
+      this.getCurrentNetProfitBeforeTax(),
+      this.getPreviousNetProfitBeforeTax()
+    );
+  // ------------------ End net profit before tax-related ------------------ //
 
   getNpMargin = (key: string): singleValueRowDataInterface[] | null => {
     let data: singleValueRowDataInterface[];
