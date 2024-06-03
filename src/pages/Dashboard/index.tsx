@@ -299,7 +299,7 @@ const Dashboard: React.FC<DashboardProps> = ({
                       fontSize: "0.875rem",
                     }}
                   >
-                    Expand Table
+                    Expand Chart
                   </Typography>
                 </CardContent>
               </Card>
