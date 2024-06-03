@@ -218,6 +218,18 @@ const Dashboard: React.FC<DashboardProps> = ({
                   >
                     Expand Chart
                   </Typography>
+                  <Typography
+                    onClick={handleOpenBarChartModal}
+                    sx={{
+                      cursor: "pointer",
+                      color: "blue",
+                      textAlign: "right",
+                      textDecoration: "underline",
+                      fontSize: "0.875rem",
+                    }}
+                  >
+                    Expand Chart
+                  </Typography>
                 </CardContent>
               </Card>
             </Grid>
@@ -238,6 +250,18 @@ const Dashboard: React.FC<DashboardProps> = ({
                       "#7B9BB1",
                     ]}
                   />
+                  <Typography
+                    onClick={handleOpenPieChartModal}
+                    sx={{
+                      cursor: "pointer",
+                      color: "blue",
+                      textAlign: "right",
+                      textDecoration: "underline",
+                      fontSize: "0.875rem",
+                    }}
+                  >
+                    Expand Chart
+                  </Typography>
                   <Typography
                     onClick={handleOpenPieChartModal}
                     sx={{
@@ -274,7 +298,7 @@ const Dashboard: React.FC<DashboardProps> = ({
                       fontSize: "0.875rem",
                     }}
                   >
-                    Expand Table
+                    Expand Chart
                   </Typography>
                 </CardContent>
               </Card>
@@ -295,24 +319,6 @@ const Dashboard: React.FC<DashboardProps> = ({
           )}
         </Grid>
       </Box>
-      <BarChartModal
-        open={isBarChartModalOpen}
-        onClose={handleCloseBarChartModal}
-        barData={barDataFiltered}
-        title={cardTitles[1].title ?? "Bar Chart"}
-      />
-      <PieChartModal
-        open={isPieChartModalOpen}
-        onClose={handleClosePieChartModal}
-        pieData={pieDataFiltered}
-        title={cardTitles[2].title ?? "Pie Chart"}
-      />
-      <IncomeStatementTableModal
-        open={isIncomeStatementTableModalOpen}
-        onClose={handleCloseIncomeStatementTableModal}
-        data={incomeStatementDataFiltered}
-        title={cardTitles[3].title ?? "Income Statement Table"}
-      />
       <BarChartModal
         open={isBarChartModalOpen}
         onClose={handleCloseBarChartModal}
