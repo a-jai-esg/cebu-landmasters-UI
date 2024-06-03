@@ -13,7 +13,6 @@ import incomeStatementRowDataInterface from "./common/interfaces/data/charts/inc
 import singleValueRowDataInterface from "./common/interfaces/data/objects/forms/singleValueRowDataInterface";
 import _ from "lodash";
 import commonFunctions from "./common/functions/commonFunctions";
-import OperatingExpensesInterface from "./common/interfaces/data/objects/forms/graph-related/template-interfaces/operatingExpenseInterface";
 import OperatingExpenseDataInterface from "./common/interfaces/data/objects/forms/graph-related/data-interfaces/operatingExpenseDataInterface";
 
 const App: React.FC = () => {
@@ -165,35 +164,16 @@ const App: React.FC = () => {
   const opexPreviousTotalOpexValue: singleValueRowDataInterface[] | null =
     data.getPreviousTotalOpexValue();
 
-  const opexCurrentData: OperatingExpenseDataInterface[] | null =
-    data.getOpexPerBU(dateDataSource);
-  const opexPreviousData: OperatingExpenseDataInterface[] | null =
-    data.getOpexPerBU("previous");
-
   // per BU
   const currentOpexDataPerBu: OperatingExpenseDataInterface[] | null =
     data.getOpexPerBU("current");
   const previousOpexDataPerBu: OperatingExpenseDataInterface[] | null =
     data.getOpexPerBU("previous");
 
-  // extract results from objects
-  const opexPercentageResult: singleValueRowDataInterface | null =
-    (opexPercentageData
-      ? _.find(opexPercentageData, { name: filteredEntity })
-      : null) || null;
-  const opexCurrentTotalOpexResult: singleValueRowDataInterface | null =
-    (opexCurrentTotalOpexValue
-      ? _.find(opexCurrentTotalOpexValue, { name: filteredEntity })
-      : null) || null;
-  const opexPreviousTotalOpexResult: singleValueRowDataInterface | null =
-    (opexPreviousTotalOpexValue
-      ? _.find(opexPreviousTotalOpexValue, { name: filteredEntity })
-      : null) || null;
-
   // specific opex result/s
   const currentSpecificOpexResult: OperatingExpenseDataInterface | null =
-    (opexCurrentData
-      ? _.find(opexCurrentData, { name: filteredEntity })
+    (currentOpexDataPerBu
+      ? _.find(currentOpexDataPerBu, { name: filteredEntity })
       : null) || null;
 
   const currentCommissionsResult: number | null =
@@ -227,33 +207,54 @@ const App: React.FC = () => {
       : null;
 
   const previousSpecificOpexResult: OperatingExpenseDataInterface | null =
-    (opexPercentageData
-      ? _.find(opexPreviousData, { name: filteredEntity })
-      : null) || null;
-
-  const currentCommissionsOpexResult: OperatingExpenseDataInterface | null =
-    (currentOpexDataPerBu
-      ? _.find(currentOpexDataPerBu, { name: filteredEntity })
-      : null) || null;
-
-  const previousCommissionsOpexResult: OperatingExpenseDataInterface | null =
     (previousOpexDataPerBu
       ? _.find(previousOpexDataPerBu, { name: filteredEntity })
       : null) || null;
 
-  const currentOpexCommissionsResult: number | null =
-    currentCommissionsOpexResult != null
-      ? currentCommissionsOpexResult.expenses != null
-        ? currentCommissionsOpexResult.expenses.commissions
-        : 0
-      : 0;
+  const previousCommissionsResult: number | null =
+    previousSpecificOpexResult != null &&
+    previousSpecificOpexResult.expenses != null
+      ? previousSpecificOpexResult.expenses.commissions
+      : null;
 
-  const previousOpexCommissionsResult: number | null =
-    previousCommissionsOpexResult != null
-      ? previousCommissionsOpexResult.expenses != null
-        ? previousCommissionsOpexResult.expenses.commissions
-        : 0
-      : 0;
+  const previousManagementFeeExpenseResult: number | null =
+    previousSpecificOpexResult != null &&
+    previousSpecificOpexResult.expenses != null
+      ? previousSpecificOpexResult.expenses.management_fee_expense
+      : null;
+
+  const previousProfessionalAndLegalFeesResult: number | null =
+    previousSpecificOpexResult != null &&
+    previousSpecificOpexResult.expenses != null
+      ? previousSpecificOpexResult.expenses.professional_and_legal_fees
+      : null;
+
+  const previousSecurityAndJanitorialServicesResult: number | null =
+    previousSpecificOpexResult != null &&
+    previousSpecificOpexResult.expenses != null
+      ? previousSpecificOpexResult.expenses.security_and_janitorial_services
+      : null;
+
+  const previousTaxesAndLicensesResult: number | null =
+    previousSpecificOpexResult != null &&
+    previousSpecificOpexResult.expenses != null
+      ? previousSpecificOpexResult.expenses.taxes_and_licenses
+      : null;
+
+  // extract results from objects
+  const opexPercentageResult: singleValueRowDataInterface | null =
+    (opexPercentageData
+      ? _.find(opexPercentageData, { name: filteredEntity })
+      : null) || null;
+  const opexCurrentTotalOpexResult: singleValueRowDataInterface | null =
+    (opexCurrentTotalOpexValue
+      ? _.find(opexCurrentTotalOpexValue, { name: filteredEntity })
+      : null) || null;
+  const opexPreviousTotalOpexResult: singleValueRowDataInterface | null =
+    (opexPreviousTotalOpexValue
+      ? _.find(opexPreviousTotalOpexValue, { name: filteredEntity })
+      : null) || null;
+
   // --------- End Opex-related --------//
 
   const rows: incomeStatementRowDataInterface[] = [
