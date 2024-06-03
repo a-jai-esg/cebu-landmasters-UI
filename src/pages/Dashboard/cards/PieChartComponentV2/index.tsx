@@ -47,13 +47,13 @@ const PrimaryPieChartComponent = ({
       <Typography fontSize={20} color="#333" fontWeight="bold" padding={1}>
         {title}
       </Typography>
-      <ResponsiveContainer width="100%" height={255}>
+      <ResponsiveContainer width="100%" height={355}>
         <PieChart style={{ backgroundColor: "#E4F4FA" }}>
           <Pie
             data={transformedData}
             dataKey="value"
             nameKey="name"
-            outerRadius={62.5}
+            outerRadius={110}
             fill="#8884d8"
             label={({ value }) => `${formatNumberWithCommas(value)}`}
           >
