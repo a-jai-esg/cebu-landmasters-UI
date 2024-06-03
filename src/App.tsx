@@ -13,7 +13,6 @@ import incomeStatementRowDataInterface from "./common/interfaces/data/charts/inc
 import singleValueRowDataInterface from "./common/interfaces/data/objects/forms/singleValueRowDataInterface";
 import _ from "lodash";
 import commonFunctions from "./common/functions/commonFunctions";
-import OperatingExpenseDataInterface from "./common/interfaces/data/objects/forms/graph-related/data-interfaces/operatingExpenseDataInterface";
 import OperatingExpensesInterface from "./common/interfaces/data/objects/forms/graph-related/template-interfaces/operatingExpenseInterface";
 import OperatingExpenseDataInterface from "./common/interfaces/data/objects/forms/graph-related/data-interfaces/operatingExpenseDataInterface";
 
@@ -320,118 +319,118 @@ const App: React.FC = () => {
       opexPercentageResult?.value != null ? opexPercentageResult.value : 0
     ),
 
-    // OPEX Commissions
-    createIncomeStatementRowData(
-      4,
-      "Commissions",
-      currentCommissionsResult != null ? currentCommissionsResult : 0,
-      commonFunc.checkComparison(
-        currentCommissionsResult != null ? currentCommissionsResult : 0,
-        previousCommissionsResult != null ? previousCommissionsResult : 0
-      ),
-      data.calculatePercentageFromTwoValues(
-        currentCommissionsResult != null ? currentCommissionsResult : 0,
-        previousCommissionsResult != null ? previousCommissionsResult : 0
-      )
-    ),
+    // // OPEX Commissions
+    // createIncomeStatementRowData(
+    //   4,
+    //   "Commissions",
+    //   currentCommissionsResult != null ? currentCommissionsResult : 0,
+    //   commonFunc.checkComparison(
+    //     currentCommissionsResult != null ? currentCommissionsResult : 0,
+    //     previousCommissionsResult != null ? previousCommissionsResult : 0
+    //   ),
+    //   data.calculatePercentageFromTwoValues(
+    //     currentCommissionsResult != null ? currentCommissionsResult : 0,
+    //     previousCommissionsResult != null ? previousCommissionsResult : 0
+    //   )
+    // ),
 
-    // Management Fee Expenses
-    createIncomeStatementRowData(
-      5,
-      "Management Fee Expense",
-      currentManagementFeeExpenseResult != null
-        ? currentManagementFeeExpenseResult
-        : 0,
-      commonFunc.checkComparison(
-        currentManagementFeeExpenseResult != null
-          ? currentManagementFeeExpenseResult
-          : 0,
-        previousManagementFeeExpenseResult != null
-          ? previousManagementFeeExpenseResult
-          : 0
-      ),
-      data.calculatePercentageFromTwoValues(
-        currentManagementFeeExpenseResult != null
-          ? currentManagementFeeExpenseResult
-          : 0,
-        previousManagementFeeExpenseResult != null
-          ? previousManagementFeeExpenseResult
-          : 0
-      )
-    ),
+    // // Management Fee Expenses
+    // createIncomeStatementRowData(
+    //   5,
+    //   "Management Fee Expense",
+    //   currentManagementFeeExpenseResult != null
+    //     ? currentManagementFeeExpenseResult
+    //     : 0,
+    //   commonFunc.checkComparison(
+    //     currentManagementFeeExpenseResult != null
+    //       ? currentManagementFeeExpenseResult
+    //       : 0,
+    //     previousManagementFeeExpenseResult != null
+    //       ? previousManagementFeeExpenseResult
+    //       : 0
+    //   ),
+    //   data.calculatePercentageFromTwoValues(
+    //     currentManagementFeeExpenseResult != null
+    //       ? currentManagementFeeExpenseResult
+    //       : 0,
+    //     previousManagementFeeExpenseResult != null
+    //       ? previousManagementFeeExpenseResult
+    //       : 0
+    //   )
+    // ),
 
-    // Professional and Legal Fees
-    createIncomeStatementRowData(
-      6,
-      "Professional and Legal Fees",
-      currentProfessionalAndLegalFeesResult != null
-        ? currentProfessionalAndLegalFeesResult
-        : 0,
-      commonFunc.checkComparison(
-        currentProfessionalAndLegalFeesResult != null
-          ? currentProfessionalAndLegalFeesResult
-          : 0,
-        previousProfessionalAndLegalFeesResult != null
-          ? previousProfessionalAndLegalFeesResult
-          : 0
-      ),
-      data.calculatePercentageFromTwoValues(
-        currentProfessionalAndLegalFeesResult != null
-          ? currentProfessionalAndLegalFeesResult
-          : 0,
-        previousProfessionalAndLegalFeesResult != null
-          ? previousProfessionalAndLegalFeesResult
-          : 0
-      )
-    ),
+    // // Professional and Legal Fees
+    // createIncomeStatementRowData(
+    //   6,
+    //   "Professional and Legal Fees",
+    //   currentProfessionalAndLegalFeesResult != null
+    //     ? currentProfessionalAndLegalFeesResult
+    //     : 0,
+    //   commonFunc.checkComparison(
+    //     currentProfessionalAndLegalFeesResult != null
+    //       ? currentProfessionalAndLegalFeesResult
+    //       : 0,
+    //     previousProfessionalAndLegalFeesResult != null
+    //       ? previousProfessionalAndLegalFeesResult
+    //       : 0
+    //   ),
+    //   data.calculatePercentageFromTwoValues(
+    //     currentProfessionalAndLegalFeesResult != null
+    //       ? currentProfessionalAndLegalFeesResult
+    //       : 0,
+    //     previousProfessionalAndLegalFeesResult != null
+    //       ? previousProfessionalAndLegalFeesResult
+    //       : 0
+    //   )
+    // ),
 
-    // Security and Janitorial
-    createIncomeStatementRowData(
-      7,
-      "Security and Janitorial",
-      currentSecurityAndJanitorialServicesResult != null
-        ? currentSecurityAndJanitorialServicesResult
-        : 0,
-      commonFunc.checkComparison(
-        currentSecurityAndJanitorialServicesResult != null
-          ? currentSecurityAndJanitorialServicesResult
-          : 0,
-        previousSecurityAndJanitorialServicesResult != null
-          ? previousSecurityAndJanitorialServicesResult
-          : 0
-      ),
-      data.calculatePercentageFromTwoValues(
-        currentSecurityAndJanitorialServicesResult != null
-          ? currentSecurityAndJanitorialServicesResult
-          : 0,
-        previousSecurityAndJanitorialServicesResult != null
-          ? previousSecurityAndJanitorialServicesResult
-          : 0
-      )
-    ),
+    // // Security and Janitorial
+    // createIncomeStatementRowData(
+    //   7,
+    //   "Security and Janitorial",
+    //   currentSecurityAndJanitorialServicesResult != null
+    //     ? currentSecurityAndJanitorialServicesResult
+    //     : 0,
+    //   commonFunc.checkComparison(
+    //     currentSecurityAndJanitorialServicesResult != null
+    //       ? currentSecurityAndJanitorialServicesResult
+    //       : 0,
+    //     previousSecurityAndJanitorialServicesResult != null
+    //       ? previousSecurityAndJanitorialServicesResult
+    //       : 0
+    //   ),
+    //   data.calculatePercentageFromTwoValues(
+    //     currentSecurityAndJanitorialServicesResult != null
+    //       ? currentSecurityAndJanitorialServicesResult
+    //       : 0,
+    //     previousSecurityAndJanitorialServicesResult != null
+    //       ? previousSecurityAndJanitorialServicesResult
+    //       : 0
+    //   )
+    // ),
 
-    // Taxes and Licenses
-    createIncomeStatementRowData(
-      8,
-      "Taxes and Licenses",
-      currentTaxesAndLicensesResult != null ? currentTaxesAndLicensesResult : 0,
-      commonFunc.checkComparison(
-        currentTaxesAndLicensesResult != null
-          ? currentTaxesAndLicensesResult
-          : 0,
-        previousTaxesAndLicensesResult != null
-          ? previousTaxesAndLicensesResult
-          : 0
-      ),
-      data.calculatePercentageFromTwoValues(
-        currentTaxesAndLicensesResult != null
-          ? currentTaxesAndLicensesResult
-          : 0,
-        previousTaxesAndLicensesResult != null
-          ? previousTaxesAndLicensesResult
-          : 0
-      )
-    ),
+    // // Taxes and Licenses
+    // createIncomeStatementRowData(
+    //   8,
+    //   "Taxes and Licenses",
+    //   currentTaxesAndLicensesResult != null ? currentTaxesAndLicensesResult : 0,
+    //   commonFunc.checkComparison(
+    //     currentTaxesAndLicensesResult != null
+    //       ? currentTaxesAndLicensesResult
+    //       : 0,
+    //     previousTaxesAndLicensesResult != null
+    //       ? previousTaxesAndLicensesResult
+    //       : 0
+    //   ),
+    //   data.calculatePercentageFromTwoValues(
+    //     currentTaxesAndLicensesResult != null
+    //       ? currentTaxesAndLicensesResult
+    //       : 0,
+    //     previousTaxesAndLicensesResult != null
+    //       ? previousTaxesAndLicensesResult
+    //       : 0
+    //   )
+    // ),
 
     // Other operating expenses
     createIncomeStatementRowData(
