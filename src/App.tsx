@@ -13,6 +13,8 @@ import incomeStatementRowDataInterface from "./common/interfaces/data/charts/inc
 import singleValueRowDataInterface from "./common/interfaces/data/objects/forms/singleValueRowDataInterface";
 import _ from "lodash";
 import commonFunctions from "./common/functions/commonFunctions";
+import OperatingExpensesInterface from "./common/interfaces/data/objects/forms/graph-related/template-interfaces/operatingExpenseInterface";
+import OperatingExpenseDataInterface from "./common/interfaces/data/objects/forms/graph-related/data-interfaces/operatingExpenseDataInterface";
 
 const App: React.FC = () => {
   const [reloadDashboard, setReloadDashboard] = useState<boolean>(false);
@@ -62,7 +64,7 @@ const App: React.FC = () => {
 
   // --------- Revenue-related --------- //
   const revenuePercentageData: singleValueRowDataInterface[] | null =
-    data.getRevenuePercentage(dateDataSource);
+    data.getRevenuePercentage();
   const currentRevenueData: singleValueRowDataInterface[] | null =
     data.getCurrentRevenueValue();
   const previousRevenueData: singleValueRowDataInterface[] | null =
@@ -85,7 +87,7 @@ const App: React.FC = () => {
 
   // --------- COS-related --------- //
   const cosPercentageData: singleValueRowDataInterface[] | null =
-    data.getCosPercentage(dateDataSource);
+    data.getCosPercentage();
   const currentCosData: singleValueRowDataInterface[] | null =
     data.getCurrentCosValue();
   const previousCosData: singleValueRowDataInterface[] | null =
@@ -108,7 +110,7 @@ const App: React.FC = () => {
 
   // --------- Gross-profit-related --------- //
   const grossProfitPercentageData: singleValueRowDataInterface[] | null =
-    data.getGrossProfitPercentage(dateDataSource);
+    data.getGrossProfitPercentage();
   const currentGrossProfitData: singleValueRowDataInterface[] | null =
     data.getCurrentGrossProfitValue();
   const previousGrossProfitData: singleValueRowDataInterface[] | null =
@@ -129,28 +131,130 @@ const App: React.FC = () => {
       : null) || null;
   // --------- End Revenue-related --------//
 
+  // --------- Other Income or expense-related --------- //
+  const otherIncomeOrExpensePercentageData:
+    | singleValueRowDataInterface[]
+    | null = data.getOtherTotalOpexPercentage();
+  const currentOtherIncomeOrExpenseData: singleValueRowDataInterface[] | null =
+    data.getCurrentOtherTotalOperatingExpenses();
+  const previousOtherIncomeOrExpenseData: singleValueRowDataInterface[] | null =
+    data.getPreviousOtherTotalOperatingExpenses();
+
+  // extract results from objects
+  const otherIncomeOrExpensePercentageResult: singleValueRowDataInterface | null =
+    (otherIncomeOrExpensePercentageData
+      ? _.find(otherIncomeOrExpensePercentageData, { name: filteredEntity })
+      : null) || null;
+  const currentOtherIncomeOrExpenseResult: singleValueRowDataInterface | null =
+    (currentOtherIncomeOrExpenseData
+      ? _.find(currentOtherIncomeOrExpenseData, { name: filteredEntity })
+      : null) || null;
+  const previousOtherIncomeOrExpenseResult: singleValueRowDataInterface | null =
+    (previousOtherIncomeOrExpenseData
+      ? _.find(previousOtherIncomeOrExpenseData, {
+          name: filteredEntity,
+        })
+      : null) || null;
+  // --------- End Other Income or expense-related --------//
+
   // --------- Opex-related --------- //
   const opexPercentageData: singleValueRowDataInterface[] | null =
-    data.getOpexPercentage(dateDataSource);
-  const opexCurrentData: singleValueRowDataInterface[] | null =
-    data.getCurrentOpexValue();
-  const opexPreviousData: singleValueRowDataInterface[] | null =
-    data.getPreviousOpexValue();
+    data.getOpexPercentage();
+  const opexCurrentTotalOpexValue: singleValueRowDataInterface[] | null =
+    data.getCurrentTotalOpexValue();
+  const opexPreviousTotalOpexValue: singleValueRowDataInterface[] | null =
+    data.getPreviousTotalOpexValue();
+
+  const opexCurrentData: OperatingExpenseDataInterface[] | null =
+    data.getOpexPerBU(dateDataSource);
+  const opexPreviousData: OperatingExpenseDataInterface[] | null =
+    data.getOpexPerBU("previous");
+
+  // per BU
+  const currentOpexDataPerBu: OperatingExpenseDataInterface[] | null =
+    data.getOpexPerBU("current");
+  const previousOpexDataPerBu: OperatingExpenseDataInterface[] | null =
+    data.getOpexPerBU("previous");
 
   // extract results from objects
   const opexPercentageResult: singleValueRowDataInterface | null =
     (opexPercentageData
       ? _.find(opexPercentageData, { name: filteredEntity })
       : null) || null;
-  const currentOpexResult: singleValueRowDataInterface | null =
-    (opexPercentageData
+  const opexCurrentTotalOpexResult: singleValueRowDataInterface | null =
+    (opexCurrentTotalOpexValue
+      ? _.find(opexCurrentTotalOpexValue, { name: filteredEntity })
+      : null) || null;
+  const opexPreviousTotalOpexResult: singleValueRowDataInterface | null =
+    (opexPreviousTotalOpexValue
+      ? _.find(opexPreviousTotalOpexValue, { name: filteredEntity })
+      : null) || null;
+
+  // specific opex result/s
+  const currentSpecificOpexResult: OperatingExpenseDataInterface | null =
+    (opexCurrentData
       ? _.find(opexCurrentData, { name: filteredEntity })
       : null) || null;
-  const previousOpexResult: singleValueRowDataInterface | null =
+
+  const currentCommissionsResult: number | null =
+    currentSpecificOpexResult != null &&
+    currentSpecificOpexResult.expenses != null
+      ? currentSpecificOpexResult.expenses.commissions
+      : null;
+
+  const currentManagementFeeExpenseResult: number | null =
+    currentSpecificOpexResult != null &&
+    currentSpecificOpexResult.expenses != null
+      ? currentSpecificOpexResult.expenses.management_fee_expense
+      : null;
+
+  const currentProfessionalAndLegalFeesResult: number | null =
+    currentSpecificOpexResult != null &&
+    currentSpecificOpexResult.expenses != null
+      ? currentSpecificOpexResult.expenses.professional_and_legal_fees
+      : null;
+
+  const currentSecurityAndJanitorialServicesResult: number | null =
+    currentSpecificOpexResult != null &&
+    currentSpecificOpexResult.expenses != null
+      ? currentSpecificOpexResult.expenses.security_and_janitorial_services
+      : null;
+
+  const currentTaxesAndLicensesResult: number | null =
+    currentSpecificOpexResult != null &&
+    currentSpecificOpexResult.expenses != null
+      ? currentSpecificOpexResult.expenses.taxes_and_licenses
+      : null;
+
+  const previousSpecificOpexResult: OperatingExpenseDataInterface | null =
     (opexPercentageData
       ? _.find(opexPreviousData, { name: filteredEntity })
       : null) || null;
-  // --------- End Revenue-related --------//
+
+  const currentCommissionsOpexResult: OperatingExpenseDataInterface | null =
+    (currentOpexDataPerBu
+      ? _.find(currentOpexDataPerBu, { name: filteredEntity })
+      : null) || null;
+
+  const previousCommissionsOpexResult: OperatingExpenseDataInterface | null =
+    (previousOpexDataPerBu
+      ? _.find(previousOpexDataPerBu, { name: filteredEntity })
+      : null) || null;
+
+  const currentOpexCommissionsResult: number | null =
+    currentCommissionsOpexResult != null
+      ? currentCommissionsOpexResult.expenses != null
+        ? currentCommissionsOpexResult.expenses.commissions
+        : 0
+      : 0;
+
+  const previousOpexCommissionsResult: number | null =
+    previousCommissionsOpexResult != null
+      ? previousCommissionsOpexResult.expenses != null
+        ? previousCommissionsOpexResult.expenses.commissions
+        : 0
+      : 0;
+  // --------- End Opex-related --------//
 
   const rows: incomeStatementRowDataInterface[] = [
     // Revenue
@@ -201,20 +305,153 @@ const App: React.FC = () => {
     createIncomeStatementRowData(
       3,
       "OPEX",
-      currentOpexResult?.value != null ? currentOpexResult.value : 0,
+      opexCurrentTotalOpexResult?.value != null
+        ? opexCurrentTotalOpexResult?.value
+        : 0,
       commonFunc.checkComparison(
-        currentOpexResult?.value != null ? currentOpexResult.value : 0,
-        previousOpexResult?.value != null ? previousOpexResult.value : 0
+        opexCurrentTotalOpexResult?.value != null
+          ? opexCurrentTotalOpexResult.value
+          : 0,
+        opexPreviousTotalOpexResult?.value != null
+          ? opexPreviousTotalOpexResult?.value
+          : 0
       ),
       opexPercentageResult?.value != null ? opexPercentageResult.value : 0
     ),
 
-    // createIncomeStatementRowData(4, "Commissions", 0, null),
-    // createIncomeStatementRowData(5, "Management Fee Expense", 0, null),
-    // createIncomeStatementRowData(6, "Professional and Legal Fees", 0, null),
-    // createIncomeStatementRowData(7, "Security and Janitorial", 0, null),
-    // createIncomeStatementRowData(8, "Taxes and Licenses", 0, null),
-    // createIncomeStatementRowData(9, "Other Expenses", 0, null),
+    // // OPEX Commissions
+    // createIncomeStatementRowData(
+    //   4,
+    //   "Commissions",
+    //   currentCommissionsResult != null ? currentCommissionsResult : 0,
+    //   commonFunc.checkComparison(
+    //     currentCommissionsResult != null ? currentCommissionsResult : 0,
+    //     previousCommissionsResult != null ? previousCommissionsResult : 0
+    //   ),
+    //   data.calculatePercentageFromTwoValues(
+    //     currentCommissionsResult != null ? currentCommissionsResult : 0,
+    //     previousCommissionsResult != null ? previousCommissionsResult : 0
+    //   )
+    // ),
+
+    // // Management Fee Expenses
+    // createIncomeStatementRowData(
+    //   5,
+    //   "Management Fee Expense",
+    //   currentManagementFeeExpenseResult != null
+    //     ? currentManagementFeeExpenseResult
+    //     : 0,
+    //   commonFunc.checkComparison(
+    //     currentManagementFeeExpenseResult != null
+    //       ? currentManagementFeeExpenseResult
+    //       : 0,
+    //     previousManagementFeeExpenseResult != null
+    //       ? previousManagementFeeExpenseResult
+    //       : 0
+    //   ),
+    //   data.calculatePercentageFromTwoValues(
+    //     currentManagementFeeExpenseResult != null
+    //       ? currentManagementFeeExpenseResult
+    //       : 0,
+    //     previousManagementFeeExpenseResult != null
+    //       ? previousManagementFeeExpenseResult
+    //       : 0
+    //   )
+    // ),
+
+    // // Professional and Legal Fees
+    // createIncomeStatementRowData(
+    //   6,
+    //   "Professional and Legal Fees",
+    //   currentProfessionalAndLegalFeesResult != null
+    //     ? currentProfessionalAndLegalFeesResult
+    //     : 0,
+    //   commonFunc.checkComparison(
+    //     currentProfessionalAndLegalFeesResult != null
+    //       ? currentProfessionalAndLegalFeesResult
+    //       : 0,
+    //     previousProfessionalAndLegalFeesResult != null
+    //       ? previousProfessionalAndLegalFeesResult
+    //       : 0
+    //   ),
+    //   data.calculatePercentageFromTwoValues(
+    //     currentProfessionalAndLegalFeesResult != null
+    //       ? currentProfessionalAndLegalFeesResult
+    //       : 0,
+    //     previousProfessionalAndLegalFeesResult != null
+    //       ? previousProfessionalAndLegalFeesResult
+    //       : 0
+    //   )
+    // ),
+
+    // // Security and Janitorial
+    // createIncomeStatementRowData(
+    //   7,
+    //   "Security and Janitorial",
+    //   currentSecurityAndJanitorialServicesResult != null
+    //     ? currentSecurityAndJanitorialServicesResult
+    //     : 0,
+    //   commonFunc.checkComparison(
+    //     currentSecurityAndJanitorialServicesResult != null
+    //       ? currentSecurityAndJanitorialServicesResult
+    //       : 0,
+    //     previousSecurityAndJanitorialServicesResult != null
+    //       ? previousSecurityAndJanitorialServicesResult
+    //       : 0
+    //   ),
+    //   data.calculatePercentageFromTwoValues(
+    //     currentSecurityAndJanitorialServicesResult != null
+    //       ? currentSecurityAndJanitorialServicesResult
+    //       : 0,
+    //     previousSecurityAndJanitorialServicesResult != null
+    //       ? previousSecurityAndJanitorialServicesResult
+    //       : 0
+    //   )
+    // ),
+
+    // // Taxes and Licenses
+    // createIncomeStatementRowData(
+    //   8,
+    //   "Taxes and Licenses",
+    //   currentTaxesAndLicensesResult != null ? currentTaxesAndLicensesResult : 0,
+    //   commonFunc.checkComparison(
+    //     currentTaxesAndLicensesResult != null
+    //       ? currentTaxesAndLicensesResult
+    //       : 0,
+    //     previousTaxesAndLicensesResult != null
+    //       ? previousTaxesAndLicensesResult
+    //       : 0
+    //   ),
+    //   data.calculatePercentageFromTwoValues(
+    //     currentTaxesAndLicensesResult != null
+    //       ? currentTaxesAndLicensesResult
+    //       : 0,
+    //     previousTaxesAndLicensesResult != null
+    //       ? previousTaxesAndLicensesResult
+    //       : 0
+    //   )
+    // ),
+
+    // Other operating expenses
+    createIncomeStatementRowData(
+      9,
+      "Other Operating Expenses",
+      currentOtherIncomeOrExpenseResult?.value != null
+        ? currentOtherIncomeOrExpenseResult?.value
+        : 0,
+      commonFunc.checkComparison(
+        currentOtherIncomeOrExpenseResult?.value != null
+          ? currentOtherIncomeOrExpenseResult?.value
+          : 0,
+        previousOtherIncomeOrExpenseResult?.value != null
+          ? previousOtherIncomeOrExpenseResult?.value
+          : 0
+      ),
+      otherIncomeOrExpensePercentageResult?.value != null
+        ? otherIncomeOrExpensePercentageResult?.value
+        : 0
+    ),
+
     // createIncomeStatementRowData(10, "EBIT", 0, null),
     // createIncomeStatementRowData(11, "Interest and Tax", 0, null),
     // createIncomeStatementRowData(12, "Net Profit", 0, null),
