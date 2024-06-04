@@ -39,11 +39,11 @@ const App: React.FC = () => {
   };
 
   const cardTitles = [
-    { title: "Card 1" },
-    { title: "REVENUE per BUs" },
-    { title: "OPERATION EXPENSES" },
     { title: null },
-    { title: "GPM PER ENTITY" },
+    { title: "REVENUE per BUs (PHP in millions)" },
+    { title: "OPERATION EXPENSES (PHP in millions)" },
+    { title: null },
+    { title: "GPM PER ENTITY (%)" },
   ];
 
   const commonFunc = new commonFunctions();
