@@ -59,7 +59,7 @@ const BarchartComponent = ({
       <ResponsiveContainer width="100%" height={315}>
         <BarChart
           data={transformedData}
-          margin={{ left: 20, top: 30, right: 40 }}
+          margin={{ left: 45, top: 30, right: 40 }}
         >
           <XAxis dataKey="name" />
           <YAxis />
