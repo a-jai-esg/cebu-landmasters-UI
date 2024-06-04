@@ -50,7 +50,6 @@ const BarchartComponent = ({
         <BarChart
           data={transformedData}
           margin={{ left: 45, top: 30, right: 40 }}
-          style={{ backgroundColor: "#E4F4FA" }}
         >
           <XAxis dataKey="name" />
           <YAxis />
