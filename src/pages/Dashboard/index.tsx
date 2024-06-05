@@ -143,7 +143,7 @@ const Dashboard: React.FC<DashboardProps> = ({
                       >
                         <GaugeComponent
                           gaugeData={gaugeData[0]}
-                          title="Gross Profit Margin"
+                          title="Gross Profit Margin (%)"
                         />
                       </div>
                     </Grid>
@@ -153,7 +153,7 @@ const Dashboard: React.FC<DashboardProps> = ({
                       >
                         <GaugeComponent
                           gaugeData={gaugeData[1]}
-                          title="Opex Ratio"
+                          title="Opex Ratio (%)"
                         />
                       </div>
                     </Grid>
@@ -163,7 +163,7 @@ const Dashboard: React.FC<DashboardProps> = ({
                       >
                         <GaugeComponent
                           gaugeData={gaugeData[2]}
-                          title="EBITDA Margin"
+                          title="EBITDA Margin (%)"
                         />
                       </div>
                     </Grid>
@@ -173,7 +173,7 @@ const Dashboard: React.FC<DashboardProps> = ({
                       >
                         <GaugeComponent
                           gaugeData={gaugeData[3]}
-                          title="Conso NIAT"
+                          title="Conso NIAT (%)"
                         />
                       </div>
                     </Grid>
@@ -183,7 +183,7 @@ const Dashboard: React.FC<DashboardProps> = ({
                       >
                         <GaugeComponent
                           gaugeData={gaugeData[4]}
-                          title="Parent NIAT"
+                          title="Parent NIAT (%)"
                         />
                       </div>
                     </Grid>
@@ -262,7 +262,7 @@ const Dashboard: React.FC<DashboardProps> = ({
                       fontSize: "0.875rem",
                     }}
                   >
-                    Expand Chart
+                    Expand Table
                   </Typography>
                 </CardContent>
               </Card>

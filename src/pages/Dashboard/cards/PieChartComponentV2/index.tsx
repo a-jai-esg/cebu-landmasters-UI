@@ -48,7 +48,7 @@ const PrimaryPieChartComponent = ({
         {title}
       </Typography>
       <ResponsiveContainer width="100%" height={355}>
-        <PieChart style={{ backgroundColor: "#E4F4FA" }}>
+        <PieChart>
           <Pie
             data={transformedData}
             dataKey="value"

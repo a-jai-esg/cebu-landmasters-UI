@@ -27,13 +27,14 @@ const GaugeComponent = ({
   gaugeData,
   title,
 }: gaugeDataInterface & titleStringInterface): JSX.Element => {
-  // gauge settings
-  const gaugeColors = ["#413ea0", "#D7DBFA"];
+  // Determine gauge color based on the value
+  const gaugeValue = gaugeData?.value ?? 0;
+  const gaugeColor = gaugeValue >= 0 ? "#413ea0" : "#D62828";
 
   const settings = {
     width: 150,
     height: 95,
-    value: 60,
+    value: gaugeValue,
   };
 
   return (
@@ -46,7 +47,6 @@ const GaugeComponent = ({
         <Gauge
           {...settings}
           cornerRadius="50%"
-          value={gaugeData?.value}
           startAngle={0}
           endAngle={360}
           innerRadius="80%"
@@ -57,8 +57,7 @@ const GaugeComponent = ({
               fontWeight: 400,
             },
             [`& .${gaugeClasses.valueArc}`]: {
-              //fill: "#52b202",
-              fill: gaugeColors[0],
+              fill: gaugeColor,
             },
             [`& .${gaugeClasses.referenceArc}`]: {
               fill: theme.palette.text.disabled,
