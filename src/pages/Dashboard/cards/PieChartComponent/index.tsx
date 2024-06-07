@@ -47,7 +47,7 @@ const PrimaryPieChartComponent = ({
       <Typography fontSize={20} color="#333" fontWeight="bold" padding={1}>
         {title}
       </Typography>
-      <ResponsiveContainer width="100%" height={255}>
+      <ResponsiveContainer width="100%" height={285}>
         <PieChart>
           <Pie
             data={transformedData}
@@ -65,7 +65,12 @@ const PrimaryPieChartComponent = ({
             ))}
           </Pie>
           <Tooltip formatter={formatNumberWithCommas} />
-          <Legend />
+          <Legend
+          // verticalAlign="middle"
+          layout="vertical"
+          // align="left"
+          // wrapperStyle={{ lineHeight: '20px' }}
+        />
         </PieChart>
       </ResponsiveContainer>
     </Box>
