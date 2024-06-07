@@ -14,7 +14,7 @@ interface PieDataInterface {
   pieData: OperatingExpenseDataInterface[];
 }
 
-const COLORS = ["#3FB3E5", "#D777C3", "#84E48D", "#85C7EE"];
+const COLORS = ["#3FB3E5", "#D777C3", "#84E48D", "#85C7EE", "#7B9BB1"];
 
 // This function transforms the expenses data into the pie chart data format
 const transformData = (
@@ -47,7 +47,7 @@ const PrimaryPieChartComponent = ({
       <Typography fontSize={20} color="#333" fontWeight="bold" padding={1}>
         {title}
       </Typography>
-      <ResponsiveContainer width="100%" height={255}>
+      <ResponsiveContainer width="100%" height={285}>
         <PieChart>
           <Pie
             data={transformedData}
@@ -65,7 +65,12 @@ const PrimaryPieChartComponent = ({
             ))}
           </Pie>
           <Tooltip formatter={formatNumberWithCommas} />
-          <Legend />
+          <Legend
+          // verticalAlign="middle"
+          layout="vertical"
+          // align="left"
+          // wrapperStyle={{ lineHeight: '20px' }}
+        />
         </PieChart>
       </ResponsiveContainer>
     </Box>
