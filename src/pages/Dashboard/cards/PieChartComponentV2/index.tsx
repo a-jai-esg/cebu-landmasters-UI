@@ -14,7 +14,7 @@ interface PieDataInterface {
   pieData: OperatingExpenseDataInterface[];
 }
 
-const COLORS = ["#3FB3E5", "#D777C3", "#84E48D", "#85C7EE"];
+const COLORS = ["#3FB3E5", "#D777C3", "#84E48D", "#85C7EE", "#7B9BB1"];
 
 // This function transforms the expenses data into the pie chart data format
 const transformData = (
