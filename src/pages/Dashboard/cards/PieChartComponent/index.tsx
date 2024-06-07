@@ -15,6 +15,7 @@ interface PieDataInterface {
 }
 
 const COLORS = ["#3FB3E5", "#D777C3", "#84E48D", "#85C7EE", "#7B9BB1"];
+const COLORS = ["#3FB3E5", "#D777C3", "#84E48D", "#85C7EE", "#7B9BB1"];
 
 // This function transforms the expenses data into the pie chart data format
 const transformData = (
@@ -65,7 +66,12 @@ const PrimaryPieChartComponent = ({
             ))}
           </Pie>
           <Tooltip formatter={formatNumberWithCommas} />
-          <Legend />
+          <Legend
+            // verticalAlign="middle"
+            layout="vertical"
+            // align="left"
+            // wrapperStyle={{ lineHeight: '20px' }}
+          />
         </PieChart>
       </ResponsiveContainer>
     </Box>
