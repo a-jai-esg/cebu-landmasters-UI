@@ -46,7 +46,7 @@ const BarchartComponent = ({
       <Typography fontSize={20} color="#333" fontWeight="bold" padding={1}>
         {title}
       </Typography>
-      <ResponsiveContainer width="100%" height={250}>
+      <ResponsiveContainer width="100%" height={313}>
         <BarChart
           data={transformedData}
           margin={{ left: 45, top: 30, right: 40 }}

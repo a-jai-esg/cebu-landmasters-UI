@@ -17,7 +17,7 @@ const IncomeStatementTable = ({ data }: dataObjects): JSX.Element => {
   return (
     <>
       <React.Fragment>
-        <div style={{ height: "300px", overflow: "auto" }}>
+        <div style={{ height: "362.5px", overflow: "auto" }}>
           <Table size="small">
             <TableHead>
               <TableRow>
