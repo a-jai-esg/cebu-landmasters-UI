@@ -26,15 +26,19 @@ const transformData = (
       return Object.entries(entry.expenses).map(([key, value]) => ({
         name: key.replace(/_/g, " "), // Optional: replace underscores with spaces for better readability
         value: value ? parseFloat((Math.abs(value) / 1_000_000).toFixed(2)) : 0, // Divide by one million and round to 2 decimal places
+        value: value ? parseFloat((Math.abs(value) / 1_000_000).toFixed(2)) : 0, // Divide by one million and round to 2 decimal places
       }));
     }
     return [];
   });
 };
 
-// Function to format numbers with commas
-const formatNumberWithCommas = (number: number) => {
-  return number.toLocaleString();
+// Function to format numbers with commas and 2 decimal places
+const formatNumberWithCommasAndDecimals = (number: number) => {
+  return number.toLocaleString(undefined, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
 };
 
 const PrimaryPieChartComponent = ({
@@ -56,7 +60,7 @@ const PrimaryPieChartComponent = ({
             nameKey="name"
             outerRadius={62.5}
             fill="#8884d8"
-            label={({ value }) => `${formatNumberWithCommas(value)}`}
+            label={({ value }) => `${formatNumberWithCommasAndDecimals(value)}`}
           >
             {transformedData.map((_entry, index) => (
               <Cell
@@ -65,13 +69,8 @@ const PrimaryPieChartComponent = ({
               />
             ))}
           </Pie>
-          <Tooltip formatter={formatNumberWithCommas} />
-          <Legend
-            // verticalAlign="middle"
-            layout="vertical"
-            // align="left"
-            // wrapperStyle={{ lineHeight: '20px' }}
-          />
+          <Tooltip formatter={formatNumberWithCommasAndDecimals} />
+          <Legend layout="vertical" />
         </PieChart>
       </ResponsiveContainer>
     </Box>
