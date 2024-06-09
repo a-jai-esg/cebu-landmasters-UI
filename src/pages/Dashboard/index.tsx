@@ -4,7 +4,7 @@ import { Card, CardContent, Typography, Grid, Box } from "@mui/material";
 import GaugeComponent from "./cards/GaugeComponent";
 import IncomeStatementTable from "./cards/IncomeStatementTableComponent";
 import BarchartComponent from "./cards/BarchartComponent";
-import PrimaryPieChartComponent from "./cards/PieChartComponent";
+import PrimaryPieChartComponent from "./cards/CustomPieChartComponent";
 import ComposedChartComponent from "./cards/ComposedChartComponent";
 import BarChartModal from "../../components/global/Modals/BarChartModal";
 import PieChartModal from "../../components/global/Modals/PieChartModal"; 
@@ -224,7 +224,8 @@ const Dashboard: React.FC<DashboardProps> = ({
                 <CardContent>
                   <PrimaryPieChartComponent
                     pieData={pieDataFiltered}
-                    title={cardTitles[2].title}
+                    title={cardTitles[2].title ?? "Pie Chart"}
+                    colors = {["#3FB3E5", "#D777C3", "#84E48D", "#85C7EE", "#7B9BB1"]}
                   />
                   <Typography
                     onClick={handleOpenPieChartModal}
