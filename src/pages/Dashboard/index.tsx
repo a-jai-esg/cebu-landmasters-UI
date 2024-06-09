@@ -307,7 +307,7 @@ const Dashboard: React.FC<DashboardProps> = ({
           )}
           {/* Composed Chart*/}
           {cardTitles.length > 4 && (
-            <Grid item xs={12}>
+            <Grid item xs={12} sx={{ marginBottom: 3.5 }}>
               <Card sx={{ borderRadius: 3, boxShadow: 6 }}>
                 <CardContent>
                   <ComposedChartComponent

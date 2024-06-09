@@ -1,18 +1,16 @@
 import * as React from "react";
 import Typography from "@mui/material/Typography";
 import { FilterAltOutlined } from "@mui/icons-material";
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import {
   Box,
   Checkbox,
   FormControl,
   FormControlLabel,
   FormGroup,
+  Button,
 } from "@mui/material";
 import { styled } from "@mui/system";
 import { keyframes } from "@emotion/react";
-import { Dayjs } from "dayjs";
 
 const appear = keyframes`
   from {
@@ -32,32 +30,6 @@ const scaleUp = keyframes`
   }
 `;
 
-const StyledDatePicker = styled(DatePicker)(({}) => ({
-  animation: `${appear} 1s ease-in-out`,
-  "& .MuiSvgIcon-root": {
-    color: "#c1c5de",
-  },
-  "& .MuiOutlinedInput-root": {
-    "& fieldset": {
-      color: "#c1c5de",
-      borderColor: "#c1c5de",
-    },
-    "&:hover fieldset": {
-      borderColor: "#c1c5de",
-    },
-    "&.Mui-focused fieldset": {
-      borderColor: "#c1c5de",
-    },
-    color: "#c1c5de", // Change input text color
-  },
-  "& .MuiInputLabel-root": {
-    color: "#c1c5de", // Change label text color
-  },
-  "& .MuiFormHelperText-root": {
-    color: "#c1c5de", // Change helper text color
-  },
-}));
-
 const StyledFormControlLabel = styled(FormControlLabel)(({}) => ({
   color: "#c1c5de", // Change label text color
   animation: `${appear} 1s ease-in-out`,
@@ -75,18 +47,18 @@ const AnimatedTypography = styled(Typography)(({}) => ({
 
 interface FilterProps {
   onCheckboxChange: (selectedEntity: string | null) => void;
-  startDate: Dayjs | null;
-  endDate: Dayjs | null;
-  onStartDateChange: (date: Dayjs | null) => void;
-  onEndDateChange: (date: Dayjs | null) => void;
+  onCurrentFileUpload: (file: File | null) => void;
+  onPreviousFileUpload: (file: File | null) => void;
 }
+
+const truncateText = (text: string, maxLength: number) => {
+  return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
+};
 
 const FilterComponent: React.FC<FilterProps> = ({
   onCheckboxChange,
-  startDate,
-  endDate,
-  onStartDateChange,
-  onEndDateChange,
+  onCurrentFileUpload,
+  onPreviousFileUpload,
 }) => {
   const [state, setState] = React.useState({
     CLI: true,
@@ -94,10 +66,8 @@ const FilterComponent: React.FC<FilterProps> = ({
     YES: false,
   });
 
-  const nullifyValues = () => {
-    onStartDateChange(null);
-    onEndDateChange(null);
-  };
+  const [currentFilename, setCurrentFilename] = React.useState("");
+  const [previousFilename, setPreviousFilename] = React.useState("");
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = event.target;
@@ -120,24 +90,22 @@ const FilterComponent: React.FC<FilterProps> = ({
     onCheckboxChange(checked ? name : null);
   };
 
-  const handleStartDateChange = (newValue: unknown) => {
-    const date = (newValue as Dayjs)?.startOf("day") || null;
-    if (date && endDate && date.isAfter(endDate)) {
-      alert("Start date must be lesser than or equal to end date");
-      nullifyValues();
-    } else {
-      onStartDateChange(date);
-    }
+  const handleCurrentIncomeStatementFileUpload = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const files = event.target.files;
+    const file = files ? files[0] : null;
+    setCurrentFilename(file ? file.name : "");
+    onCurrentFileUpload(file);
   };
 
-  const handleEndDateChange = (newValue: unknown) => {
-    const date = (newValue as Dayjs)?.startOf("day") || null;
-    if (date && startDate && date.isBefore(startDate)) {
-      alert("End date must be greater than or equal to start date");
-      nullifyValues();
-    } else {
-      onEndDateChange(date);
-    }
+  const handlePreviousIncomeStatementFileUpload = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const files = event.target.files;
+    const file = files ? files[0] : null;
+    setPreviousFilename(file ? file.name : "");
+    onPreviousFileUpload(file);
   };
 
   return (
@@ -168,62 +136,6 @@ const FilterComponent: React.FC<FilterProps> = ({
           Filters
         </AnimatedTypography>
       </div>
-
-      {/* Date Filters */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          margin: "40px 0 15px 25px",
-        }}
-      >
-        <AnimatedTypography
-          variant="h6"
-          color="#c1c5de"
-          fontWeight="600"
-          fontSize={14}
-        >
-          DATE
-        </AnimatedTypography>
-      </div>
-
-      <div
-        style={{
-          marginTop: "20px",
-          marginLeft: "25px",
-          marginRight: "35px",
-          marginBottom: "50px",
-        }}
-      >
-        {/* Start Date */}
-        <Box sx={{ marginBottom: "10px" }}>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <StyledDatePicker
-              label="Start Date"
-              slotProps={{ textField: { variant: "outlined" } }}
-              value={startDate}
-              onChange={handleStartDateChange}
-            />
-          </LocalizationProvider>
-        </Box>
-        {/* End Date */}
-        <Box
-          sx={{
-            marginTop: "20px",
-            marginBottom: "20px",
-          }}
-        >
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <StyledDatePicker
-              label="End Date"
-              slotProps={{ textField: { variant: "outlined" } }}
-              value={endDate}
-              onChange={handleEndDateChange}
-            />
-          </LocalizationProvider>
-        </Box>
-      </div>
-
       {/* Entity Filters */}
       <div
         style={{
@@ -298,6 +210,91 @@ const FilterComponent: React.FC<FilterProps> = ({
             </FormGroup>
           </FormControl>
         </Box>
+      </div>
+      <div>
+        {/* file upload */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            margin: "50px 0 38px 20px",
+          }}
+        >
+          <AnimatedTypography
+            variant="h6"
+            color="#c1c5de"
+            sx={{ fontWeight: 600, fontSize: "14px" }}
+          >
+            INCOME STATEMENT
+          </AnimatedTypography>
+        </div>
+        <div
+          style={{
+            marginTop: "20px",
+            marginLeft: "40px",
+            marginRight: "25px",
+          }}
+        >
+          <input
+            type="file"
+            id="currentFile"
+            accept=".xlsx, .xls"
+            style={{ display: "none" }}
+            onChange={handleCurrentIncomeStatementFileUpload}
+          />
+          <label htmlFor="currentFile">
+            <Button
+              variant="contained"
+              component="span"
+              sx={{
+                backgroundColor: "#c1c5de",
+                color: "#24274c",
+                "&:active": {
+                  transform: "none",
+                },
+                "&:focus": {
+                  transform: "none",
+                },
+              }}
+            >
+              {truncateText(currentFilename, 15) || "Upload Current"}
+            </Button>
+          </label>
+        </div>
+
+        <div
+          style={{
+            marginTop: "20px",
+            marginLeft: "40px",
+            marginRight: "25px",
+          }}
+        >
+          <input
+            type="file"
+            id="previousFile"
+            accept=".xlsx, .xls"
+            style={{ display: "none" }}
+            onChange={handlePreviousIncomeStatementFileUpload}
+          />
+          <label htmlFor="previousFile">
+            <Button
+              variant="contained"
+              component="span"
+              sx={{
+                backgroundColor: "#c1c5de",
+                color: "#24274c",
+                "&:active": {
+                  transform: "none",
+                },
+                "&:focus": {
+                  transform: "none",
+                },
+              }}
+            >
+              {truncateText(previousFilename, 15) || "Upload Previous"}
+            </Button>
+          </label>
+        </div>
       </div>
     </>
   );
