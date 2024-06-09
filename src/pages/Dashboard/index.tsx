@@ -5,6 +5,7 @@ import GaugeComponent from "./cards/GaugeComponent";
 import IncomeStatementTable from "./cards/IncomeStatementTableComponent";
 import BarchartComponent from "./cards/BarchartComponent";
 import PrimaryPieChartComponent from "./cards/CustomPieChartComponent";
+import PrimaryPieChartComponent from "./cards/CustomPieChartComponent";
 import ComposedChartComponent from "./cards/ComposedChartComponent";
 import BarChartModal from "../../components/global/Modals/BarChartModal";
 import PieChartModal from "../../components/global/Modals/PieChartModal";
