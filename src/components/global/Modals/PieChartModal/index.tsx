@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal, Box, Card, CardContent, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import PieChartComponentV2 from "../../../../pages/Dashboard/cards/PieChartComponentV2";
+import CustomPieChartComponent from "../../../../pages/Dashboard/cards/CustomPieChartComponent";
 import operatingExpenseDataInterface from "../../../../common/interfaces/data/objects/forms/graph-related/data-interfaces/operatingExpenseDataInterface";
 
 interface PieChartModalProps {
@@ -37,7 +37,11 @@ const PieChartModal: React.FC<PieChartModalProps> = ({ open, onClose, pieData, t
               >
                 <CloseIcon />
               </IconButton>
-              <PieChartComponentV2 pieData={pieData} title={title} />
+              <CustomPieChartComponent 
+                pieData={pieData} 
+                title={title} 
+                colors={["#3FB3E5", "#D777C3", "#84E48D", "#85C7EE", "#7B9BB1"]}  
+              />
             </CardContent>
           </Card>
         </Box>
