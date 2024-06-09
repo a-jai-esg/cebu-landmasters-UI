@@ -25,7 +25,7 @@ const IncomeStatementTable = ({ data }: dataObjects): JSX.Element => {
                   Income Statement
                 </TableCell>
                 <TableCell sx={{ fontWeight: 800, fontSize: "13px" }}>
-                  Current Year
+                   Current Year <br />(PHP in millions)
                 </TableCell>
                 <TableCell sx={{ fontWeight: 800, fontSize: "13px" }}>
                   vs PY
@@ -98,9 +98,12 @@ const IncomeStatementTable = ({ data }: dataObjects): JSX.Element => {
                     ) : (
                       <TableCell sx={{ fontWeight: 400 }}>{row.name}</TableCell>
                     )}
-
                     <TableCell>
-                      {commonFunc.formatCurrencyToPHP(row.currentYear)}
+                      {row.currentYear !== null
+                        ? commonFunc.formatCurrencyToPHP(
+                            parseFloat((row.currentYear / 1_000_000).toFixed(2))
+                          )
+                        : ""}
                     </TableCell>
                     <TableCell>
                       {row.vsPreviousYear ? (
