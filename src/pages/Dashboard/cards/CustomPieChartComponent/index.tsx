@@ -9,7 +9,6 @@ import {
 } from "recharts";
 import TitleStringInterface from "../../../../common/interfaces/components/titleStringInterface";
 import OperatingExpenseDataInterface from "../../../../common/interfaces/data/objects/forms/graph-related/data-interfaces/operatingExpenseDataInterface";
-import { Box, Typography } from "@mui/material";
 
 const renderActiveShape = (props: any) => {
   const RADIAN = Math.PI / 180;
@@ -118,11 +117,9 @@ const CustomPieChartComponent: React.FC<CustomPieChartComponentProps> = ({
   const transformedData = transformData(pieData);
 
   return (
-    <Box>
-      <Typography fontSize={18} color="#333" fontWeight="bold" padding={1.5}>
-        {title}
-      </Typography>
-      <ResponsiveContainer width="100%" height={314}>
+    <div>
+      <h3>{title}</h3>
+      <ResponsiveContainer width="100%" height={303}>
         <PieChart>
           <Pie
             activeIndex={activeIndex}
@@ -146,7 +143,7 @@ const CustomPieChartComponent: React.FC<CustomPieChartComponentProps> = ({
           <Legend />
         </PieChart>
       </ResponsiveContainer>
-    </Box>
+    </div>
   );
 };
 
