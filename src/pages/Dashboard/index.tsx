@@ -7,8 +7,8 @@ import BarchartComponent from "./cards/BarchartComponent";
 import PrimaryPieChartComponent from "./cards/CustomPieChartComponent";
 import ComposedChartComponent from "./cards/ComposedChartComponent";
 import BarChartModal from "../../components/global/Modals/BarChartModal";
-import PieChartModal from "../../components/global/Modals/PieChartModal"; 
-import IncomeStatementTableModal from "../../components/global/Modals/IncomeStatementTableModal"; 
+import PieChartModal from "../../components/global/Modals/PieChartModal";
+import IncomeStatementTableModal from "../../components/global/Modals/IncomeStatementTableModal";
 import chartDataInterface from "../../common/interfaces/data/charts/chartDataInterface";
 import * as _ from "lodash";
 import singleValueRowDataInterface from "../../common/interfaces/data/objects/forms/singleValueRowDataInterface";
@@ -32,9 +32,12 @@ const Dashboard: React.FC<DashboardProps> = ({
   entityFilter,
 }) => {
   const [reloadKey, setReloadKey] = useState<number>(0);
-  const [isBarChartModalOpen, setIsBarChartModalOpen] = useState<boolean>(false);
-  const [isPieChartModalOpen, setIsPieChartModalOpen] = useState<boolean>(false);
-  const [isIncomeStatementTableModalOpen, setIsIncomeStatementTableModalOpen] = useState<boolean>(false);
+  const [isBarChartModalOpen, setIsBarChartModalOpen] =
+    useState<boolean>(false);
+  const [isPieChartModalOpen, setIsPieChartModalOpen] =
+    useState<boolean>(false);
+  const [isIncomeStatementTableModalOpen, setIsIncomeStatementTableModalOpen] =
+    useState<boolean>(false);
 
   useEffect(() => {
     if (reload) {
@@ -117,8 +120,10 @@ const Dashboard: React.FC<DashboardProps> = ({
   const handleOpenPieChartModal = () => setIsPieChartModalOpen(true);
   const handleClosePieChartModal = () => setIsPieChartModalOpen(false);
 
-  const handleOpenIncomeStatementTableModal = () => setIsIncomeStatementTableModalOpen(true);
-  const handleCloseIncomeStatementTableModal = () => setIsIncomeStatementTableModalOpen(false);
+  const handleOpenIncomeStatementTableModal = () =>
+    setIsIncomeStatementTableModalOpen(true);
+  const handleCloseIncomeStatementTableModal = () =>
+    setIsIncomeStatementTableModalOpen(false);
 
   return (
     <Box
@@ -225,7 +230,13 @@ const Dashboard: React.FC<DashboardProps> = ({
                   <PrimaryPieChartComponent
                     pieData={pieDataFiltered}
                     title={cardTitles[2].title ?? "Pie Chart"}
-                    colors = {["#3FB3E5", "#D777C3", "#84E48D", "#85C7EE", "#7B9BB1"]}
+                    colors={[
+                      "#3FB3E5",
+                      "#D777C3",
+                      "#84E48D",
+                      "#85C7EE",
+                      "#7B9BB1",
+                    ]}
                   />
                   <Typography
                     onClick={handleOpenPieChartModal}
@@ -271,7 +282,7 @@ const Dashboard: React.FC<DashboardProps> = ({
           )}
           {/* Composed Chart*/}
           {cardTitles.length > 4 && (
-            <Grid item xs={12}>
+            <Grid item xs={12} sx={{ marginBottom: 3.5 }}>
               <Card sx={{ borderRadius: 3, boxShadow: 6 }}>
                 <CardContent>
                   <ComposedChartComponent

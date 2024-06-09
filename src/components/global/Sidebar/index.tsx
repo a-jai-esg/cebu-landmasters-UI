@@ -7,33 +7,26 @@ import { Box, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import FilterComponent from "./FilterComponent";
 import "../../../App.css";
-import { Dayjs } from "dayjs";
 
 interface SidebarProps {
   onCheckboxClick: (selectedEntity: string | null) => void;
-  startDate: Dayjs | null;
-  endDate: Dayjs | null;
-  onStartDateChange: (date: Dayjs | null) => void;
-  onEndDateChange: (date: Dayjs | null) => void;
+  onCurrentFileUpload: (file: File | null) => void;
+  onPreviousFileUpload: (file: File | null) => void;
 }
 
 const SidebarComponent: React.FC<SidebarProps> = ({
   onCheckboxClick,
-  startDate,
-  endDate,
-  onStartDateChange,
-  onEndDateChange,
+  onCurrentFileUpload,
+  onPreviousFileUpload,
 }) => {
   const [selected, setSelected] = useState("Income Statement");
   const [isFilterVisible, setIsFilterVisible] = useState(true);
 
   const handleMenuItemClick = (menuItem: string) => {
     setSelected(menuItem);
-    if (menuItem === "Income Statement") {
-      setIsFilterVisible((prevState) => !prevState);
-    } else {
-      setIsFilterVisible(false);
-    }
+    menuItem === "Income Statement"
+      ? setIsFilterVisible((prevState) => !prevState)
+      : setIsFilterVisible(false);
   };
 
   return (
@@ -109,10 +102,8 @@ const SidebarComponent: React.FC<SidebarProps> = ({
             >
               <FilterComponent
                 onCheckboxChange={onCheckboxClick}
-                startDate={startDate}
-                endDate={endDate}
-                onStartDateChange={onStartDateChange}
-                onEndDateChange={onEndDateChange}
+                onCurrentFileUpload={onCurrentFileUpload}
+                onPreviousFileUpload={onPreviousFileUpload}
               />
             </Box>
           )}

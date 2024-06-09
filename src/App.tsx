@@ -4,7 +4,6 @@ import SidebarComponent from "./components/global/Sidebar";
 import Dashboard from "../src/pages/Dashboard";
 import chartDataInterface from "./common/interfaces/data/charts/chartDataInterface";
 import dataCalculation from "./data-calculation/dataCalculation";
-import { Dayjs } from "dayjs";
 
 // datasets
 import dataSource2021 from "./data/incomeStatementDataSource2021.json";
@@ -17,24 +16,30 @@ import OperatingExpenseDataInterface from "./common/interfaces/data/objects/form
 
 const App: React.FC = () => {
   const [reloadDashboard, setReloadDashboard] = useState<boolean>(false);
-  const [startDate, setStartDate] = useState<Dayjs | null>(null);
-  const [endDate, setEndDate] = useState<Dayjs | null>(null);
-  const [dateDataSource, setDateDataSource] = useState<string>("current");
+  const [dateDataSource, setDateDataSource] = useState("current");
   const [filteredEntity, setFilteredEntity] = useState<string>("CLI");
+
+  // handle for current and previous income statement uploads
+  const [currentIncomeStatement, setCurrentIncomeStatement] =
+    useState<File | null>(null);
+  const [previousIncomeStatement, setPreviousIncomeStatement] =
+    useState<File | null>(null);
 
   const handleReloadDashboard = (data: string | null) => {
     setReloadDashboard(!reloadDashboard);
     data !== null ? setFilteredEntity(data) : setFilteredEntity("CLI");
   };
 
-  const handleStartDateChange = (date: Dayjs | null) => {
-    setStartDate(date);
-    console.log("Start Date: ", date);
+  const handleCurrentIncomeStatementChange = (file: File | null) => {
+    setCurrentIncomeStatement(file);
+    console.log(currentIncomeStatement);
+    console.log("Successfully set file for current income statement.");
   };
 
-  const handleEndDateChange = (date: Dayjs | null) => {
-    setEndDate(date);
-    console.log("End Date: ", date);
+  const handlePreviousIncomeStatementChange = (file: File | null) => {
+    setPreviousIncomeStatement(file);
+    console.log(previousIncomeStatement);
+    console.log("Successfully set file for previous income statement.");
   };
 
   const cardTitles = [
@@ -150,9 +155,7 @@ const App: React.FC = () => {
       : null) || null;
   const previousOtherIncomeOrExpenseResult: singleValueRowDataInterface | null =
     (previousOtherIncomeOrExpenseData
-      ? _.find(previousOtherIncomeOrExpenseData, {
-          name: filteredEntity,
-        })
+      ? _.find(previousOtherIncomeOrExpenseData, { name: filteredEntity })
       : null) || null;
   // --------- End Other Income or expense-related --------//
 
@@ -320,119 +323,6 @@ const App: React.FC = () => {
       opexPercentageResult?.value != null ? opexPercentageResult.value : 0
     ),
 
-    // // OPEX Commissions
-    // createIncomeStatementRowData(
-    //   4,
-    //   "Commissions",
-    //   currentCommissionsResult != null ? currentCommissionsResult : 0,
-    //   commonFunc.checkComparison(
-    //     currentCommissionsResult != null ? currentCommissionsResult : 0,
-    //     previousCommissionsResult != null ? previousCommissionsResult : 0
-    //   ),
-    //   data.calculatePercentageFromTwoValues(
-    //     currentCommissionsResult != null ? currentCommissionsResult : 0,
-    //     previousCommissionsResult != null ? previousCommissionsResult : 0
-    //   )
-    // ),
-
-    // // Management Fee Expenses
-    // createIncomeStatementRowData(
-    //   5,
-    //   "Management Fee Expense",
-    //   currentManagementFeeExpenseResult != null
-    //     ? currentManagementFeeExpenseResult
-    //     : 0,
-    //   commonFunc.checkComparison(
-    //     currentManagementFeeExpenseResult != null
-    //       ? currentManagementFeeExpenseResult
-    //       : 0,
-    //     previousManagementFeeExpenseResult != null
-    //       ? previousManagementFeeExpenseResult
-    //       : 0
-    //   ),
-    //   data.calculatePercentageFromTwoValues(
-    //     currentManagementFeeExpenseResult != null
-    //       ? currentManagementFeeExpenseResult
-    //       : 0,
-    //     previousManagementFeeExpenseResult != null
-    //       ? previousManagementFeeExpenseResult
-    //       : 0
-    //   )
-    // ),
-
-    // // Professional and Legal Fees
-    // createIncomeStatementRowData(
-    //   6,
-    //   "Professional and Legal Fees",
-    //   currentProfessionalAndLegalFeesResult != null
-    //     ? currentProfessionalAndLegalFeesResult
-    //     : 0,
-    //   commonFunc.checkComparison(
-    //     currentProfessionalAndLegalFeesResult != null
-    //       ? currentProfessionalAndLegalFeesResult
-    //       : 0,
-    //     previousProfessionalAndLegalFeesResult != null
-    //       ? previousProfessionalAndLegalFeesResult
-    //       : 0
-    //   ),
-    //   data.calculatePercentageFromTwoValues(
-    //     currentProfessionalAndLegalFeesResult != null
-    //       ? currentProfessionalAndLegalFeesResult
-    //       : 0,
-    //     previousProfessionalAndLegalFeesResult != null
-    //       ? previousProfessionalAndLegalFeesResult
-    //       : 0
-    //   )
-    // ),
-
-    // // Security and Janitorial
-    // createIncomeStatementRowData(
-    //   7,
-    //   "Security and Janitorial",
-    //   currentSecurityAndJanitorialServicesResult != null
-    //     ? currentSecurityAndJanitorialServicesResult
-    //     : 0,
-    //   commonFunc.checkComparison(
-    //     currentSecurityAndJanitorialServicesResult != null
-    //       ? currentSecurityAndJanitorialServicesResult
-    //       : 0,
-    //     previousSecurityAndJanitorialServicesResult != null
-    //       ? previousSecurityAndJanitorialServicesResult
-    //       : 0
-    //   ),
-    //   data.calculatePercentageFromTwoValues(
-    //     currentSecurityAndJanitorialServicesResult != null
-    //       ? currentSecurityAndJanitorialServicesResult
-    //       : 0,
-    //     previousSecurityAndJanitorialServicesResult != null
-    //       ? previousSecurityAndJanitorialServicesResult
-    //       : 0
-    //   )
-    // ),
-
-    // // Taxes and Licenses
-    // createIncomeStatementRowData(
-    //   8,
-    //   "Taxes and Licenses",
-    //   currentTaxesAndLicensesResult != null ? currentTaxesAndLicensesResult : 0,
-    //   commonFunc.checkComparison(
-    //     currentTaxesAndLicensesResult != null
-    //       ? currentTaxesAndLicensesResult
-    //       : 0,
-    //     previousTaxesAndLicensesResult != null
-    //       ? previousTaxesAndLicensesResult
-    //       : 0
-    //   ),
-    //   data.calculatePercentageFromTwoValues(
-    //     currentTaxesAndLicensesResult != null
-    //       ? currentTaxesAndLicensesResult
-    //       : 0,
-    //     previousTaxesAndLicensesResult != null
-    //       ? previousTaxesAndLicensesResult
-    //       : 0
-    //   )
-    // ),
-
     // Other operating expenses
     createIncomeStatementRowData(
       9,
@@ -452,10 +342,6 @@ const App: React.FC = () => {
         ? otherIncomeOrExpensePercentageResult?.value
         : 0
     ),
-
-    // createIncomeStatementRowData(10, "EBIT", 0, null),
-    // createIncomeStatementRowData(11, "Interest and Tax", 0, null),
-    // createIncomeStatementRowData(12, "Net Profit", 0, null),
   ];
 
   const chartData: chartDataInterface = {
@@ -480,10 +366,8 @@ const App: React.FC = () => {
     <div className="app-container">
       <SidebarComponent
         onCheckboxClick={handleReloadDashboard}
-        startDate={startDate}
-        endDate={endDate}
-        onStartDateChange={handleStartDateChange}
-        onEndDateChange={handleEndDateChange}
+        onCurrentFileUpload={handleCurrentIncomeStatementChange}
+        onPreviousFileUpload={handlePreviousIncomeStatementChange}
       />
       <div className="dashboard-container">
         <Dashboard
