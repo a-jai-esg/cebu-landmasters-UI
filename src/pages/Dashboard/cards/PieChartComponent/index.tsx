@@ -15,7 +15,6 @@ interface PieDataInterface {
 }
 
 const COLORS = ["#3FB3E5", "#D777C3", "#84E48D", "#85C7EE", "#7B9BB1"];
-const COLORS = ["#3FB3E5", "#D777C3", "#84E48D", "#85C7EE", "#7B9BB1"];
 
 // This function transforms the expenses data into the pie chart data format
 const transformData = (
@@ -32,9 +31,12 @@ const transformData = (
   });
 };
 
-// Function to format numbers with commas
-const formatNumberWithCommas = (number: number) => {
-  return number.toLocaleString();
+// Function to format numbers with commas and 2 decimal places
+const formatNumberWithCommasAndDecimals = (number: number) => {
+  return number.toLocaleString(undefined, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
 };
 
 const PrimaryPieChartComponent = ({
@@ -56,7 +58,7 @@ const PrimaryPieChartComponent = ({
             nameKey="name"
             outerRadius={62.5}
             fill="#8884d8"
-            label={({ value }) => `${formatNumberWithCommas(value)}`}
+            label={({ value }) => `${formatNumberWithCommasAndDecimals(value)}`}
           >
             {transformedData.map((_entry, index) => (
               <Cell
@@ -65,7 +67,7 @@ const PrimaryPieChartComponent = ({
               />
             ))}
           </Pie>
-          <Tooltip formatter={formatNumberWithCommas} />
+          <Tooltip formatter={formatNumberWithCommasAndDecimals} />
           <Legend
             // verticalAlign="middle"
             layout="vertical"
