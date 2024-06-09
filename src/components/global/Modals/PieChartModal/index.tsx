@@ -51,11 +51,7 @@ const PieChartModal: React.FC<PieChartModalProps> = ({
             >
               <CloseIcon />
             </IconButton>
-            <CustomPieChartComponent
-              pieData={pieData}
-              title={title}
-              colors={["#3FB3E5", "#D777C3", "#84E48D", "#85C7EE", "#7B9BB1"]}
-            />
+            <PieChartComponentV2 pieData={pieData} title={title} />
           </CardContent>
         </Card>
       </Box>
