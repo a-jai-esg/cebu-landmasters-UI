@@ -5,7 +5,6 @@ import GaugeComponent from "./cards/GaugeComponent";
 import IncomeStatementTable from "./cards/IncomeStatementTableComponent";
 import BarchartComponent from "./cards/BarchartComponent";
 import PrimaryPieChartComponent from "./cards/CustomPieChartComponent";
-import PrimaryPieChartComponent from "./cards/CustomPieChartComponent";
 import ComposedChartComponent from "./cards/ComposedChartComponent";
 import BarChartModal from "../../components/global/Modals/BarChartModal";
 import PieChartModal from "../../components/global/Modals/PieChartModal";
@@ -219,18 +218,6 @@ const Dashboard: React.FC<DashboardProps> = ({
                   >
                     Expand Chart
                   </Typography>
-                  <Typography
-                    onClick={handleOpenBarChartModal}
-                    sx={{
-                      cursor: "pointer",
-                      color: "blue",
-                      textAlign: "right",
-                      textDecoration: "underline",
-                      fontSize: "0.875rem",
-                    }}
-                  >
-                    Expand Chart
-                  </Typography>
                 </CardContent>
               </Card>
             </Grid>
@@ -251,18 +238,6 @@ const Dashboard: React.FC<DashboardProps> = ({
                       "#7B9BB1",
                     ]}
                   />
-                  <Typography
-                    onClick={handleOpenPieChartModal}
-                    sx={{
-                      cursor: "pointer",
-                      color: "blue",
-                      textAlign: "right",
-                      textDecoration: "underline",
-                      fontSize: "0.875rem",
-                    }}
-                  >
-                    Expand Chart
-                  </Typography>
                   <Typography
                     onClick={handleOpenPieChartModal}
                     sx={{
