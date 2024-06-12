@@ -68,9 +68,7 @@ const PrimaryPieChartComponent = ({
             ))}
           </Pie>
           <Tooltip formatter={formatNumberWithCommasAndDecimals} />
-          <Legend
-            layout="vertical"
-          />
+          <Legend layout="vertical" />
         </PieChart>
       </ResponsiveContainer>
     </Box>
