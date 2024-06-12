@@ -218,18 +218,6 @@ const Dashboard: React.FC<DashboardProps> = ({
                   >
                     Expand Chart
                   </Typography>
-                  <Typography
-                    onClick={handleOpenBarChartModal}
-                    sx={{
-                      cursor: "pointer",
-                      color: "blue",
-                      textAlign: "right",
-                      textDecoration: "underline",
-                      fontSize: "0.875rem",
-                    }}
-                  >
-                    Expand Chart
-                  </Typography>
                 </CardContent>
               </Card>
             </Grid>
@@ -250,18 +238,6 @@ const Dashboard: React.FC<DashboardProps> = ({
                       "#7B9BB1",
                     ]}
                   />
-                  <Typography
-                    onClick={handleOpenPieChartModal}
-                    sx={{
-                      cursor: "pointer",
-                      color: "blue",
-                      textAlign: "right",
-                      textDecoration: "underline",
-                      fontSize: "0.875rem",
-                    }}
-                  >
-                    Expand Chart
-                  </Typography>
                   <Typography
                     onClick={handleOpenPieChartModal}
                     sx={{
