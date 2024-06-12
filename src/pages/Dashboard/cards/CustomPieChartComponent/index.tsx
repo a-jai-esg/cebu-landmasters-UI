@@ -1,11 +1,30 @@
-import React, { useState } from 'react';
-import { PieChart, Pie, Cell, Legend, Sector, ResponsiveContainer } from 'recharts';
+import React, { useState } from "react";
+import {
+  PieChart,
+  Pie,
+  Cell,
+  Legend,
+  Sector,
+  ResponsiveContainer,
+} from "recharts";
 import TitleStringInterface from "../../../../common/interfaces/components/titleStringInterface";
-import OperatingExpenseDataInterface from '../../../../common/interfaces/data/objects/forms/graph-related/data-interfaces/operatingExpenseDataInterface';
+import OperatingExpenseDataInterface from "../../../../common/interfaces/data/objects/forms/graph-related/data-interfaces/operatingExpenseDataInterface";
+import { Typography } from "@mui/material";
 
 const renderActiveShape = (props: any) => {
   const RADIAN = Math.PI / 180;
-  const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, payload, value } = props;
+  const {
+    cx,
+    cy,
+    midAngle,
+    innerRadius,
+    outerRadius,
+    startAngle,
+    endAngle,
+    fill,
+    payload,
+    value,
+  } = props;
   const sin = Math.sin(-RADIAN * midAngle);
   const cos = Math.cos(-RADIAN * midAngle);
   const sx = cx + (outerRadius + 10) * cos;
@@ -14,7 +33,7 @@ const renderActiveShape = (props: any) => {
   const my = cy + (outerRadius + 30) * sin;
   const ex = mx + (cos >= 0 ? 1 : -1) * 22;
   const ey = my;
-  const textAnchor = cos >= 0 ? 'start' : 'end';
+  const textAnchor = cos >= 0 ? "start" : "end";
 
   return (
     <g>
@@ -39,24 +58,35 @@ const renderActiveShape = (props: any) => {
         outerRadius={outerRadius + 10}
         fill={fill}
       />
-      <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill="none" />
+      <path
+        d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`}
+        stroke={fill}
+        fill="none"
+      />
       <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
-      <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill="#333">{`${value}`}</text>
+      <text
+        x={ex + (cos >= 0 ? 1 : -1) * 12}
+        y={ey}
+        textAnchor={textAnchor}
+        fill="#333"
+      >{`${value}`}</text>
     </g>
   );
 };
 
 // Mapping of full names to their abbreviations
 const abbreviations: { [key: string]: string } = {
-  "commissions": "COM",
-  "management_fee_expense": "MFE",
-  "professional_and_legal_fees": "PLF",
-  "security_and_janitorial_services": "SJS",
-  "taxes_and_licenses": "TL",
+  commissions: "COM",
+  management_fee_expense: "MFE",
+  professional_and_legal_fees: "PLF",
+  security_and_janitorial_services: "SJS",
+  taxes_and_licenses: "TL",
 };
 
 // Function to transform the expenses data into the pie chart data format
-const transformData = (data: OperatingExpenseDataInterface[]): { name: string; value: number }[] => {
+const transformData = (
+  data: OperatingExpenseDataInterface[]
+): { name: string; value: number }[] => {
   return data.flatMap((entry) => {
     if (entry.expenses) {
       return Object.entries(entry.expenses).map(([key, value]) => ({
@@ -74,7 +104,11 @@ interface CustomPieChartComponentProps {
   title: string;
 }
 
-const CustomPieChartComponent: React.FC<CustomPieChartComponentProps> = ({ pieData, colors, title }) => {
+const CustomPieChartComponent: React.FC<CustomPieChartComponentProps> = ({
+  pieData,
+  colors,
+  title,
+}) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const onPieEnter = (_: any, index: any) => {
@@ -85,8 +119,10 @@ const CustomPieChartComponent: React.FC<CustomPieChartComponentProps> = ({ pieDa
 
   return (
     <div>
-      <h3>{title}</h3>
-      <ResponsiveContainer width="100%" height={303}>
+      <Typography fontSize={20} color="#333" fontWeight="bold" padding={1}>
+        {title}
+      </Typography>
+      <ResponsiveContainer width="100%" height={315}>
         <PieChart>
           <Pie
             activeIndex={activeIndex}
@@ -101,7 +137,10 @@ const CustomPieChartComponent: React.FC<CustomPieChartComponentProps> = ({ pieDa
             onMouseEnter={onPieEnter}
           >
             {transformedData.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
+              <Cell
+                key={`cell-${index}`}
+                fill={colors[index % colors.length]}
+              />
             ))}
           </Pie>
           <Legend />
