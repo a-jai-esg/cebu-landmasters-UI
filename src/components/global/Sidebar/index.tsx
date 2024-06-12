@@ -10,14 +10,12 @@ import "../../../App.css";
 
 interface SidebarProps {
   onCheckboxClick: (selectedEntity: string | null) => void;
-  onCurrentFileUpload: (file: File | null) => void;
-  onPreviousFileUpload: (file: File | null) => void;
+  onFileUpload: (file: File | null) => void;
 }
 
 const SidebarComponent: React.FC<SidebarProps> = ({
   onCheckboxClick,
-  onCurrentFileUpload,
-  onPreviousFileUpload,
+  onFileUpload,
 }) => {
   const [selected, setSelected] = useState("Income Statement");
   const [isFilterVisible, setIsFilterVisible] = useState(true);
@@ -102,8 +100,7 @@ const SidebarComponent: React.FC<SidebarProps> = ({
             >
               <FilterComponent
                 onCheckboxChange={onCheckboxClick}
-                onCurrentFileUpload={onCurrentFileUpload}
-                onPreviousFileUpload={onPreviousFileUpload}
+                onFileUpload={onFileUpload}
               />
             </Box>
           )}

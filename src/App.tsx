@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import "./App.css";
 import SidebarComponent from "./components/global/Sidebar";
 import Dashboard from "../src/pages/Dashboard";
@@ -6,42 +7,56 @@ import chartDataInterface from "./common/interfaces/data/charts/chartDataInterfa
 import dataCalculation from "./data-calculation/dataCalculation";
 
 // datasets
-import dataSource2021 from "./data/incomeStatementDataSource2021.json";
-import dataSource2020 from "./data/incomeStatementDataSource2020.json";
 import incomeStatementRowDataInterface from "./common/interfaces/data/charts/incomeStatementRowDataInterface";
 import singleValueRowDataInterface from "./common/interfaces/data/objects/forms/singleValueRowDataInterface";
 import _ from "lodash";
 import commonFunctions from "./common/functions/commonFunctions";
 import OperatingExpenseDataInterface from "./common/interfaces/data/objects/forms/graph-related/data-interfaces/operatingExpenseDataInterface";
+import companyDataInterface from "./common/interfaces/data/companyDataInterface";
 
 const App: React.FC = () => {
   const [reloadDashboard, setReloadDashboard] = useState<boolean>(false);
+  const [currentDatasource, setCurrentDatasource] =
+    useState<companyDataInterface | null>(null);
+  const [previousDatasource, setPreviousDatasource] =
+    useState<companyDataInterface | null>(null);
+
   const [dateDataSource, setDateDataSource] = useState("current");
   const [filteredEntity, setFilteredEntity] = useState<string>("CLI");
 
   // handle for current and previous income statement uploads
-  const [currentIncomeStatement, setCurrentIncomeStatement] =
-    useState<File | null>(null);
-  const [previousIncomeStatement, setPreviousIncomeStatement] =
-    useState<File | null>(null);
+  const [incomeStatement, setIncomeStatement] = useState<File | null>(null);
 
   const handleReloadDashboard = (data: string | null) => {
     setReloadDashboard(!reloadDashboard);
     data !== null ? setFilteredEntity(data) : setFilteredEntity("CLI");
   };
 
-  const handleCurrentIncomeStatementChange = (file: File | null) => {
-    setCurrentIncomeStatement(file);
-    console.log(currentIncomeStatement);
-    console.log("Successfully set file for current income statement.");
-  };
+  const handleIncomeStatementChange = async (file: File | null) => {
+    setIncomeStatement(file);
+    if (file) {
+      console.log("Successfully set file for current income statement.");
 
-  const handlePreviousIncomeStatementChange = (file: File | null) => {
-    setPreviousIncomeStatement(file);
-    console.log(previousIncomeStatement);
-    console.log("Successfully set file for previous income statement.");
-  };
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("year", "2020"); // Add the year to the form data
 
+      try {
+        const response = await axios.post(
+          "https://seashell-app-3sxk9.ondigitalocean.app/upload",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        console.log("File uploaded successfully", response.data);
+      } catch (error) {
+        console.error("Error uploading file", error);
+      }
+    }
+  };
   const cardTitles = [
     { title: null },
     { title: "REVENUE per BUs (PHP in millions)" },
@@ -51,7 +66,7 @@ const App: React.FC = () => {
   ];
 
   const commonFunc = new commonFunctions();
-  const data = new dataCalculation(dataSource2020, dataSource2021); // load datasource/dataset from FY 2020 and 2021
+  const data = new dataCalculation(previousDatasource, currentDatasource); // load datasource/dataset from FY 2020 and 2021
 
   // create Income Statement Row Data Function
   const createIncomeStatementRowData = (
@@ -366,8 +381,7 @@ const App: React.FC = () => {
     <div className="app-container">
       <SidebarComponent
         onCheckboxClick={handleReloadDashboard}
-        onCurrentFileUpload={handleCurrentIncomeStatementChange}
-        onPreviousFileUpload={handlePreviousIncomeStatementChange}
+        onFileUpload={handleIncomeStatementChange}
       />
       <div className="dashboard-container">
         <Dashboard
