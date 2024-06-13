@@ -147,9 +147,7 @@ const CashFlowComponent: React.FC<CashFlowProps> = ({
                 <CardContent style={{ textAlign: "center" }}>
                   <Grid container spacing={2} justifyContent="center">
                     <Grid item xs={6} sm={4} md={2}>
-                      <div
-                        style={{ display: "flex", justifyContent: "center" }}
-                      >
+                      <div style={{ display: "flex", justifyContent: "center" }}>
                         <GaugeComponent
                           gaugeData={gaugeData[0]}
                           title="Gross Profit Margin (%)"
@@ -157,9 +155,7 @@ const CashFlowComponent: React.FC<CashFlowProps> = ({
                       </div>
                     </Grid>
                     <Grid item xs={6} sm={4} md={2}>
-                      <div
-                        style={{ display: "flex", justifyContent: "center" }}
-                      >
+                      <div style={{ display: "flex", justifyContent: "center" }}>
                         <GaugeComponent
                           gaugeData={gaugeData[1]}
                           title="Opex Ratio (%)"
@@ -167,9 +163,7 @@ const CashFlowComponent: React.FC<CashFlowProps> = ({
                       </div>
                     </Grid>
                     <Grid item xs={6} sm={4} md={2}>
-                      <div
-                        style={{ display: "flex", justifyContent: "center" }}
-                      >
+                      <div style={{ display: "flex", justifyContent: "center" }}>
                         <GaugeComponent
                           gaugeData={gaugeData[2]}
                           title="EBITDA Margin (%)"
@@ -177,9 +171,7 @@ const CashFlowComponent: React.FC<CashFlowProps> = ({
                       </div>
                     </Grid>
                     <Grid item xs={6} sm={4} md={2}>
-                      <div
-                        style={{ display: "flex", justifyContent: "center" }}
-                      >
+                      <div style={{ display: "flex", justifyContent: "center" }}>
                         <GaugeComponent
                           gaugeData={gaugeData[3]}
                           title="Conso NIAT (%)"
@@ -187,9 +179,7 @@ const CashFlowComponent: React.FC<CashFlowProps> = ({
                       </div>
                     </Grid>
                     <Grid item xs={6} sm={4} md={2}>
-                      <div
-                        style={{ display: "flex", justifyContent: "center" }}
-                      >
+                      <div style={{ display: "flex", justifyContent: "center" }}>
                         <GaugeComponent
                           gaugeData={gaugeData[4]}
                           title="Parent NIAT (%)"
@@ -203,8 +193,8 @@ const CashFlowComponent: React.FC<CashFlowProps> = ({
           )}
           {/* Bar chart */}
           {cardTitles.length > 1 && (
-            <Grid item xs={12} md={6} lg={4}>
-              <Card sx={{ borderRadius: 3, boxShadow: 6, width: "100%" }}>
+              <Grid item sm={12} md={4}>
+              <Card sx={{ borderRadius: 3, boxShadow: 6, width:"100%" }}>
                 <CardContent>
                   <BarchartComponent
                     barData={barDataFiltered}
@@ -228,19 +218,13 @@ const CashFlowComponent: React.FC<CashFlowProps> = ({
           )}
           {/* Pie Chart*/}
           {cardTitles.length > 2 && (
-            <Grid item xs={12} md={6} lg={4}>
-              <Card sx={{ borderRadius: 3, boxShadow: 6, height: "100%" }}>
+            <Grid item sm={12} md={4}>
+              <Card sx={{ borderRadius: 3, boxShadow: 6, height:"100%" }}>
                 <CardContent>
                   <PrimaryPieChartComponent
                     pieData={pieDataFiltered}
                     title={cardTitles[2].title ?? "Pie Chart"}
-                    colors={[
-                      "#3FB3E5",
-                      "#D777C3",
-                      "#84E48D",
-                      "#85C7EE",
-                      "#7B9BB1",
-                    ]}
+                    colors={["#3FB3E5", "#D777C3", "#84E48D", "#85C7EE", "#7B9BB1"]}
                   />
                   <Typography
                     onClick={handleOpenPieChartModal}
@@ -261,7 +245,7 @@ const CashFlowComponent: React.FC<CashFlowProps> = ({
           {/* Income Statement Table */}
           {/* Table*/}
           {cardTitles.length > 3 && (
-            <Grid item xs={12} md={12} lg={4}>
+            <Grid item sm={12} md={4}>
               <Card sx={{ borderRadius: 3, boxShadow: 6 }}>
                 <CardContent>
                   <Typography fontSize={20} color="#333" fontWeight="bold">
@@ -286,6 +270,7 @@ const CashFlowComponent: React.FC<CashFlowProps> = ({
           )}
           {/* Composed Chart*/}
           {cardTitles.length > 4 && (
+            <Grid item xs={12}>
             <Grid item xs={12}>
               <Card sx={{ borderRadius: 3, boxShadow: 6 }}>
                 <CardContent>
