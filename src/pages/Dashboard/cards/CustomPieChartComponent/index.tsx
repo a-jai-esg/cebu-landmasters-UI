@@ -122,7 +122,7 @@ const CustomPieChartComponent: React.FC<CustomPieChartComponentProps> = ({
       <Typography fontSize={18} color="#333" fontWeight="bold" padding={1.5}>
         {title}
       </Typography>
-      <ResponsiveContainer width="100%" height={314}>
+      <ResponsiveContainer width="100%" height={283}>
         <PieChart>
           <Pie
             activeIndex={activeIndex}
