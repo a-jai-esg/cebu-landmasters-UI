@@ -191,7 +191,7 @@ const Dashboard: React.FC<DashboardProps> = ({
           )}
           {/* Bar chart */}
           {cardTitles.length > 1 && (
-              <Grid item xs={12} md={6} lg={4}>
+              <Grid item sm={12} md={4}>
               <Card sx={{ borderRadius: 3, boxShadow: 6, width:"100%" }}>
                 <CardContent>
                   <BarchartComponent
@@ -216,12 +216,13 @@ const Dashboard: React.FC<DashboardProps> = ({
           )}
           {/* Pie Chart*/}
           {cardTitles.length > 2 && (
-            <Grid item xs={12} md={6} lg={4}>
+            <Grid item sm={12} md={4}>
               <Card sx={{ borderRadius: 3, boxShadow: 6, height:"100%" }}>
                 <CardContent>
                   <PrimaryPieChartComponent
                     pieData={pieDataFiltered}
                     title={cardTitles[2].title ?? "Pie Chart"}
+                    colors={["#3FB3E5", "#D777C3", "#84E48D", "#85C7EE", "#7B9BB1"]}
                     colors={["#3FB3E5", "#D777C3", "#84E48D", "#85C7EE", "#7B9BB1"]}
                   />
                   <Typography
@@ -243,7 +244,7 @@ const Dashboard: React.FC<DashboardProps> = ({
           {/* Income Statement Table */}
           {/* Table*/}
           {cardTitles.length > 3 && (
-            <Grid item xs={12} md={12} lg={4}>
+            <Grid item sm={12} md={4}>
               <Card sx={{ borderRadius: 3, boxShadow: 6 }}>
                 <CardContent>
                   <Typography fontSize={20} color="#333" fontWeight="bold">
@@ -268,6 +269,7 @@ const Dashboard: React.FC<DashboardProps> = ({
           )}
           {/* Composed Chart*/}
           {cardTitles.length > 4 && (
+            <Grid item xs={12}>
             <Grid item xs={12}>
               <Card sx={{ borderRadius: 3, boxShadow: 6 }}>
                 <CardContent>
