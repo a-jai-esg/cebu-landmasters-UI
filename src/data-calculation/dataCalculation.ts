@@ -500,13 +500,55 @@ class DataCalculation {
     return data;
   };
 
-  // Dummy function to calculate percentage (implementation needed)
   private calculatePercentageFromDataset(
     currentDataset: singleValueRowDataInterface[] | null,
     previousDataset: singleValueRowDataInterface[] | null
-  ): singleValueRowDataInterface[] | null {
-    // Implementation goes here
-    return null;
+  ):
+    | (singleValueRowDataInterface & { percentageChange: number | null })[]
+    | null {
+    if (!currentDataset || !previousDataset) {
+      return null;
+    }
+
+    // Create a map for quick lookup of previous values by name
+    const previousValueMap = new Map<string, number | null>();
+    previousDataset.forEach((row) => {
+      if (row.name !== null) {
+        previousValueMap.set(row.name, row.value);
+      }
+    });
+
+    // Calculate percentage change for each row in the current dataset
+    const result = currentDataset.map((row) => {
+      if (row.name === null || row.value === null) {
+        return {
+          ...row,
+          percentageChange: null,
+        };
+      }
+
+      const previousValue = previousValueMap.get(row.name);
+
+      if (
+        previousValue === undefined ||
+        previousValue === null ||
+        previousValue === 0
+      ) {
+        return {
+          ...row,
+          percentageChange: null, // Handle undefined, null, or zero previous value
+        };
+      }
+
+      const percentageChange =
+        ((row.value - previousValue) / previousValue) * 100;
+      return {
+        ...row,
+        percentageChange,
+      };
+    });
+
+    return result;
   }
 }
 
