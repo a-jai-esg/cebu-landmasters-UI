@@ -97,7 +97,7 @@ const FilterComponent: React.FC<FilterProps> = ({
   };
 
   return (
-    <>
+    <Box>
       {/* Filters Subheader */}
       <div
         style={{
@@ -205,7 +205,7 @@ const FilterComponent: React.FC<FilterProps> = ({
           style={{
             display: "flex",
             alignItems: "center",
-            margin: "50px 0 38px 20px",
+            margin: "70px 0 15px 20px",
           }}
         >
           <AnimatedTypography
@@ -245,12 +245,39 @@ const FilterComponent: React.FC<FilterProps> = ({
                 },
               }}
             >
-              {truncateText(filename, 15) || "Upload File"}
+              {truncateText(filename, 15) || "CHOOSE FILE"}
+            </Button>
+          </label>
+        </div>
+        <div
+          style={{
+            marginTop: "15px",
+            marginLeft: "40px",
+            marginRight: "25px",
+          }}
+        >
+          <label htmlFor="clearButton">
+            <Button
+              variant="outlined"
+              component="span"
+              sx={{
+                backgroundColor: "#24274c",
+                color: "#c1c5de",
+                borderColor: "#c1c5de",
+                "&:active": {
+                  transform: "none",
+                },
+                "&:focus": {
+                  transform: "none",
+                },
+              }}
+            >
+              CLEAR FILE
             </Button>
           </label>
         </div>
       </div>
-    </>
+    </Box>
   );
 };
 

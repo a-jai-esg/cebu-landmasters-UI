@@ -25,38 +25,44 @@ const App: React.FC = () => {
   const [filteredEntity, setFilteredEntity] = useState<string>("CLI");
 
   // handle for current and previous income statement uploads
-  const [incomeStatement, setIncomeStatement] = useState<File | null>(null);
-
   const handleReloadDashboard = (data: string | null) => {
     setReloadDashboard(!reloadDashboard);
     data !== null ? setFilteredEntity(data) : setFilteredEntity("CLI");
   };
 
   const handleIncomeStatementChange = async (file: File | null) => {
-    setIncomeStatement(file);
     if (file) {
       console.log("Successfully set file for current income statement.");
+      const years: number[] = [2020, 2021];
+      years.map(async (year) => {
+        const formData = new FormData();
+        const yearValue: string = year.toString();
 
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("year", "2020"); // Add the year to the form data
-
-      try {
-        const response = await axios.post(
-          "https://seashell-app-3sxk9.ondigitalocean.app/upload",
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
-        console.log("File uploaded successfully", response.data);
-      } catch (error) {
-        console.error("Error uploading file", error);
-      }
+        formData.append("file", file);
+        formData.append("year", yearValue); // Add the year to the form data
+        try {
+          console.log("Awaiting server response...");
+          const response = await axios.post(
+            "https://seashell-app-3sxk9.ondigitalocean.app/upload",
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          );
+          Number.parseInt(yearValue) === 2020
+            ? setPreviousDatasource(response.data)
+            : setCurrentDatasource(response.data);
+          localStorage.setItem(yearValue, response.data);
+          console.log("File uploaded successfully", response.data);
+        } catch (error) {
+          console.error("Error uploading file", error);
+        }
+      });
     }
   };
+
   const cardTitles = [
     { title: null },
     { title: "REVENUE per BUs (PHP in millions)" },
