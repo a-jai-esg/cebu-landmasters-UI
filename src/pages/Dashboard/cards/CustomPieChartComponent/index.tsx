@@ -7,33 +7,11 @@ import {
   Sector,
   ResponsiveContainer,
 } from "recharts";
-import React, { useState } from "react";
-import {
-  PieChart,
-  Pie,
-  Cell,
-  Legend,
-  Sector,
-  ResponsiveContainer,
-} from "recharts";
-import TitleStringInterface from "../../../../common/interfaces/components/titleStringInterface";
 import OperatingExpenseDataInterface from "../../../../common/interfaces/data/objects/forms/graph-related/data-interfaces/operatingExpenseDataInterface";
 import { Box, Typography } from "@mui/material";
 
 const renderActiveShape = (props: any) => {
   const RADIAN = Math.PI / 180;
-  const {
-    cx,
-    cy,
-    midAngle,
-    innerRadius,
-    outerRadius,
-    startAngle,
-    endAngle,
-    fill,
-    payload,
-    value,
-  } = props;
   const {
     cx,
     cy,
@@ -113,17 +91,9 @@ const abbreviations: { [key: string]: string } = {
   professional_and_legal_fees: "PLF",
   security_and_janitorial_services: "SJS",
   taxes_and_licenses: "TL",
-  commissions: "COM",
-  management_fee_expense: "MFE",
-  professional_and_legal_fees: "PLF",
-  security_and_janitorial_services: "SJS",
-  taxes_and_licenses: "TL",
 };
 
 // Function to transform the expenses data into the pie chart data format
-const transformData = (
-  data: OperatingExpenseDataInterface[]
-): { name: string; value: number }[] => {
 const transformData = (
   data: OperatingExpenseDataInterface[]
 ): { name: string; value: number }[] => {
@@ -144,11 +114,6 @@ interface CustomPieChartComponentProps {
   title: string;
 }
 
-const CustomPieChartComponent: React.FC<CustomPieChartComponentProps> = ({
-  pieData,
-  colors,
-  title,
-}) => {
 const CustomPieChartComponent: React.FC<CustomPieChartComponentProps> = ({
   pieData,
   colors,
@@ -182,10 +147,6 @@ const CustomPieChartComponent: React.FC<CustomPieChartComponentProps> = ({
             onMouseEnter={onPieEnter}
           >
             {transformedData.map((entry, index) => (
-              <Cell
-                key={`cell-${index}`}
-                fill={colors[index % colors.length]}
-              />
               <Cell
                 key={`cell-${index}`}
                 fill={colors[index % colors.length]}
