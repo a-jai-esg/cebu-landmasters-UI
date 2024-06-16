@@ -7,7 +7,6 @@ import {
   Sector,
   ResponsiveContainer,
 } from "recharts";
-import TitleStringInterface from "../../../../common/interfaces/components/titleStringInterface";
 import OperatingExpenseDataInterface from "../../../../common/interfaces/data/objects/forms/graph-related/data-interfaces/operatingExpenseDataInterface";
 import { Box, Typography } from "@mui/material";
 
@@ -63,7 +62,18 @@ const renderActiveShape = (props: any) => {
         stroke={fill}
         fill="none"
       />
+      <path
+        d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`}
+        stroke={fill}
+        fill="none"
+      />
       <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
+      <text
+        x={ex + (cos >= 0 ? 1 : -1) * 12}
+        y={ey}
+        textAnchor={textAnchor}
+        fill="#333"
+      >{`${value}`}</text>
       <text
         x={ex + (cos >= 0 ? 1 : -1) * 12}
         y={ey}

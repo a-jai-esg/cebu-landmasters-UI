@@ -47,8 +47,7 @@ const AnimatedTypography = styled(Typography)(({}) => ({
 
 interface FilterProps {
   onCheckboxChange: (selectedEntity: string | null) => void;
-  onCurrentFileUpload: (file: File | null) => void;
-  onPreviousFileUpload: (file: File | null) => void;
+  onFileUpload: (file: File | null) => void;
 }
 
 const truncateText = (text: string, maxLength: number) => {
@@ -57,8 +56,7 @@ const truncateText = (text: string, maxLength: number) => {
 
 const FilterComponent: React.FC<FilterProps> = ({
   onCheckboxChange,
-  onCurrentFileUpload,
-  onPreviousFileUpload,
+  onFileUpload,
 }) => {
   const [state, setState] = React.useState({
     CLI: true,
@@ -66,8 +64,7 @@ const FilterComponent: React.FC<FilterProps> = ({
     YES: false,
   });
 
-  const [currentFilename, setCurrentFilename] = React.useState("");
-  const [previousFilename, setPreviousFilename] = React.useState("");
+  const [filename, setFilename] = React.useState("");
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = event.target;
@@ -90,26 +87,17 @@ const FilterComponent: React.FC<FilterProps> = ({
     onCheckboxChange(checked ? name : null);
   };
 
-  const handleCurrentIncomeStatementFileUpload = (
+  const handleIncomeStatementFileUpload = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const files = event.target.files;
     const file = files ? files[0] : null;
-    setCurrentFilename(file ? file.name : "");
-    onCurrentFileUpload(file);
-  };
-
-  const handlePreviousIncomeStatementFileUpload = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const files = event.target.files;
-    const file = files ? files[0] : null;
-    setPreviousFilename(file ? file.name : "");
-    onPreviousFileUpload(file);
+    setFilename(file ? file.name : "");
+    onFileUpload(file);
   };
 
   return (
-    <>
+    <Box>
       {/* Filters Subheader */}
       <div
         style={{
@@ -217,7 +205,7 @@ const FilterComponent: React.FC<FilterProps> = ({
           style={{
             display: "flex",
             alignItems: "center",
-            margin: "50px 0 38px 20px",
+            margin: "70px 0 15px 20px",
           }}
         >
           <AnimatedTypography
@@ -240,7 +228,7 @@ const FilterComponent: React.FC<FilterProps> = ({
             id="currentFile"
             accept=".xlsx, .xls"
             style={{ display: "none" }}
-            onChange={handleCurrentIncomeStatementFileUpload}
+            onChange={handleIncomeStatementFileUpload}
           />
           <label htmlFor="currentFile">
             <Button
@@ -257,32 +245,25 @@ const FilterComponent: React.FC<FilterProps> = ({
                 },
               }}
             >
-              {truncateText(currentFilename, 15) || "Upload Current"}
+              {truncateText(filename, 15) || "CHOOSE FILE"}
             </Button>
           </label>
         </div>
-
         <div
           style={{
-            marginTop: "20px",
+            marginTop: "15px",
             marginLeft: "40px",
             marginRight: "25px",
           }}
         >
-          <input
-            type="file"
-            id="previousFile"
-            accept=".xlsx, .xls"
-            style={{ display: "none" }}
-            onChange={handlePreviousIncomeStatementFileUpload}
-          />
-          <label htmlFor="previousFile">
+          <label htmlFor="clearButton">
             <Button
-              variant="contained"
+              variant="outlined"
               component="span"
               sx={{
-                backgroundColor: "#c1c5de",
-                color: "#24274c",
+                backgroundColor: "#24274c",
+                color: "#c1c5de",
+                borderColor: "#c1c5de",
                 "&:active": {
                   transform: "none",
                 },
@@ -291,12 +272,12 @@ const FilterComponent: React.FC<FilterProps> = ({
                 },
               }}
             >
-              {truncateText(previousFilename, 15) || "Upload Previous"}
+              CLEAR FILE
             </Button>
           </label>
         </div>
       </div>
-    </>
+    </Box>
   );
 };
 
