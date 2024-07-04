@@ -4,6 +4,7 @@ import operatingExpenseDataInterface from "../common/interfaces/data/objects/for
 import operatingExpenseInterface from "../common/interfaces/data/objects/forms/graph-related/template-interfaces/operatingExpenseInterface";
 import revenueDataInterface from "../common/interfaces/data/objects/forms/graph-related/data-interfaces/revenueDataInterface";
 import revenueInterface from "../common/interfaces/data/objects/forms/graph-related/template-interfaces/revenueInterface";
+import singleValueBooleanRowDataInterface from "../common/interfaces/data/objects/forms/singleValueBooleanRowDataInterface";
 class DataCalculation {
   private currentDataset: companyDataInterface | null;
   private previousDataset: companyDataInterface | null;
@@ -183,6 +184,8 @@ class DataCalculation {
     return data;
   };
 
+  // --- Revenue --- //
+
   getCurrentRevenueValue = (): singleValueRowDataInterface[] | null => {
     let data: singleValueRowDataInterface[] = [];
 
@@ -221,13 +224,26 @@ class DataCalculation {
     return data;
   };
 
-  getRevenuePercentage = () =>
-    this.calculatePercentageFromDataset(
-      this.getCurrentRevenueValue(),
-      this.getPreviousRevenueValue()
-    );
+  getRevenueVsPy = () => {
+    let data: singleValueBooleanRowDataInterface[] = [];
 
-  getCurrentCosValue = (): singleValueRowDataInterface[] | null => {
+    for (const entity in this.currentDataset) {
+      if (this.currentDataset.hasOwnProperty(entity)) {
+        const entityData =
+          this.currentDataset[entity as keyof companyDataInterface];
+        const name: string = entity;
+        const value: boolean | null = entityData
+          ? entityData.revenue_vs_py
+          : null;
+
+        data.push({ name, value });
+      }
+    }
+
+    return data;
+  };
+
+  getRevenueVsPyPercentage = () => {
     let data: singleValueRowDataInterface[] = [];
 
     for (const entity in this.currentDataset) {
@@ -235,7 +251,9 @@ class DataCalculation {
         const entityData =
           this.currentDataset[entity as keyof companyDataInterface];
         const name: string = entity;
-        const value: number | null = entityData ? entityData.total_cos : null;
+        const value: number | null = entityData
+          ? entityData.revenue_vs_py_percentage
+          : null;
 
         data.push({ name, value });
       }
@@ -244,7 +262,26 @@ class DataCalculation {
     return data;
   };
 
-  getPreviousCosValue = (): singleValueRowDataInterface[] | null => {
+  // -- COS -- //
+
+  getCurrentCogsValue = (): singleValueRowDataInterface[] | null => {
+    let data: singleValueRowDataInterface[] = [];
+
+    for (const entity in this.currentDataset) {
+      if (this.currentDataset.hasOwnProperty(entity)) {
+        const entityData =
+          this.currentDataset[entity as keyof companyDataInterface];
+        const name: string = entity;
+        const value: number | null = entityData ? entityData.total_cogs : null;
+
+        data.push({ name, value });
+      }
+    }
+
+    return data;
+  };
+
+  getPreviousCogsValue = (): singleValueRowDataInterface[] | null => {
     let data: singleValueRowDataInterface[] = [];
 
     for (const entity in this.previousDataset) {
@@ -252,7 +289,7 @@ class DataCalculation {
         const entityData =
           this.previousDataset[entity as keyof companyDataInterface];
         const name: string = entity;
-        const value: number | null = entityData ? entityData.total_cos : null;
+        const value: number | null = entityData ? entityData.total_cogs : null;
 
         data.push({ name, value });
       }
@@ -261,11 +298,43 @@ class DataCalculation {
     return data;
   };
 
-  getCosPercentage = () =>
-    this.calculatePercentageFromDataset(
-      this.getCurrentCosValue(),
-      this.getPreviousCosValue()
-    );
+  getCogsVsPy = () => {
+    let data: singleValueBooleanRowDataInterface[] = [];
+
+    for (const entity in this.currentDataset) {
+      if (this.currentDataset.hasOwnProperty(entity)) {
+        const entityData =
+          this.currentDataset[entity as keyof companyDataInterface];
+        const name: string = entity;
+        const value: boolean | null = entityData ? entityData.cogs_vs_py : null;
+
+        data.push({ name, value });
+      }
+    }
+
+    return data;
+  };
+
+  getCogsVsPyPercentage = () => {
+    let data: singleValueRowDataInterface[] = [];
+
+    for (const entity in this.currentDataset) {
+      if (this.currentDataset.hasOwnProperty(entity)) {
+        const entityData =
+          this.currentDataset[entity as keyof companyDataInterface];
+        const name: string = entity;
+        const value: number | null = entityData
+          ? entityData.cogs_vs_py_percentage
+          : null;
+
+        data.push({ name, value });
+      }
+    }
+
+    return data;
+  };
+
+  // -- Gross Profit -- //
 
   getCurrentGrossProfitValue = (): singleValueRowDataInterface[] | null => {
     let data: singleValueRowDataInterface[] = [];
@@ -301,16 +370,51 @@ class DataCalculation {
         data.push({ name, value });
       }
     }
+
     return data;
   };
 
-  getGrossProfitPercentage = () =>
-    this.calculatePercentageFromDataset(
-      this.getCurrentGrossProfitValue(),
-      this.getPreviousGrossProfitValue()
-    );
+  getGrossProfitVsPy = () => {
+    let data: singleValueBooleanRowDataInterface[] = [];
 
-  getCurrentTotalOpexValue = (): singleValueRowDataInterface[] | null => {
+    for (const entity in this.currentDataset) {
+      if (this.currentDataset.hasOwnProperty(entity)) {
+        const entityData =
+          this.currentDataset[entity as keyof companyDataInterface];
+        const name: string = entity;
+        const value: boolean | null = entityData
+          ? entityData.gross_profit_vs_py
+          : null;
+
+        data.push({ name, value });
+      }
+    }
+
+    return data;
+  };
+
+  getGrossProfitVsPyPercentage = () => {
+    let data: singleValueRowDataInterface[] = [];
+
+    for (const entity in this.currentDataset) {
+      if (this.currentDataset.hasOwnProperty(entity)) {
+        const entityData =
+          this.currentDataset[entity as keyof companyDataInterface];
+        const name: string = entity;
+        const value: number | null = entityData
+          ? entityData.gross_profit_vs_py_percentage
+          : null;
+
+        data.push({ name, value });
+      }
+    }
+
+    return data;
+  };
+
+  // -- OPEX --//
+
+  getCurrentOpexValue = (): singleValueRowDataInterface[] | null => {
     let data: singleValueRowDataInterface[] = [];
 
     for (const entity in this.currentDataset) {
@@ -329,7 +433,7 @@ class DataCalculation {
     return data;
   };
 
-  getPreviousTotalOpexValue = (): singleValueRowDataInterface[] | null => {
+  getPreviousOpexValue = (): singleValueRowDataInterface[] | null => {
     let data: singleValueRowDataInterface[] = [];
 
     for (const entity in this.previousDataset) {
@@ -348,11 +452,43 @@ class DataCalculation {
     return data;
   };
 
-  getOpexPercentage = () =>
-    this.calculatePercentageFromDataset(
-      this.getCurrentTotalOpexValue(),
-      this.getPreviousTotalOpexValue()
-    );
+  getOpexVsPy = () => {
+    let data: singleValueBooleanRowDataInterface[] = [];
+
+    for (const entity in this.currentDataset) {
+      if (this.currentDataset.hasOwnProperty(entity)) {
+        const entityData =
+          this.currentDataset[entity as keyof companyDataInterface];
+        const name: string = entity;
+        const value: boolean | null = entityData
+          ? entityData.operating_expense_vs_py
+          : null;
+
+        data.push({ name, value });
+      }
+    }
+
+    return data;
+  };
+
+  getOpexVsPyPercentage = () => {
+    let data: singleValueRowDataInterface[] = [];
+
+    for (const entity in this.currentDataset) {
+      if (this.currentDataset.hasOwnProperty(entity)) {
+        const entityData =
+          this.currentDataset[entity as keyof companyDataInterface];
+        const name: string = entity;
+        const value: number | null = entityData
+          ? entityData.operating_expense_vs_py_percentage
+          : null;
+
+        data.push({ name, value });
+      }
+    }
+
+    return data;
+  };
 
   getOpexRatio = (key: string): singleValueRowDataInterface[] | null => {
     let data: singleValueRowDataInterface[] = [];
@@ -392,7 +528,7 @@ class DataCalculation {
           this.currentDataset[entity as keyof companyDataInterface];
         const name: string = entity;
         const value: number | null = entityData
-          ? entityData.total_other_income_or_expense
+          ? entityData.total_operating_expenses
           : null;
 
         data.push({ name, value });
@@ -413,7 +549,7 @@ class DataCalculation {
           this.previousDataset[entity as keyof companyDataInterface];
         const name: string = entity;
         const value: number | null = entityData
-          ? entityData.total_other_income_or_expense
+          ? entityData.total_operating_expenses
           : null;
 
         data.push({ name, value });
@@ -500,6 +636,7 @@ class DataCalculation {
     return data;
   };
 
+  // -- deprecated
   private calculatePercentageFromDataset(
     currentDataset: singleValueRowDataInterface[] | null,
     previousDataset: singleValueRowDataInterface[] | null

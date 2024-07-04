@@ -25,7 +25,8 @@ const IncomeStatementTable = ({ data }: dataObjects): JSX.Element => {
                   Income Statement
                 </TableCell>
                 <TableCell sx={{ fontWeight: 800, fontSize: "13px" }}>
-                   Current Year <br />(PHP in millions)
+                  Current Year <br />
+                  (PHP in millions)
                 </TableCell>
                 <TableCell sx={{ fontWeight: 800, fontSize: "13px" }}>
                   vs PY
@@ -41,57 +42,31 @@ const IncomeStatementTable = ({ data }: dataObjects): JSX.Element => {
                   id: React.Key | null | undefined;
                   name:
                     | string
-                    // | number
-                    // | boolean
-                    // | React.ReactElement<
-                    //     any,
-                    //     string | React.JSXElementConstructor<any>
-                    //   >
-                    // | Iterable<React.ReactNode>
-                    // | React.ReactPortal
+                    | React.ReactElement<
+                        any,
+                        string | React.JSXElementConstructor<any>
+                      >
                     | null;
-                  // | undefined;
                   currentYear: // | string
-                  | number
-                    // | boolean
-                    // | React.ReactElement<
-                    //     any,
-                    //     string | React.JSXElementConstructor<any>
-                    //   >
-                    // | Iterable<React.ReactNode>
-                    // | React.ReactPortal
-                    | null;
-                  // | undefined;
+                  number | null;
                   vsPreviousYear:
-                    | string
-                    | number
                     | boolean
                     | React.ReactElement<
                         any,
                         string | React.JSXElementConstructor<any>
                       >
-                    | Iterable<React.ReactNode>
-                    | React.ReactPortal
                     | null
                     | undefined;
                   percentage: // | string
-                  | number
-                    // | boolean
-                    // | React.ReactElement<
-                    //     any,
-                    //     string | React.JSXElementConstructor<any>
-                    //   >
-                    // | Iterable<React.ReactNode>
-                    // | React.ReactPortal
-                    | null;
-                  // | undefined;
+                  number | null;
                 }) => (
                   <TableRow key={row.id}>
                     {row.name === "Commissions" ||
-                    row.name === "Management Fee Expense" ||
+                    row.name === "Management Fee Expenses" ||
                     row.name === "Professional and Legal Fees" ||
                     row.name === "Security and Janitorial" ||
-                    row.name === "Taxes and Licenses" ? (
+                    row.name === "Taxes and Licenses" ||
+                    row.name === "Interest and Taxes" ? (
                       <TableCell sx={{ paddingLeft: 5, fontWeight: 300 }}>
                         {row.name}
                       </TableCell>
@@ -112,12 +87,16 @@ const IncomeStatementTable = ({ data }: dataObjects): JSX.Element => {
                         <ArrowDropDownIcon sx={{ color: "red" }} />
                       )}
                     </TableCell>
-                    
-                      {row.vsPreviousYear ? (<TableCell sx={{ color: "green" }}>{commonFunc.formatNumberToTwo(row.percentage)+"%"}</TableCell> )
-                      : (<TableCell sx={{ color: "red" }}>{commonFunc.formatNumberToTwo(row.percentage)+"%"}</TableCell>)
-                      } 
 
-                    
+                    {row.vsPreviousYear ? (
+                      <TableCell sx={{ color: "green" }}>
+                        {commonFunc.formatNumberToTwo(row.percentage) + "%"}
+                      </TableCell>
+                    ) : (
+                      <TableCell sx={{ color: "red" }}>
+                        {commonFunc.formatNumberToTwo(row.percentage) + "%"}
+                      </TableCell>
+                    )}
                   </TableRow>
                 )
               )}
