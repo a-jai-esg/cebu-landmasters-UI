@@ -10,8 +10,6 @@ import dataCalculation from "./data-calculation/dataCalculation";
 import incomeStatementRowDataInterface from "./common/interfaces/data/charts/incomeStatementRowDataInterface";
 import singleValueRowDataInterface from "./common/interfaces/data/objects/forms/singleValueRowDataInterface";
 import _ from "lodash";
-import commonFunctions from "./common/functions/commonFunctions";
-import OperatingExpenseDataInterface from "./common/interfaces/data/objects/forms/graph-related/data-interfaces/operatingExpenseDataInterface";
 import companyDataInterface from "./common/interfaces/data/companyDataInterface";
 import singleValueBooleanRowDataInterface from "./common/interfaces/data/objects/forms/singleValueBooleanRowDataInterface";
 
@@ -165,26 +163,152 @@ const App: React.FC = () => {
   // --------- OPEX-related --------- //
   const currentOpexData: singleValueRowDataInterface[] | null =
     data.getCurrentOpexValue();
+  const currentOpexCommissionsData: singleValueRowDataInterface[] | null =
+    data.getOpexCurrentCommissionsValue();
+  const currentOpexMgtFeeExpensesData: singleValueRowDataInterface[] | null =
+    data.getCurrentOpexMgtFeeExpensesValue();
+  const currentOpexProAndLegalFeesData: singleValueRowDataInterface[] | null =
+    data.getCurrentOpexMgtFeeExpensesValue();
+  const currentOpexSecAndJanitorialData: singleValueRowDataInterface[] | null =
+    data.getCurrentSecAndJanitorialValue();
+  const currentOpexTaxesAndLicensesData: singleValueRowDataInterface[] | null =
+    data.getCurrentTaxesAndLicensesValue();
 
-  const opexVsPy: singleValueBooleanRowDataInterface[] | null =
+  const currentOpexVsPy: singleValueBooleanRowDataInterface[] | null =
     data.getOpexVsPy();
+  const currentOpexCommissionsVsPy:
+    | singleValueBooleanRowDataInterface[]
+    | null = data.getOpexCommissionsVsPy();
+  const currentOpexMgtFeeExpensesVsPy:
+    | singleValueBooleanRowDataInterface[]
+    | null = data.getOpexMgtFeeExpensesVsPy();
+  const currentOpexProAndLegalFeesVsPy:
+    | singleValueBooleanRowDataInterface[]
+    | null = data.getProAndLegalFeesVsPy();
+  const currentOpexSecAndJanitorialVsPy:
+    | singleValueBooleanRowDataInterface[]
+    | null = data.getSecAndJanitorialVsPy();
+  const currentOpexTaxesAndLicensesVsPy:
+    | singleValueBooleanRowDataInterface[]
+    | null = data.getTaxesAndLicensesVsPy();
 
-  const opexVsPyPercentage: singleValueRowDataInterface[] | null =
+  const currentOpexVsPyPercentage: singleValueRowDataInterface[] | null =
     data.getOpexVsPyPercentage();
+  const currentOpexCommissionsVsPyPercentage:
+    | singleValueRowDataInterface[]
+    | null = data.getCommissionsVsPyPercentage();
+  const currentOpexMgtFeeExpensesVsPyPercentage:
+    | singleValueRowDataInterface[]
+    | null = data.getOpexMgtFeeExpenseVsPyPercentage();
+  const currentOpexProAndLegalFeesVsPyPercentage:
+    | singleValueRowDataInterface[]
+    | null = data.getProAndLegalFeesVsPyPercentage();
+  const currentOpexSecAndJanitorialVsPyPercentage:
+    | singleValueRowDataInterface[]
+    | null = data.getSecAndJanitorialVsPyPercentage();
+  const currentOpexTaxesAndLicensesVsPyPercentage:
+    | singleValueRowDataInterface[]
+    | null = data.getTaxesAndLicensesVsPyPercentage();
 
   // extract results from objects
+
+  // actual data/numbers
   const currentOpexResult: singleValueRowDataInterface | null =
     (currentOpexData
       ? _.find(currentOpexData, { name: filteredEntity })
       : null) || null;
-
-  const opexVsPyResult: singleValueBooleanRowDataInterface | null =
-    (opexVsPy ? _.find(opexVsPy, { name: filteredEntity }) : null) || null;
-  const opexVsPyPercentageResult: singleValueRowDataInterface | null =
-    (opexVsPyPercentage
-      ? _.find(opexVsPyPercentage, { name: filteredEntity })
+  const currentOpexCommissionsResult: singleValueRowDataInterface | null =
+    (currentOpexCommissionsData
+      ? _.find(currentOpexCommissionsData, { name: filteredEntity })
       : null) || null;
-  // --------- End Gross Profit-related --------//
+  const currentOpexMgtFeeExpensesResult: singleValueRowDataInterface | null =
+    (currentOpexMgtFeeExpensesData
+      ? _.find(currentOpexMgtFeeExpensesData, { name: filteredEntity })
+      : null) || null;
+  const currentOpexProAndLegalFeesResult: singleValueRowDataInterface | null =
+    (currentOpexProAndLegalFeesData
+      ? _.find(currentOpexProAndLegalFeesData, { name: filteredEntity })
+      : null) || null;
+  const currentOpexSecAndJanitorialResult: singleValueRowDataInterface | null =
+    (currentOpexSecAndJanitorialData
+      ? _.find(currentOpexSecAndJanitorialData, { name: filteredEntity })
+      : null) || null;
+  const currentOpexTaxesAndLicensesResult: singleValueRowDataInterface | null =
+    (currentOpexTaxesAndLicensesData
+      ? _.find(currentOpexTaxesAndLicensesData, { name: filteredEntity })
+      : null) || null;
+
+  // up and down arrows
+  const currentOpexVsPyResult: singleValueBooleanRowDataInterface | null =
+    (currentOpexVsPy
+      ? _.find(currentOpexVsPy, { name: filteredEntity })
+      : null) || null;
+
+  const currentOpexCommissionsVsPyResult: singleValueBooleanRowDataInterface | null =
+    (currentOpexCommissionsVsPy
+      ? _.find(currentOpexCommissionsVsPy, { name: filteredEntity })
+      : null) || null;
+
+  const currentOpexMgtFeeExpensesVsPyResult: singleValueBooleanRowDataInterface | null =
+    (currentOpexMgtFeeExpensesVsPy
+      ? _.find(currentOpexMgtFeeExpensesVsPy, { name: filteredEntity })
+      : null) || null;
+
+  const currentOpexProAndLegalFeesVsPyResult: singleValueBooleanRowDataInterface | null =
+    (currentOpexProAndLegalFeesVsPy
+      ? _.find(currentOpexProAndLegalFeesVsPy, { name: filteredEntity })
+      : null) || null;
+
+  const currentOpexSecAndJanitorialVsPyResult: singleValueBooleanRowDataInterface | null =
+    (currentOpexSecAndJanitorialVsPy
+      ? _.find(currentOpexSecAndJanitorialVsPy, { name: filteredEntity })
+      : null) || null;
+
+  const currentOpexTaxesAndLicensesVsPyResult: singleValueBooleanRowDataInterface | null =
+    (currentOpexTaxesAndLicensesVsPy
+      ? _.find(currentOpexTaxesAndLicensesVsPy, { name: filteredEntity })
+      : null) || null;
+
+  // percentages
+  const currentOpexVsPyPercentageResult: singleValueRowDataInterface | null =
+    (currentOpexVsPyPercentage
+      ? _.find(currentOpexVsPyPercentage, { name: filteredEntity })
+      : null) || null;
+
+  const currentOpexCommissionsVsPyPercentageResult: singleValueRowDataInterface | null =
+    (currentOpexCommissionsVsPyPercentage
+      ? _.find(currentOpexCommissionsVsPyPercentage, { name: filteredEntity })
+      : null) || null;
+
+  const currentOpexMgtFeeExpensesVsPyPercentageResult: singleValueRowDataInterface | null =
+    (currentOpexMgtFeeExpensesVsPyPercentage
+      ? _.find(currentOpexMgtFeeExpensesVsPyPercentage, {
+          name: filteredEntity,
+        })
+      : null) || null;
+
+  const currentOpexProAndLegalFeesVsPyPercentageResult: singleValueRowDataInterface | null =
+    (currentOpexProAndLegalFeesVsPyPercentage
+      ? _.find(currentOpexProAndLegalFeesVsPyPercentage, {
+          name: filteredEntity,
+        })
+      : null) || null;
+
+  const currentOpexSecAndJanitorialVsPyPercentageResult: singleValueRowDataInterface | null =
+    (currentOpexSecAndJanitorialVsPyPercentage
+      ? _.find(currentOpexSecAndJanitorialVsPyPercentage, {
+          name: filteredEntity,
+        })
+      : null) || null;
+
+  const currentOpexTaxesAndLicensesVsPyPercentageResult: singleValueRowDataInterface | null =
+    (currentOpexTaxesAndLicensesVsPyPercentage
+      ? _.find(currentOpexTaxesAndLicensesVsPyPercentage, {
+          name: filteredEntity,
+        })
+      : null) || null;
+
+  // --------- End OPEX-related --------- //
 
   const rows: incomeStatementRowDataInterface[] = [
     // Revenue
@@ -229,26 +353,88 @@ const App: React.FC = () => {
       3,
       "OPEX",
       currentOpexResult?.value != null ? currentOpexResult?.value : 0,
-      opexVsPyResult?.value != null ? opexVsPyResult?.value : false, // false by default
-      opexVsPyPercentageResult?.value != null
-        ? opexVsPyPercentageResult?.value
+      currentOpexVsPyResult?.value != null
+        ? currentOpexVsPyResult?.value
+        : false, // false by default
+      currentOpexVsPyPercentageResult?.value != null
+        ? currentOpexVsPyPercentageResult?.value
         : 0
     ),
 
     // Commissions
-    createIncomeStatementRowData(4, "Commissions", 0, true, 0),
+    createIncomeStatementRowData(
+      4,
+      "Commissions",
+      currentOpexCommissionsResult?.value != null
+        ? currentOpexCommissionsResult?.value
+        : 0,
+      currentOpexCommissionsVsPyResult?.value != null
+        ? currentOpexCommissionsVsPyResult?.value
+        : false, // false by default
+      currentOpexCommissionsVsPyPercentageResult?.value != null
+        ? currentOpexCommissionsVsPyPercentageResult?.value
+        : 0
+    ),
 
     // Management Fee Expenses
-    createIncomeStatementRowData(5, "Management Fee Expenses", 0, true, 0),
+    createIncomeStatementRowData(
+      5,
+      "Management Fee Expenses",
+      currentOpexMgtFeeExpensesResult?.value != null
+        ? currentOpexMgtFeeExpensesResult?.value
+        : 0,
+      currentOpexMgtFeeExpensesVsPyResult?.value != null
+        ? currentOpexMgtFeeExpensesVsPyResult?.value
+        : false, // false by default
+      currentOpexMgtFeeExpensesVsPyPercentageResult?.value != null
+        ? currentOpexMgtFeeExpensesVsPyPercentageResult?.value
+        : 0
+    ),
 
     // Professional & Legal Fees
-    createIncomeStatementRowData(6, "Professional and Legal Fees", 0, true, 0),
+    createIncomeStatementRowData(
+      6,
+      "Professional and Legal Fees",
+      currentOpexProAndLegalFeesResult?.value != null
+        ? currentOpexProAndLegalFeesResult?.value
+        : 0,
+      currentOpexProAndLegalFeesVsPyResult?.value != null
+        ? currentOpexProAndLegalFeesVsPyResult?.value
+        : false, // false by default
+      currentOpexProAndLegalFeesVsPyPercentageResult?.value != null
+        ? currentOpexProAndLegalFeesVsPyPercentageResult?.value
+        : 0
+    ),
 
     // Security & Janitorial
-    createIncomeStatementRowData(7, "Security and Janitorial", 0, true, 0),
+    createIncomeStatementRowData(
+      7,
+      "Security and Janitorial",
+      currentOpexSecAndJanitorialResult?.value != null
+        ? currentOpexSecAndJanitorialResult?.value
+        : 0,
+      currentOpexSecAndJanitorialVsPyResult?.value != null
+        ? currentOpexSecAndJanitorialVsPyResult?.value
+        : false, // false by default
+      currentOpexSecAndJanitorialVsPyPercentageResult?.value != null
+        ? currentOpexSecAndJanitorialVsPyPercentageResult?.value
+        : 0
+    ),
 
     // Taxes and Licenses
-    createIncomeStatementRowData(8, "Taxes and Licenses", 0, true, 0),
+    createIncomeStatementRowData(
+      8,
+      "Taxes and Licenses",
+      currentOpexTaxesAndLicensesResult?.value != null
+        ? currentOpexTaxesAndLicensesResult?.value
+        : 0,
+      currentOpexTaxesAndLicensesVsPyResult?.value != null
+        ? currentOpexTaxesAndLicensesVsPyResult?.value
+        : false, // false by default
+      currentOpexTaxesAndLicensesVsPyPercentageResult?.value != null
+        ? currentOpexTaxesAndLicensesVsPyPercentageResult?.value
+        : 0
+    ),
 
     // Other Income
     createIncomeStatementRowData(9, "Other Income", 0, true, 0),
@@ -257,7 +443,7 @@ const App: React.FC = () => {
     createIncomeStatementRowData(10, "Other Expenses", 0, true, 0),
 
     // EBITDA
-    createIncomeStatementRowData(11, "EBIT", 0, true, 0),
+    createIncomeStatementRowData(11, "EBITDA", 0, true, 0),
 
     // Interest and Tax
     createIncomeStatementRowData(12, "Interest and Taxes", 0, true, 0),

@@ -146,7 +146,7 @@ const CustomPieChartComponent: React.FC<CustomPieChartComponentProps> = ({
             dataKey="value"
             onMouseEnter={onPieEnter}
           >
-            {transformedData.map((entry, index) => (
+            {transformedData.map((_entry, index) => (
               <Cell
                 key={`cell-${index}`}
                 fill={colors[index % colors.length]}

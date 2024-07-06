@@ -16,6 +16,7 @@ interface FinancialData {
   equity_in_net_earnings: number;
   equity_in_net_earnings_losses: number;
   expected_credit_losses: number;
+  ebitda: number;
   final_income_tax: number;
   gain_on_sale_of_financial_assets: number;
   gain_on_sale_of_property: number;
