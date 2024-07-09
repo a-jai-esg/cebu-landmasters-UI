@@ -1097,7 +1097,7 @@ class DataCalculation {
     return data;
   };
 
-  getOtherExpenseValueVsPyPercentage = () => {
+  getOtherExpensesValueVsPyPercentage = () => {
     let data: singleValueRowDataInterface[] = [];
 
     for (const entity in this.currentDataset) {
@@ -1241,7 +1241,7 @@ class DataCalculation {
           this.currentDataset[entity as keyof companyDataInterface];
         const name: string = entity;
         const value: boolean | null = entityData
-          ? entityData.operating_expense_vs_py
+          ? entityData.operating_expenses_taxes_and_licenses_vs_py
           : null;
 
         data.push({ name, value });
@@ -1260,7 +1260,7 @@ class DataCalculation {
           this.currentDataset[entity as keyof companyDataInterface];
         const name: string = entity;
         const value: number | null = entityData
-          ? entityData.operating_expense_vs_py_percentage
+          ? entityData.operating_expenses_taxes_and_licenses_vs_py_percentage
           : null;
 
         data.push({ name, value });
@@ -1271,7 +1271,7 @@ class DataCalculation {
   };
 
   // net profit
-  getCurrentNetProfitBeforeTax = (): singleValueRowDataInterface[] | null => {
+  getCurrentNetProfit = (): singleValueRowDataInterface[] | null => {
     let data: singleValueRowDataInterface[] = [];
 
     for (const entity in this.currentDataset) {
@@ -1290,7 +1290,7 @@ class DataCalculation {
     return data;
   };
 
-  getPreviousNetProfitBeforeTax = (): singleValueRowDataInterface[] | null => {
+  getPreviousNetProfit = (): singleValueRowDataInterface[] | null => {
     let data: singleValueRowDataInterface[] = [];
 
     for (const entity in this.previousDataset) {
@@ -1300,6 +1300,44 @@ class DataCalculation {
         const name: string = entity;
         const value: number | null = entityData
           ? entityData.net_profit_before_tax
+          : null;
+
+        data.push({ name, value });
+      }
+    }
+
+    return data;
+  };
+
+  getNetProfitVsPy = (): singleValueBooleanRowDataInterface[] | null => {
+    let data: singleValueBooleanRowDataInterface[] = [];
+
+    for (const entity in this.currentDataset) {
+      if (this.currentDataset.hasOwnProperty(entity)) {
+        const entityData =
+          this.currentDataset[entity as keyof companyDataInterface];
+        const name: string = entity;
+        const value: boolean | null = entityData
+          ? entityData.net_profit_vs_py
+          : null;
+
+        data.push({ name, value });
+      }
+    }
+
+    return data;
+  };
+
+  getNetProfitVsPyPercentage = (): singleValueRowDataInterface[] | null => {
+    let data: singleValueRowDataInterface[] = [];
+
+    for (const entity in this.currentDataset) {
+      if (this.currentDataset.hasOwnProperty(entity)) {
+        const entityData =
+          this.currentDataset[entity as keyof companyDataInterface];
+        const name: string = entity;
+        const value: number | null = entityData
+          ? entityData.net_profit_vs_py_percentage
           : null;
 
         data.push({ name, value });

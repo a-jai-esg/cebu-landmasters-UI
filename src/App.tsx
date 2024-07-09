@@ -310,6 +310,132 @@ const App: React.FC = () => {
 
   // --------- End OPEX-related --------- //
 
+  // --------- Other Income-related --------- //
+  const currentOtherIncomeData: singleValueRowDataInterface[] | null =
+    data.getCurrentOtherIncomeValue();
+
+  const currentOtherIncomeVsPy: singleValueBooleanRowDataInterface[] | null =
+    data.getOtherIncomeValueVsPy();
+
+  const currentOtherIncomeVsPyPercentage: singleValueRowDataInterface[] | null =
+    data.getOtherIncomeValueVsPyPercentage();
+
+  // extract results from objects
+  const currentOtherIncomeResult: singleValueRowDataInterface | null =
+    (currentOtherIncomeData
+      ? _.find(currentOtherIncomeData, { name: filteredEntity })
+      : null) || null;
+
+  const currentOtherIncomeVsPyResult: singleValueBooleanRowDataInterface | null =
+    (currentOtherIncomeVsPy
+      ? _.find(currentOtherIncomeVsPy, { name: filteredEntity })
+      : null) || null;
+  const currentOtherIncomeVsPyPercentageResult: singleValueRowDataInterface | null =
+    (currentOtherIncomeVsPyPercentage
+      ? _.find(currentOtherIncomeVsPyPercentage, { name: filteredEntity })
+      : null) || null;
+  // --------- End Other Income-related --------//
+
+  // --------- Other Expense-related --------- //
+  const currentOtherExpensesData: singleValueRowDataInterface[] | null =
+    data.getCurrentOtherExpensesValue();
+
+  const currentOtherExpensesVsPy: singleValueBooleanRowDataInterface[] | null =
+    data.getOtherExpensesValueVsPy();
+
+  const currentOtherExpensesVsPyPercentage:
+    | singleValueRowDataInterface[]
+    | null = data.getOtherExpensesValueVsPyPercentage();
+
+  // extract results from objects
+  const currentOtherExpensesResult: singleValueRowDataInterface | null =
+    (currentOtherExpensesData
+      ? _.find(currentOtherExpensesData, { name: filteredEntity })
+      : null) || null;
+
+  const currentOtherExpensesVsPyResult: singleValueBooleanRowDataInterface | null =
+    (currentOtherExpensesVsPy
+      ? _.find(currentOtherExpensesVsPy, { name: filteredEntity })
+      : null) || null;
+  const currentOtherExpensesVsPyPercentageResult: singleValueRowDataInterface | null =
+    (currentOtherExpensesVsPyPercentage
+      ? _.find(currentOtherExpensesVsPyPercentage, { name: filteredEntity })
+      : null) || null;
+  // --------- End Other Expense-related --------//
+
+  // --------- EBITDA-related --------- //
+  const currentEbitdaData: singleValueRowDataInterface[] | null =
+    data.getCurrentEbitdaValue();
+  const currentInterestAndTaxesData: singleValueRowDataInterface[] | null =
+    data.getCurrentInterestAndTaxesValue();
+
+  const currentEbitdaVsPy: singleValueBooleanRowDataInterface[] | null =
+    data.getEbitdaValueVsPy();
+  const currentInterestAndTaxesVsPy:
+    | singleValueBooleanRowDataInterface[]
+    | null = data.getEbitdaValueVsPy();
+
+  const currentEbitdaVsPyPercentage: singleValueRowDataInterface[] | null =
+    data.getEbitdaValueVsPyPercentage();
+  const currentInterestAndTaxesVsPyPercentage:
+    | singleValueRowDataInterface[]
+    | null = data.getInterestAndTaxesVsPyPercentage();
+
+  // extract results from objects
+  const currentEbitdaResult: singleValueRowDataInterface | null =
+    (currentEbitdaData
+      ? _.find(currentEbitdaData, { name: filteredEntity })
+      : null) || null;
+  const currentInterestAndTaxesResult: singleValueRowDataInterface | null =
+    (currentInterestAndTaxesData
+      ? _.find(currentInterestAndTaxesData, { name: filteredEntity })
+      : null) || null;
+
+  const currentEbitdaVsPyResult: singleValueBooleanRowDataInterface | null =
+    (currentEbitdaVsPy
+      ? _.find(currentEbitdaVsPy, { name: filteredEntity })
+      : null) || null;
+  const currentInterestAndTaxesVsPyResult: singleValueBooleanRowDataInterface | null =
+    (currentInterestAndTaxesVsPy
+      ? _.find(currentInterestAndTaxesVsPy, { name: filteredEntity })
+      : null) || null;
+
+  const currentEbitdaVsPyPercentageResult: singleValueRowDataInterface | null =
+    (currentEbitdaVsPyPercentage
+      ? _.find(currentEbitdaVsPyPercentage, { name: filteredEntity })
+      : null) || null;
+  const currentInterestAndTaxesVsPyPercentageResult: singleValueRowDataInterface | null =
+    (currentInterestAndTaxesVsPyPercentage
+      ? _.find(currentInterestAndTaxesVsPyPercentage, { name: filteredEntity })
+      : null) || null;
+  // --------- End EBITDA-related --------//
+
+  // --------- Net profit-related --------- //
+  const currentNetProfitData: singleValueRowDataInterface[] | null =
+    data.getCurrentOtherExpensesValue();
+
+  const currentNetProfitVsPy: singleValueBooleanRowDataInterface[] | null =
+    data.getOtherExpensesValueVsPy();
+
+  const currentNetProfitVsPyPercentage: singleValueRowDataInterface[] | null =
+    data.getOtherExpensesValueVsPyPercentage();
+
+  // extract results from objects
+  const currentNetProfitResult: singleValueRowDataInterface | null =
+    (currentNetProfitData
+      ? _.find(currentNetProfitData, { name: filteredEntity })
+      : null) || null;
+
+  const currentNetProfitVsPyResult: singleValueBooleanRowDataInterface | null =
+    (currentNetProfitVsPy
+      ? _.find(currentNetProfitVsPy, { name: filteredEntity })
+      : null) || null;
+  const currentNetProfitVsPyPercentageResult: singleValueRowDataInterface | null =
+    (currentNetProfitVsPyPercentage
+      ? _.find(currentNetProfitVsPyPercentage, { name: filteredEntity })
+      : null) || null;
+  // --------- End Net profit-related --------//
+
   const rows: incomeStatementRowDataInterface[] = [
     // Revenue
     createIncomeStatementRowData(
@@ -437,19 +563,74 @@ const App: React.FC = () => {
     ),
 
     // Other Income
-    createIncomeStatementRowData(9, "Other Income", 0, true, 0),
+    createIncomeStatementRowData(
+      9,
+      "Other Income",
+      currentOtherIncomeResult?.value != null
+        ? currentOtherIncomeResult?.value
+        : 0,
+      currentOtherIncomeVsPyResult?.value != null
+        ? currentOtherIncomeVsPyResult?.value
+        : false, // false by default
+      currentOtherIncomeVsPyPercentageResult?.value != null
+        ? currentOtherIncomeVsPyPercentageResult?.value
+        : 0
+    ),
 
     // Other Expenses
-    createIncomeStatementRowData(10, "Other Expenses", 0, true, 0),
-
+    createIncomeStatementRowData(
+      10,
+      "Other Expenses",
+      currentOtherExpensesResult?.value != null
+        ? currentOtherExpensesResult?.value
+        : 0,
+      currentOtherExpensesVsPyResult?.value != null
+        ? currentOtherExpensesVsPyResult?.value
+        : false, // false by default
+      currentOtherExpensesVsPyPercentageResult?.value != null
+        ? currentOtherExpensesVsPyPercentageResult?.value
+        : 0
+    ),
     // EBITDA
-    createIncomeStatementRowData(11, "EBITDA", 0, true, 0),
+    createIncomeStatementRowData(
+      11,
+      "EBITDA",
+      currentEbitdaResult?.value != null ? currentEbitdaResult?.value : 0,
+      currentEbitdaVsPyResult?.value != null
+        ? currentEbitdaVsPyResult?.value
+        : false, // false by default
+      currentEbitdaVsPyPercentageResult?.value != null
+        ? currentEbitdaVsPyPercentageResult?.value
+        : 0
+    ),
 
     // Interest and Tax
-    createIncomeStatementRowData(12, "Interest and Taxes", 0, true, 0),
+    createIncomeStatementRowData(
+      12,
+      "Interest and Taxes",
+      currentInterestAndTaxesResult?.value != null
+        ? currentInterestAndTaxesResult?.value
+        : 0,
+      currentInterestAndTaxesVsPyResult?.value != null
+        ? currentInterestAndTaxesVsPyResult?.value
+        : false, // false by default
+      currentInterestAndTaxesVsPyPercentageResult?.value != null
+        ? currentInterestAndTaxesVsPyPercentageResult?.value
+        : 0
+    ),
 
     // Net Profit
-    createIncomeStatementRowData(13, "Net Profit", 0, true, 0),
+    createIncomeStatementRowData(
+      13,
+      "Net Profit",
+      currentNetProfitResult?.value != null ? currentNetProfitResult?.value : 0,
+      currentNetProfitVsPyResult?.value != null
+        ? currentNetProfitVsPyResult?.value
+        : false, // false by default
+      currentNetProfitVsPyPercentageResult?.value != null
+        ? currentNetProfitVsPyPercentageResult?.value
+        : 0
+    ),
   ];
 
   const chartData: chartDataInterface = {
