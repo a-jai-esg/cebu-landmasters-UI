@@ -35,6 +35,13 @@ const App: React.FC = () => {
     "https://seashell-app-3sxk9.ondigitalocean.app/upload",
   ];
 
+  const handleClearDataSources = (remove: boolean | null) => {
+    if (remove) {
+      setCurrentDatasource(null);
+      setPreviousDatasource(null);
+    }
+  };
+
   const handleIncomeStatementChange = async (file: File | null) => {
     if (file) {
       console.log("Successfully set file for current income statement.");
@@ -168,7 +175,7 @@ const App: React.FC = () => {
   const currentOpexMgtFeeExpensesData: singleValueRowDataInterface[] | null =
     data.getCurrentOpexMgtFeeExpensesValue();
   const currentOpexProAndLegalFeesData: singleValueRowDataInterface[] | null =
-    data.getCurrentOpexMgtFeeExpensesValue();
+    data.getCurrentProAndLegalFeesValue();
   const currentOpexSecAndJanitorialData: singleValueRowDataInterface[] | null =
     data.getCurrentSecAndJanitorialValue();
   const currentOpexTaxesAndLicensesData: singleValueRowDataInterface[] | null =
@@ -412,13 +419,13 @@ const App: React.FC = () => {
 
   // --------- Net profit-related --------- //
   const currentNetProfitData: singleValueRowDataInterface[] | null =
-    data.getCurrentOtherExpensesValue();
+    data.getCurrentNetProfit();
 
   const currentNetProfitVsPy: singleValueBooleanRowDataInterface[] | null =
-    data.getOtherExpensesValueVsPy();
+    data.getNetProfitVsPy();
 
   const currentNetProfitVsPyPercentage: singleValueRowDataInterface[] | null =
-    data.getOtherExpensesValueVsPyPercentage();
+    data.getNetProfitVsPyPercentage();
 
   // extract results from objects
   const currentNetProfitResult: singleValueRowDataInterface | null =
@@ -656,6 +663,7 @@ const App: React.FC = () => {
       <SidebarComponent
         onCheckboxClick={handleReloadDashboard}
         onFileUpload={handleIncomeStatementChange}
+        onRemoveFile={handleClearDataSources}
       />
       <div className="dashboard-container">
         <Dashboard

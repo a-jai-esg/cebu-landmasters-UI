@@ -48,6 +48,7 @@ const AnimatedTypography = styled(Typography)(({}) => ({
 interface FilterProps {
   onCheckboxChange: (selectedEntity: string | null) => void;
   onFileUpload: (file: File | null) => void;
+  onRemoveFile: (remove: boolean | null) => void;
 }
 
 const truncateText = (text: string, maxLength: number) => {
@@ -57,6 +58,7 @@ const truncateText = (text: string, maxLength: number) => {
 const FilterComponent: React.FC<FilterProps> = ({
   onCheckboxChange,
   onFileUpload,
+  onRemoveFile,
 }) => {
   const [state, setState] = React.useState({
     CLI: true,
@@ -66,6 +68,7 @@ const FilterComponent: React.FC<FilterProps> = ({
 
   const [filename, setFilename] = React.useState("");
 
+  // handle change
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = event.target;
 
@@ -87,12 +90,20 @@ const FilterComponent: React.FC<FilterProps> = ({
     onCheckboxChange(checked ? name : null);
   };
 
+  // remove file and clear filename
+  const handleRemove = () => {
+    onRemoveFile(true);
+    setFilename("");
+  };
+
+  // handle upload
   const handleIncomeStatementFileUpload = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const files = event.target.files;
     const file = files ? files[0] : null;
     setFilename(file ? file.name : "");
+    onRemoveFile(false);
     onFileUpload(file);
   };
 
@@ -271,6 +282,7 @@ const FilterComponent: React.FC<FilterProps> = ({
                   transform: "none",
                 },
               }}
+              onClick={handleRemove}
             >
               CLEAR FILE
             </Button>
