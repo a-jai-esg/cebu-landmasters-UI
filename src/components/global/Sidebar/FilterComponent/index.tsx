@@ -8,6 +8,7 @@ import {
   FormControlLabel,
   FormGroup,
   Button,
+  CircularProgress,
 } from "@mui/material";
 import { styled } from "@mui/system";
 import { keyframes } from "@emotion/react";
@@ -49,6 +50,7 @@ interface FilterProps {
   onCheckboxChange: (selectedEntity: string | null) => void;
   onFileUpload: (file: File | null) => void;
   onRemoveFile: (remove: boolean | null) => void;
+  isUploading: boolean;
 }
 
 const truncateText = (text: string, maxLength: number) => {
@@ -59,6 +61,7 @@ const FilterComponent: React.FC<FilterProps> = ({
   onCheckboxChange,
   onFileUpload,
   onRemoveFile,
+  isUploading,
 }) => {
   const [state, setState] = React.useState({
     CLI: true,
@@ -256,7 +259,11 @@ const FilterComponent: React.FC<FilterProps> = ({
                 },
               }}
             >
-              {truncateText(filename, 15) || "CHOOSE FILE"}
+              {isUploading ? (
+                <CircularProgress size={24} sx={{ color: "#24274c" }} />
+              ) : (
+                truncateText(filename, 15) || "CHOOSE FILE"
+              )}
             </Button>
           </label>
         </div>

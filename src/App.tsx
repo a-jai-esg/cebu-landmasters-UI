@@ -22,6 +22,7 @@ const App: React.FC = () => {
 
   const [dateDataSource, setDateDataSource] = useState("current");
   const [filteredEntity, setFilteredEntity] = useState<string>("CLI");
+  const [loading, setLoading] = useState(false);
 
   // handle for current and previous income statement uploads
   const handleReloadDashboard = (data: string | null) => {
@@ -44,6 +45,7 @@ const App: React.FC = () => {
 
   const handleIncomeStatementChange = async (file: File | null) => {
     if (file) {
+      setLoading(true);
       console.log("Successfully set file for current income statement.");
       const years: number[] = [2020, 2021];
       years.map(async (year) => {
@@ -63,7 +65,9 @@ const App: React.FC = () => {
             ? setPreviousDatasource(response.data)
             : setCurrentDatasource(response.data);
           console.log("File uploaded successfully", response.data);
+          setLoading(false);
         } catch (error) {
+          setLoading(false);
           console.error("Error uploading file", error);
         }
       });
@@ -663,6 +667,7 @@ const App: React.FC = () => {
         onCheckboxClick={handleReloadDashboard}
         onFileUpload={handleIncomeStatementChange}
         onRemoveFile={handleClearDataSources}
+        isUploading={loading}
       />
       <div className="dashboard-container">
         <Dashboard
