@@ -31,8 +31,8 @@ const App: React.FC = () => {
 
   // endpoint varies depending on what the usage of the application is for
   const endpointURL: string[] = [
-    "http://127.0.0.1:5000/upload",
-    "https://seashell-app-3sxk9.ondigitalocean.app/upload",
+    "http://127.0.0.1:5000/upload", // development mode
+    "https://seashell-app-3sxk9.ondigitalocean.app/upload", // deployment mode
   ];
 
   const handleClearDataSources = (remove: boolean | null) => {

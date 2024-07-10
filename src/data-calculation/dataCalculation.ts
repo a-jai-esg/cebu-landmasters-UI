@@ -540,7 +540,7 @@ class DataCalculation {
           this.currentDataset[entity as keyof companyDataInterface];
         const name: string = entity;
         const value: boolean | null = entityData
-          ? entityData.operating_expense_vs_py
+          ? entityData.operating_expenses_commissions_vs_py
           : null;
 
         data.push({ name, value });
@@ -559,7 +559,7 @@ class DataCalculation {
           this.currentDataset[entity as keyof companyDataInterface];
         const name: string = entity;
         const value: number | null = entityData
-          ? entityData.operating_expense_vs_py_percentage
+          ? entityData.operating_expenses_commissions_vs_py_percentage
           : null;
 
         data.push({ name, value });
@@ -700,7 +700,7 @@ class DataCalculation {
           this.currentDataset[entity as keyof companyDataInterface];
         const name: string = entity;
         const value: boolean | null = entityData
-          ? entityData.operating_expenses_management_fee_expense_vs_py
+          ? entityData.operating_expenses_professional_and_legal_fees_vs_py
           : null;
 
         data.push({ name, value });
@@ -719,7 +719,7 @@ class DataCalculation {
           this.currentDataset[entity as keyof companyDataInterface];
         const name: string = entity;
         const value: number | null = entityData
-          ? entityData.operating_expenses_management_fee_expense_vs_py_percentage
+          ? entityData.operating_expenses_professional_and_legal_fees_vs_py_percentage
           : null;
 
         data.push({ name, value });
