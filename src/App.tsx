@@ -56,7 +56,7 @@ const App: React.FC = () => {
         formData.append("year", yearValue); // Add the year to the form data
         try {
           console.log("Awaiting server response...");
-          const response = await axios.post(endpointURL[0], formData, {
+          const response = await axios.post(endpointURL[1], formData, {
             headers: {
               "Content-Type": "multipart/form-data",
             },
