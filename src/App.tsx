@@ -62,7 +62,6 @@ const App: React.FC = () => {
           Number.parseInt(yearValue) === 2020
             ? setPreviousDatasource(response.data)
             : setCurrentDatasource(response.data);
-          localStorage.setItem(yearValue, response.data);
           console.log("File uploaded successfully", response.data);
         } catch (error) {
           console.error("Error uploading file", error);
