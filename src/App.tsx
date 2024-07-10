@@ -10,9 +10,8 @@ import dataCalculation from "./data-calculation/dataCalculation";
 import incomeStatementRowDataInterface from "./common/interfaces/data/charts/incomeStatementRowDataInterface";
 import singleValueRowDataInterface from "./common/interfaces/data/objects/forms/singleValueRowDataInterface";
 import _ from "lodash";
-import commonFunctions from "./common/functions/commonFunctions";
-import OperatingExpenseDataInterface from "./common/interfaces/data/objects/forms/graph-related/data-interfaces/operatingExpenseDataInterface";
 import companyDataInterface from "./common/interfaces/data/companyDataInterface";
+import singleValueBooleanRowDataInterface from "./common/interfaces/data/objects/forms/singleValueBooleanRowDataInterface";
 
 const App: React.FC = () => {
   const [reloadDashboard, setReloadDashboard] = useState<boolean>(false);
@@ -30,6 +29,19 @@ const App: React.FC = () => {
     data !== null ? setFilteredEntity(data) : setFilteredEntity("CLI");
   };
 
+  // endpoint varies depending on what the usage of the application is for
+  const endpointURL: string[] = [
+    "http://127.0.0.1:5000/upload",
+    "https://seashell-app-3sxk9.ondigitalocean.app/upload",
+  ];
+
+  const handleClearDataSources = (remove: boolean | null) => {
+    if (remove) {
+      setCurrentDatasource(null);
+      setPreviousDatasource(null);
+    }
+  };
+
   const handleIncomeStatementChange = async (file: File | null) => {
     if (file) {
       console.log("Successfully set file for current income statement.");
@@ -42,15 +54,11 @@ const App: React.FC = () => {
         formData.append("year", yearValue); // Add the year to the form data
         try {
           console.log("Awaiting server response...");
-          const response = await axios.post(
-            "https://seashell-app-3sxk9.ondigitalocean.app/upload",
-            formData,
-            {
-              headers: {
-                "Content-Type": "multipart/form-data",
-              },
-            }
-          );
+          const response = await axios.post(endpointURL[0], formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          });
           Number.parseInt(yearValue) === 2020
             ? setPreviousDatasource(response.data)
             : setCurrentDatasource(response.data);
@@ -71,8 +79,7 @@ const App: React.FC = () => {
     { title: "GPM PER ENTITY (%)" },
   ];
 
-  const commonFunc = new commonFunctions();
-  const data = new dataCalculation(previousDatasource, currentDatasource); // load datasource/dataset from FY 2020 and 2021
+  const data = new dataCalculation(currentDatasource, previousDatasource); // load datasource/dataset from FY 2020 and 2021
 
   // create Income Statement Row Data Function
   const createIncomeStatementRowData = (
@@ -85,225 +92,378 @@ const App: React.FC = () => {
     return { id, name, currentYear, vsPreviousYear, percentage };
   };
 
-  // get income statement row data
-
   // --------- Revenue-related --------- //
-  const revenuePercentageData: singleValueRowDataInterface[] | null =
-    data.getRevenuePercentage();
   const currentRevenueData: singleValueRowDataInterface[] | null =
     data.getCurrentRevenueValue();
-  const previousRevenueData: singleValueRowDataInterface[] | null =
-    data.getPreviousRevenueValue();
+
+  const revenueVsPy: singleValueBooleanRowDataInterface[] | null =
+    data.getRevenueVsPy();
+
+  const revenueVsPyPercentage: singleValueRowDataInterface[] | null =
+    data.getRevenueVsPyPercentage();
 
   // extract results from objects
-  const revenuePercentageResult: singleValueRowDataInterface | null =
-    (revenuePercentageData
-      ? _.find(revenuePercentageData, { name: filteredEntity })
-      : null) || null;
   const currentRevenueResult: singleValueRowDataInterface | null =
-    (revenuePercentageData
+    (currentRevenueData
       ? _.find(currentRevenueData, { name: filteredEntity })
       : null) || null;
-  const previousRevenueResult: singleValueRowDataInterface | null =
-    (revenuePercentageData
-      ? _.find(previousRevenueData, { name: filteredEntity })
+
+  const revenueVsPyResult: singleValueBooleanRowDataInterface | null =
+    (revenueVsPy ? _.find(revenueVsPy, { name: filteredEntity }) : null) ||
+    null;
+  const revenueVsPyPercentageResult: singleValueRowDataInterface | null =
+    (revenueVsPyPercentage
+      ? _.find(revenueVsPyPercentage, { name: filteredEntity })
       : null) || null;
   // --------- End Revenue-related --------//
 
-  // --------- COS-related --------- //
-  const cosPercentageData: singleValueRowDataInterface[] | null =
-    data.getCosPercentage();
-  const currentCosData: singleValueRowDataInterface[] | null =
-    data.getCurrentCosValue();
-  const previousCosData: singleValueRowDataInterface[] | null =
-    data.getPreviousCosValue();
+  // --------- COGS-related --------- //
+  const currentCogsData: singleValueRowDataInterface[] | null =
+    data.getCurrentCogsValue();
+
+  const cogsVsPy: singleValueBooleanRowDataInterface[] | null =
+    data.getCogsVsPy();
+
+  const cogsVsPyPercentage: singleValueRowDataInterface[] | null =
+    data.getCogsVsPyPercentage();
 
   // extract results from objects
-  const cosPercentageResult: singleValueRowDataInterface | null =
-    (cosPercentageData
-      ? _.find(cosPercentageData, { name: filteredEntity })
+  const currentCogsResult: singleValueRowDataInterface | null =
+    (currentCogsData
+      ? _.find(currentCogsData, { name: filteredEntity })
       : null) || null;
-  const currentCosResult: singleValueRowDataInterface | null =
-    (cosPercentageData
-      ? _.find(currentCosData, { name: filteredEntity })
-      : null) || null;
-  const previousCosResult: singleValueRowDataInterface | null =
-    (cosPercentageData
-      ? _.find(previousCosData, { name: filteredEntity })
-      : null) || null;
-  // --------- End COS-related --------- //
 
-  // --------- Gross-profit-related --------- //
-  const grossProfitPercentageData: singleValueRowDataInterface[] | null =
-    data.getGrossProfitPercentage();
+  const cogsVsPyResult: singleValueBooleanRowDataInterface | null =
+    (cogsVsPy ? _.find(cogsVsPy, { name: filteredEntity }) : null) || null;
+  const cogsVsPyPercentageResult: singleValueRowDataInterface | null =
+    (cogsVsPyPercentage
+      ? _.find(cogsVsPyPercentage, { name: filteredEntity })
+      : null) || null;
+  // --------- End COGS-related --------//
+
+  // --------- Gross Profit-related --------- //
   const currentGrossProfitData: singleValueRowDataInterface[] | null =
     data.getCurrentGrossProfitValue();
-  const previousGrossProfitData: singleValueRowDataInterface[] | null =
-    data.getPreviousGrossProfitValue();
+
+  const grossProfitVsPy: singleValueBooleanRowDataInterface[] | null =
+    data.getGrossProfitVsPy();
+
+  const grossProfitVsPyPercentage: singleValueRowDataInterface[] | null =
+    data.getGrossProfitVsPyPercentage();
 
   // extract results from objects
-  const grossProfitPercentageResult: singleValueRowDataInterface | null =
-    (grossProfitPercentageData
-      ? _.find(grossProfitPercentageData, { name: filteredEntity })
-      : null) || null;
   const currentGrossProfitResult: singleValueRowDataInterface | null =
-    (grossProfitPercentageData
+    (currentGrossProfitData
       ? _.find(currentGrossProfitData, { name: filteredEntity })
       : null) || null;
-  const previousGrossProfitResult: singleValueRowDataInterface | null =
-    (grossProfitPercentageData
-      ? _.find(previousGrossProfitData, { name: filteredEntity })
-      : null) || null;
-  // --------- End Revenue-related --------//
 
-  // --------- Other Income or expense-related --------- //
-  const otherIncomeOrExpensePercentageData:
+  const grossProfitVsPyResult: singleValueBooleanRowDataInterface | null =
+    (grossProfitVsPy
+      ? _.find(grossProfitVsPy, { name: filteredEntity })
+      : null) || null;
+  const grossProfitVsPyPercentageResult: singleValueRowDataInterface | null =
+    (grossProfitVsPyPercentage
+      ? _.find(grossProfitVsPyPercentage, { name: filteredEntity })
+      : null) || null;
+  // --------- End Gross Profit-related --------//
+
+  // --------- OPEX-related --------- //
+  const currentOpexData: singleValueRowDataInterface[] | null =
+    data.getCurrentOpexValue();
+  const currentOpexCommissionsData: singleValueRowDataInterface[] | null =
+    data.getOpexCurrentCommissionsValue();
+  const currentOpexMgtFeeExpensesData: singleValueRowDataInterface[] | null =
+    data.getCurrentOpexMgtFeeExpensesValue();
+  const currentOpexProAndLegalFeesData: singleValueRowDataInterface[] | null =
+    data.getCurrentProAndLegalFeesValue();
+  const currentOpexSecAndJanitorialData: singleValueRowDataInterface[] | null =
+    data.getCurrentSecAndJanitorialValue();
+  const currentOpexTaxesAndLicensesData: singleValueRowDataInterface[] | null =
+    data.getCurrentTaxesAndLicensesValue();
+
+  const currentOpexVsPy: singleValueBooleanRowDataInterface[] | null =
+    data.getOpexVsPy();
+  const currentOpexCommissionsVsPy:
+    | singleValueBooleanRowDataInterface[]
+    | null = data.getOpexCommissionsVsPy();
+  const currentOpexMgtFeeExpensesVsPy:
+    | singleValueBooleanRowDataInterface[]
+    | null = data.getOpexMgtFeeExpensesVsPy();
+  const currentOpexProAndLegalFeesVsPy:
+    | singleValueBooleanRowDataInterface[]
+    | null = data.getProAndLegalFeesVsPy();
+  const currentOpexSecAndJanitorialVsPy:
+    | singleValueBooleanRowDataInterface[]
+    | null = data.getSecAndJanitorialVsPy();
+  const currentOpexTaxesAndLicensesVsPy:
+    | singleValueBooleanRowDataInterface[]
+    | null = data.getTaxesAndLicensesVsPy();
+
+  const currentOpexVsPyPercentage: singleValueRowDataInterface[] | null =
+    data.getOpexVsPyPercentage();
+  const currentOpexCommissionsVsPyPercentage:
     | singleValueRowDataInterface[]
-    | null = data.getOtherTotalOpexPercentage();
-  const currentOtherIncomeOrExpenseData: singleValueRowDataInterface[] | null =
-    data.getCurrentOtherTotalOperatingExpenses();
-  const previousOtherIncomeOrExpenseData: singleValueRowDataInterface[] | null =
-    data.getPreviousOtherTotalOperatingExpenses();
+    | null = data.getCommissionsVsPyPercentage();
+  const currentOpexMgtFeeExpensesVsPyPercentage:
+    | singleValueRowDataInterface[]
+    | null = data.getOpexMgtFeeExpenseVsPyPercentage();
+  const currentOpexProAndLegalFeesVsPyPercentage:
+    | singleValueRowDataInterface[]
+    | null = data.getProAndLegalFeesVsPyPercentage();
+  const currentOpexSecAndJanitorialVsPyPercentage:
+    | singleValueRowDataInterface[]
+    | null = data.getSecAndJanitorialVsPyPercentage();
+  const currentOpexTaxesAndLicensesVsPyPercentage:
+    | singleValueRowDataInterface[]
+    | null = data.getTaxesAndLicensesVsPyPercentage();
 
   // extract results from objects
-  const otherIncomeOrExpensePercentageResult: singleValueRowDataInterface | null =
-    (otherIncomeOrExpensePercentageData
-      ? _.find(otherIncomeOrExpensePercentageData, { name: filteredEntity })
-      : null) || null;
-  const currentOtherIncomeOrExpenseResult: singleValueRowDataInterface | null =
-    (currentOtherIncomeOrExpenseData
-      ? _.find(currentOtherIncomeOrExpenseData, { name: filteredEntity })
-      : null) || null;
-  const previousOtherIncomeOrExpenseResult: singleValueRowDataInterface | null =
-    (previousOtherIncomeOrExpenseData
-      ? _.find(previousOtherIncomeOrExpenseData, { name: filteredEntity })
-      : null) || null;
-  // --------- End Other Income or expense-related --------//
 
-  // --------- Opex-related --------- //
-  const opexPercentageData: singleValueRowDataInterface[] | null =
-    data.getOpexPercentage();
-  const opexCurrentTotalOpexValue: singleValueRowDataInterface[] | null =
-    data.getCurrentTotalOpexValue();
-  const opexPreviousTotalOpexValue: singleValueRowDataInterface[] | null =
-    data.getPreviousTotalOpexValue();
-
-  // per BU
-  const currentOpexDataPerBu: OperatingExpenseDataInterface[] | null =
-    data.getOpexPerBU("current");
-  const previousOpexDataPerBu: OperatingExpenseDataInterface[] | null =
-    data.getOpexPerBU("previous");
-
-  // specific opex result/s
-  const currentSpecificOpexResult: OperatingExpenseDataInterface | null =
-    (currentOpexDataPerBu
-      ? _.find(currentOpexDataPerBu, { name: filteredEntity })
+  // actual data/numbers
+  const currentOpexResult: singleValueRowDataInterface | null =
+    (currentOpexData
+      ? _.find(currentOpexData, { name: filteredEntity })
+      : null) || null;
+  const currentOpexCommissionsResult: singleValueRowDataInterface | null =
+    (currentOpexCommissionsData
+      ? _.find(currentOpexCommissionsData, { name: filteredEntity })
+      : null) || null;
+  const currentOpexMgtFeeExpensesResult: singleValueRowDataInterface | null =
+    (currentOpexMgtFeeExpensesData
+      ? _.find(currentOpexMgtFeeExpensesData, { name: filteredEntity })
+      : null) || null;
+  const currentOpexProAndLegalFeesResult: singleValueRowDataInterface | null =
+    (currentOpexProAndLegalFeesData
+      ? _.find(currentOpexProAndLegalFeesData, { name: filteredEntity })
+      : null) || null;
+  const currentOpexSecAndJanitorialResult: singleValueRowDataInterface | null =
+    (currentOpexSecAndJanitorialData
+      ? _.find(currentOpexSecAndJanitorialData, { name: filteredEntity })
+      : null) || null;
+  const currentOpexTaxesAndLicensesResult: singleValueRowDataInterface | null =
+    (currentOpexTaxesAndLicensesData
+      ? _.find(currentOpexTaxesAndLicensesData, { name: filteredEntity })
       : null) || null;
 
-  const currentCommissionsResult: number | null =
-    currentSpecificOpexResult != null &&
-    currentSpecificOpexResult.expenses != null
-      ? currentSpecificOpexResult.expenses.commissions
-      : null;
-
-  const currentManagementFeeExpenseResult: number | null =
-    currentSpecificOpexResult != null &&
-    currentSpecificOpexResult.expenses != null
-      ? currentSpecificOpexResult.expenses.management_fee_expense
-      : null;
-
-  const currentProfessionalAndLegalFeesResult: number | null =
-    currentSpecificOpexResult != null &&
-    currentSpecificOpexResult.expenses != null
-      ? currentSpecificOpexResult.expenses.professional_and_legal_fees
-      : null;
-
-  const currentSecurityAndJanitorialServicesResult: number | null =
-    currentSpecificOpexResult != null &&
-    currentSpecificOpexResult.expenses != null
-      ? currentSpecificOpexResult.expenses.security_and_janitorial_services
-      : null;
-
-  const currentTaxesAndLicensesResult: number | null =
-    currentSpecificOpexResult != null &&
-    currentSpecificOpexResult.expenses != null
-      ? currentSpecificOpexResult.expenses.taxes_and_licenses
-      : null;
-
-  const previousSpecificOpexResult: OperatingExpenseDataInterface | null =
-    (previousOpexDataPerBu
-      ? _.find(previousOpexDataPerBu, { name: filteredEntity })
+  // up and down arrows
+  const currentOpexVsPyResult: singleValueBooleanRowDataInterface | null =
+    (currentOpexVsPy
+      ? _.find(currentOpexVsPy, { name: filteredEntity })
       : null) || null;
 
-  const previousCommissionsResult: number | null =
-    previousSpecificOpexResult != null &&
-    previousSpecificOpexResult.expenses != null
-      ? previousSpecificOpexResult.expenses.commissions
-      : null;
+  const currentOpexCommissionsVsPyResult: singleValueBooleanRowDataInterface | null =
+    (currentOpexCommissionsVsPy
+      ? _.find(currentOpexCommissionsVsPy, { name: filteredEntity })
+      : null) || null;
 
-  const previousManagementFeeExpenseResult: number | null =
-    previousSpecificOpexResult != null &&
-    previousSpecificOpexResult.expenses != null
-      ? previousSpecificOpexResult.expenses.management_fee_expense
-      : null;
+  const currentOpexMgtFeeExpensesVsPyResult: singleValueBooleanRowDataInterface | null =
+    (currentOpexMgtFeeExpensesVsPy
+      ? _.find(currentOpexMgtFeeExpensesVsPy, { name: filteredEntity })
+      : null) || null;
 
-  const previousProfessionalAndLegalFeesResult: number | null =
-    previousSpecificOpexResult != null &&
-    previousSpecificOpexResult.expenses != null
-      ? previousSpecificOpexResult.expenses.professional_and_legal_fees
-      : null;
+  const currentOpexProAndLegalFeesVsPyResult: singleValueBooleanRowDataInterface | null =
+    (currentOpexProAndLegalFeesVsPy
+      ? _.find(currentOpexProAndLegalFeesVsPy, { name: filteredEntity })
+      : null) || null;
 
-  const previousSecurityAndJanitorialServicesResult: number | null =
-    previousSpecificOpexResult != null &&
-    previousSpecificOpexResult.expenses != null
-      ? previousSpecificOpexResult.expenses.security_and_janitorial_services
-      : null;
+  const currentOpexSecAndJanitorialVsPyResult: singleValueBooleanRowDataInterface | null =
+    (currentOpexSecAndJanitorialVsPy
+      ? _.find(currentOpexSecAndJanitorialVsPy, { name: filteredEntity })
+      : null) || null;
 
-  const previousTaxesAndLicensesResult: number | null =
-    previousSpecificOpexResult != null &&
-    previousSpecificOpexResult.expenses != null
-      ? previousSpecificOpexResult.expenses.taxes_and_licenses
-      : null;
+  const currentOpexTaxesAndLicensesVsPyResult: singleValueBooleanRowDataInterface | null =
+    (currentOpexTaxesAndLicensesVsPy
+      ? _.find(currentOpexTaxesAndLicensesVsPy, { name: filteredEntity })
+      : null) || null;
+
+  // percentages
+  const currentOpexVsPyPercentageResult: singleValueRowDataInterface | null =
+    (currentOpexVsPyPercentage
+      ? _.find(currentOpexVsPyPercentage, { name: filteredEntity })
+      : null) || null;
+
+  const currentOpexCommissionsVsPyPercentageResult: singleValueRowDataInterface | null =
+    (currentOpexCommissionsVsPyPercentage
+      ? _.find(currentOpexCommissionsVsPyPercentage, { name: filteredEntity })
+      : null) || null;
+
+  const currentOpexMgtFeeExpensesVsPyPercentageResult: singleValueRowDataInterface | null =
+    (currentOpexMgtFeeExpensesVsPyPercentage
+      ? _.find(currentOpexMgtFeeExpensesVsPyPercentage, {
+          name: filteredEntity,
+        })
+      : null) || null;
+
+  const currentOpexProAndLegalFeesVsPyPercentageResult: singleValueRowDataInterface | null =
+    (currentOpexProAndLegalFeesVsPyPercentage
+      ? _.find(currentOpexProAndLegalFeesVsPyPercentage, {
+          name: filteredEntity,
+        })
+      : null) || null;
+
+  const currentOpexSecAndJanitorialVsPyPercentageResult: singleValueRowDataInterface | null =
+    (currentOpexSecAndJanitorialVsPyPercentage
+      ? _.find(currentOpexSecAndJanitorialVsPyPercentage, {
+          name: filteredEntity,
+        })
+      : null) || null;
+
+  const currentOpexTaxesAndLicensesVsPyPercentageResult: singleValueRowDataInterface | null =
+    (currentOpexTaxesAndLicensesVsPyPercentage
+      ? _.find(currentOpexTaxesAndLicensesVsPyPercentage, {
+          name: filteredEntity,
+        })
+      : null) || null;
+
+  // --------- End OPEX-related --------- //
+
+  // --------- Other Income-related --------- //
+  const currentOtherIncomeData: singleValueRowDataInterface[] | null =
+    data.getCurrentOtherIncomeValue();
+
+  const currentOtherIncomeVsPy: singleValueBooleanRowDataInterface[] | null =
+    data.getOtherIncomeValueVsPy();
+
+  const currentOtherIncomeVsPyPercentage: singleValueRowDataInterface[] | null =
+    data.getOtherIncomeValueVsPyPercentage();
 
   // extract results from objects
-  const opexPercentageResult: singleValueRowDataInterface | null =
-    (opexPercentageData
-      ? _.find(opexPercentageData, { name: filteredEntity })
-      : null) || null;
-  const opexCurrentTotalOpexResult: singleValueRowDataInterface | null =
-    (opexCurrentTotalOpexValue
-      ? _.find(opexCurrentTotalOpexValue, { name: filteredEntity })
-      : null) || null;
-  const opexPreviousTotalOpexResult: singleValueRowDataInterface | null =
-    (opexPreviousTotalOpexValue
-      ? _.find(opexPreviousTotalOpexValue, { name: filteredEntity })
+  const currentOtherIncomeResult: singleValueRowDataInterface | null =
+    (currentOtherIncomeData
+      ? _.find(currentOtherIncomeData, { name: filteredEntity })
       : null) || null;
 
-  // --------- End Opex-related --------//
+  const currentOtherIncomeVsPyResult: singleValueBooleanRowDataInterface | null =
+    (currentOtherIncomeVsPy
+      ? _.find(currentOtherIncomeVsPy, { name: filteredEntity })
+      : null) || null;
+  const currentOtherIncomeVsPyPercentageResult: singleValueRowDataInterface | null =
+    (currentOtherIncomeVsPyPercentage
+      ? _.find(currentOtherIncomeVsPyPercentage, { name: filteredEntity })
+      : null) || null;
+  // --------- End Other Income-related --------//
+
+  // --------- Other Expense-related --------- //
+  const currentOtherExpensesData: singleValueRowDataInterface[] | null =
+    data.getCurrentOtherExpensesValue();
+
+  const currentOtherExpensesVsPy: singleValueBooleanRowDataInterface[] | null =
+    data.getOtherExpensesValueVsPy();
+
+  const currentOtherExpensesVsPyPercentage:
+    | singleValueRowDataInterface[]
+    | null = data.getOtherExpensesValueVsPyPercentage();
+
+  // extract results from objects
+  const currentOtherExpensesResult: singleValueRowDataInterface | null =
+    (currentOtherExpensesData
+      ? _.find(currentOtherExpensesData, { name: filteredEntity })
+      : null) || null;
+
+  const currentOtherExpensesVsPyResult: singleValueBooleanRowDataInterface | null =
+    (currentOtherExpensesVsPy
+      ? _.find(currentOtherExpensesVsPy, { name: filteredEntity })
+      : null) || null;
+  const currentOtherExpensesVsPyPercentageResult: singleValueRowDataInterface | null =
+    (currentOtherExpensesVsPyPercentage
+      ? _.find(currentOtherExpensesVsPyPercentage, { name: filteredEntity })
+      : null) || null;
+  // --------- End Other Expense-related --------//
+
+  // --------- EBITDA-related --------- //
+  const currentEbitdaData: singleValueRowDataInterface[] | null =
+    data.getCurrentEbitdaValue();
+  const currentInterestAndTaxesData: singleValueRowDataInterface[] | null =
+    data.getCurrentInterestAndTaxesValue();
+
+  const currentEbitdaVsPy: singleValueBooleanRowDataInterface[] | null =
+    data.getEbitdaValueVsPy();
+  const currentInterestAndTaxesVsPy:
+    | singleValueBooleanRowDataInterface[]
+    | null = data.getEbitdaValueVsPy();
+
+  const currentEbitdaVsPyPercentage: singleValueRowDataInterface[] | null =
+    data.getEbitdaValueVsPyPercentage();
+  const currentInterestAndTaxesVsPyPercentage:
+    | singleValueRowDataInterface[]
+    | null = data.getInterestAndTaxesVsPyPercentage();
+
+  // extract results from objects
+  const currentEbitdaResult: singleValueRowDataInterface | null =
+    (currentEbitdaData
+      ? _.find(currentEbitdaData, { name: filteredEntity })
+      : null) || null;
+  const currentInterestAndTaxesResult: singleValueRowDataInterface | null =
+    (currentInterestAndTaxesData
+      ? _.find(currentInterestAndTaxesData, { name: filteredEntity })
+      : null) || null;
+
+  const currentEbitdaVsPyResult: singleValueBooleanRowDataInterface | null =
+    (currentEbitdaVsPy
+      ? _.find(currentEbitdaVsPy, { name: filteredEntity })
+      : null) || null;
+  const currentInterestAndTaxesVsPyResult: singleValueBooleanRowDataInterface | null =
+    (currentInterestAndTaxesVsPy
+      ? _.find(currentInterestAndTaxesVsPy, { name: filteredEntity })
+      : null) || null;
+
+  const currentEbitdaVsPyPercentageResult: singleValueRowDataInterface | null =
+    (currentEbitdaVsPyPercentage
+      ? _.find(currentEbitdaVsPyPercentage, { name: filteredEntity })
+      : null) || null;
+  const currentInterestAndTaxesVsPyPercentageResult: singleValueRowDataInterface | null =
+    (currentInterestAndTaxesVsPyPercentage
+      ? _.find(currentInterestAndTaxesVsPyPercentage, { name: filteredEntity })
+      : null) || null;
+  // --------- End EBITDA-related --------//
+
+  // --------- Net profit-related --------- //
+  const currentNetProfitData: singleValueRowDataInterface[] | null =
+    data.getCurrentNetProfit();
+
+  const currentNetProfitVsPy: singleValueBooleanRowDataInterface[] | null =
+    data.getNetProfitVsPy();
+
+  const currentNetProfitVsPyPercentage: singleValueRowDataInterface[] | null =
+    data.getNetProfitVsPyPercentage();
+
+  // extract results from objects
+  const currentNetProfitResult: singleValueRowDataInterface | null =
+    (currentNetProfitData
+      ? _.find(currentNetProfitData, { name: filteredEntity })
+      : null) || null;
+
+  const currentNetProfitVsPyResult: singleValueBooleanRowDataInterface | null =
+    (currentNetProfitVsPy
+      ? _.find(currentNetProfitVsPy, { name: filteredEntity })
+      : null) || null;
+  const currentNetProfitVsPyPercentageResult: singleValueRowDataInterface | null =
+    (currentNetProfitVsPyPercentage
+      ? _.find(currentNetProfitVsPyPercentage, { name: filteredEntity })
+      : null) || null;
+  // --------- End Net profit-related --------//
 
   const rows: incomeStatementRowDataInterface[] = [
     // Revenue
     createIncomeStatementRowData(
       0,
       "Revenue",
-      currentRevenueResult?.value != null ? currentRevenueResult.value : 0,
-      commonFunc.checkComparison(
-        currentRevenueResult?.value != null ? currentRevenueResult.value : 0,
-        previousRevenueResult?.value != null ? previousRevenueResult.value : 0
-      ),
-      revenuePercentageResult?.value != null ? revenuePercentageResult.value : 0
+      currentRevenueResult?.value != null ? currentRevenueResult?.value : 0,
+      revenueVsPyResult?.value != null ? revenueVsPyResult?.value : false, // false by default
+      revenueVsPyPercentageResult?.value != null
+        ? revenueVsPyPercentageResult?.value
+        : 0
     ),
 
-    // COGS / COS
+    // COGS
     createIncomeStatementRowData(
       1,
       "COGS",
-      currentCosResult?.value != null ? currentCosResult.value : 0,
-      commonFunc.checkComparison(
-        currentCosResult?.value != null ? currentCosResult.value : 0,
-        previousCosResult?.value != null ? previousCosResult.value : 0
-      ),
-      cosPercentageResult?.value != null ? cosPercentageResult.value : 0
+      currentCogsResult?.value != null ? currentCogsResult?.value : 0,
+      cogsVsPyResult?.value != null ? cogsVsPyResult?.value : false, // false by default
+      cogsVsPyPercentageResult?.value != null
+        ? cogsVsPyPercentageResult?.value
+        : 0
     ),
 
     // Gross Profit
@@ -311,18 +471,13 @@ const App: React.FC = () => {
       2,
       "Gross Profit",
       currentGrossProfitResult?.value != null
-        ? currentGrossProfitResult.value
+        ? currentGrossProfitResult?.value
         : 0,
-      commonFunc.checkComparison(
-        currentGrossProfitResult?.value != null
-          ? currentGrossProfitResult.value
-          : 0,
-        previousGrossProfitResult?.value != null
-          ? previousGrossProfitResult.value
-          : 0
-      ),
-      grossProfitPercentageResult?.value != null
-        ? grossProfitPercentageResult.value
+      grossProfitVsPyResult?.value != null
+        ? grossProfitVsPyResult?.value
+        : false, // false by default
+      grossProfitVsPyPercentageResult?.value != null
+        ? grossProfitVsPyPercentageResult?.value
         : 0
     ),
 
@@ -330,37 +485,157 @@ const App: React.FC = () => {
     createIncomeStatementRowData(
       3,
       "OPEX",
-      opexCurrentTotalOpexResult?.value != null
-        ? opexCurrentTotalOpexResult?.value
-        : 0,
-      commonFunc.checkComparison(
-        opexCurrentTotalOpexResult?.value != null
-          ? opexCurrentTotalOpexResult.value
-          : 0,
-        opexPreviousTotalOpexResult?.value != null
-          ? opexPreviousTotalOpexResult?.value
-          : 0
-      ),
-      opexPercentageResult?.value != null ? opexPercentageResult.value : 0
+      currentOpexResult?.value != null ? currentOpexResult?.value : 0,
+      currentOpexVsPyResult?.value != null
+        ? currentOpexVsPyResult?.value
+        : false, // false by default
+      currentOpexVsPyPercentageResult?.value != null
+        ? currentOpexVsPyPercentageResult?.value
+        : 0
     ),
 
-    // Other operating expenses
+    // Commissions
+    createIncomeStatementRowData(
+      4,
+      "Commissions",
+      currentOpexCommissionsResult?.value != null
+        ? currentOpexCommissionsResult?.value
+        : 0,
+      currentOpexCommissionsVsPyResult?.value != null
+        ? currentOpexCommissionsVsPyResult?.value
+        : false, // false by default
+      currentOpexCommissionsVsPyPercentageResult?.value != null
+        ? currentOpexCommissionsVsPyPercentageResult?.value
+        : 0
+    ),
+
+    // Management Fee Expenses
+    createIncomeStatementRowData(
+      5,
+      "Management Fee Expenses",
+      currentOpexMgtFeeExpensesResult?.value != null
+        ? currentOpexMgtFeeExpensesResult?.value
+        : 0,
+      currentOpexMgtFeeExpensesVsPyResult?.value != null
+        ? currentOpexMgtFeeExpensesVsPyResult?.value
+        : false, // false by default
+      currentOpexMgtFeeExpensesVsPyPercentageResult?.value != null
+        ? currentOpexMgtFeeExpensesVsPyPercentageResult?.value
+        : 0
+    ),
+
+    // Professional & Legal Fees
+    createIncomeStatementRowData(
+      6,
+      "Professional and Legal Fees",
+      currentOpexProAndLegalFeesResult?.value != null
+        ? currentOpexProAndLegalFeesResult?.value
+        : 0,
+      currentOpexProAndLegalFeesVsPyResult?.value != null
+        ? currentOpexProAndLegalFeesVsPyResult?.value
+        : false, // false by default
+      currentOpexProAndLegalFeesVsPyPercentageResult?.value != null
+        ? currentOpexProAndLegalFeesVsPyPercentageResult?.value
+        : 0
+    ),
+
+    // Security & Janitorial
+    createIncomeStatementRowData(
+      7,
+      "Security and Janitorial",
+      currentOpexSecAndJanitorialResult?.value != null
+        ? currentOpexSecAndJanitorialResult?.value
+        : 0,
+      currentOpexSecAndJanitorialVsPyResult?.value != null
+        ? currentOpexSecAndJanitorialVsPyResult?.value
+        : false, // false by default
+      currentOpexSecAndJanitorialVsPyPercentageResult?.value != null
+        ? currentOpexSecAndJanitorialVsPyPercentageResult?.value
+        : 0
+    ),
+
+    // Taxes and Licenses
+    createIncomeStatementRowData(
+      8,
+      "Taxes and Licenses",
+      currentOpexTaxesAndLicensesResult?.value != null
+        ? currentOpexTaxesAndLicensesResult?.value
+        : 0,
+      currentOpexTaxesAndLicensesVsPyResult?.value != null
+        ? currentOpexTaxesAndLicensesVsPyResult?.value
+        : false, // false by default
+      currentOpexTaxesAndLicensesVsPyPercentageResult?.value != null
+        ? currentOpexTaxesAndLicensesVsPyPercentageResult?.value
+        : 0
+    ),
+
+    // Other Income
     createIncomeStatementRowData(
       9,
-      "Other Operating Expenses",
-      currentOtherIncomeOrExpenseResult?.value != null
-        ? currentOtherIncomeOrExpenseResult?.value
+      "Other Income",
+      currentOtherIncomeResult?.value != null
+        ? currentOtherIncomeResult?.value
         : 0,
-      commonFunc.checkComparison(
-        currentOtherIncomeOrExpenseResult?.value != null
-          ? currentOtherIncomeOrExpenseResult?.value
-          : 0,
-        previousOtherIncomeOrExpenseResult?.value != null
-          ? previousOtherIncomeOrExpenseResult?.value
-          : 0
-      ),
-      otherIncomeOrExpensePercentageResult?.value != null
-        ? otherIncomeOrExpensePercentageResult?.value
+      currentOtherIncomeVsPyResult?.value != null
+        ? currentOtherIncomeVsPyResult?.value
+        : false, // false by default
+      currentOtherIncomeVsPyPercentageResult?.value != null
+        ? currentOtherIncomeVsPyPercentageResult?.value
+        : 0
+    ),
+
+    // Other Expenses
+    createIncomeStatementRowData(
+      10,
+      "Other Expenses",
+      currentOtherExpensesResult?.value != null
+        ? currentOtherExpensesResult?.value
+        : 0,
+      currentOtherExpensesVsPyResult?.value != null
+        ? currentOtherExpensesVsPyResult?.value
+        : false, // false by default
+      currentOtherExpensesVsPyPercentageResult?.value != null
+        ? currentOtherExpensesVsPyPercentageResult?.value
+        : 0
+    ),
+    // EBITDA
+    createIncomeStatementRowData(
+      11,
+      "EBITDA",
+      currentEbitdaResult?.value != null ? currentEbitdaResult?.value : 0,
+      currentEbitdaVsPyResult?.value != null
+        ? currentEbitdaVsPyResult?.value
+        : false, // false by default
+      currentEbitdaVsPyPercentageResult?.value != null
+        ? currentEbitdaVsPyPercentageResult?.value
+        : 0
+    ),
+
+    // Interest and Tax
+    createIncomeStatementRowData(
+      12,
+      "Interest and Taxes",
+      currentInterestAndTaxesResult?.value != null
+        ? currentInterestAndTaxesResult?.value
+        : 0,
+      currentInterestAndTaxesVsPyResult?.value != null
+        ? currentInterestAndTaxesVsPyResult?.value
+        : false, // false by default
+      currentInterestAndTaxesVsPyPercentageResult?.value != null
+        ? currentInterestAndTaxesVsPyPercentageResult?.value
+        : 0
+    ),
+
+    // Net Profit
+    createIncomeStatementRowData(
+      13,
+      "Net Profit",
+      currentNetProfitResult?.value != null ? currentNetProfitResult?.value : 0,
+      currentNetProfitVsPyResult?.value != null
+        ? currentNetProfitVsPyResult?.value
+        : false, // false by default
+      currentNetProfitVsPyPercentageResult?.value != null
+        ? currentNetProfitVsPyPercentageResult?.value
         : 0
     ),
   ];
@@ -388,6 +663,7 @@ const App: React.FC = () => {
       <SidebarComponent
         onCheckboxClick={handleReloadDashboard}
         onFileUpload={handleIncomeStatementChange}
+        onRemoveFile={handleClearDataSources}
       />
       <div className="dashboard-container">
         <Dashboard

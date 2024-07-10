@@ -1,14 +1,14 @@
 interface FinancialData {
   administrative_charges: number;
-  amortized_debt_issuance_cost: number;
+  amortized_debt_issuance_cogst: number;
   bank_charges: number;
   consolidated_niat: number;
-  cos_depreciation: number;
-  cos_hotel: number;
-  cos_real_estates: number;
-  cos_salaries_and_other_benefits: number;
-  cos_taxes: number;
-  cos_water: number;
+  cogs_depreciation: number;
+  cogs_hotel: number;
+  cogs_real_estates: number;
+  cogs_salaries_and_other_benefits: number;
+  cogs_taxes: number;
+  cogs_water: number;
   current_income_tax: number;
   deferred_income_tax: number;
   discount_on_non_current_contract_receivables: number;
@@ -16,6 +16,7 @@ interface FinancialData {
   equity_in_net_earnings: number;
   equity_in_net_earnings_losses: number;
   expected_credit_losses: number;
+  ebitda: number;
   final_income_tax: number;
   gain_on_sale_of_financial_assets: number;
   gain_on_sale_of_property: number;
@@ -61,7 +62,7 @@ interface FinancialData {
   operating_expenses_transportation_and_travel: number;
   operating_expenses_utilities: number;
   opex_ratio: number;
-  other_finance_costs: number;
+  other_finance_cogsts: number;
   other_finance_income: number;
   other_gains: number;
   other_operating_income: number;
@@ -78,7 +79,7 @@ interface FinancialData {
   reversal_of_payables: number;
   sales_water: number;
   total_consolidated_net_income: number;
-  total_cos: number;
+  total_cogs: number;
   total_gross_profit: number;
   total_nci: number;
   total_net_income_attributable_to_parent: number;
@@ -88,6 +89,36 @@ interface FinancialData {
   unrealized_foreign_exchange_gain: number;
   unrealized_foreign_exchange_loss: number;
   water_income: number;
+
+  revenue_vs_py: boolean;
+  cogs_vs_py: boolean;
+  gross_profit_vs_py: boolean;
+  operating_expense_vs_py: boolean;
+  operating_expenses_commissions_vs_py: boolean;
+  operating_expenses_management_fee_expense_vs_py: boolean;
+  operating_expenses_professional_and_legal_fees_vs_py: boolean;
+  operating_expenses_security_and_janitorial_services_vs_py: boolean;
+  operating_expenses_taxes_and_licenses_vs_py: boolean;
+  other_income_vs_py: boolean;
+  other_expense_vs_py: boolean;
+  ebitda_vs_py: boolean;
+  interest_and_tax_vs_py: boolean;
+  net_profit_vs_py: boolean;
+
+  revenue_vs_py_percentage: number;
+  cogs_vs_py_percentage: number;
+  gross_profit_vs_py_percentage: number;
+  operating_expense_vs_py_percentage: number;
+  operating_expenses_commissions_vs_py_percentage: number;
+  operating_expenses_management_fee_expense_vs_py_percentage: number;
+  operating_expenses_professional_and_legal_fees_vs_py_percentage: number;
+  operating_expenses_security_and_janitorial_services_vs_py_percentage: number;
+  operating_expenses_taxes_and_licenses_vs_py_percentage: number;
+  other_income_vs_py_percentage: number;
+  other_expense_vs_py_percentage: number;
+  ebitda_vs_py_percentage: number;
+  interest_and_tax_vs_py_percentage: number;
+  net_profit_vs_py_percentage: number;
 }
 
 export default interface companyDataInterface {
