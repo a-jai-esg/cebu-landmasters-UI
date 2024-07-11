@@ -193,7 +193,7 @@ const CashFlowComponent: React.FC<CashFlowProps> = ({
           )}
           {/* Bar chart */}
           {cardTitles.length > 1 && (
-              <Grid item sm={12} md={4}>
+              <Grid item xs={12} md={6} lg={4}>
               <Card sx={{ borderRadius: 3, boxShadow: 6, width:"100%" }}>
                 <CardContent>
                   <BarchartComponent
@@ -218,7 +218,7 @@ const CashFlowComponent: React.FC<CashFlowProps> = ({
           )}
           {/* Pie Chart*/}
           {cardTitles.length > 2 && (
-            <Grid item sm={12} md={4}>
+            <Grid item xs={12} md={6} lg={4}>
               <Card sx={{ borderRadius: 3, boxShadow: 6, height:"100%" }}>
                 <CardContent>
                   <PrimaryPieChartComponent
@@ -245,7 +245,7 @@ const CashFlowComponent: React.FC<CashFlowProps> = ({
           {/* Income Statement Table */}
           {/* Table*/}
           {cardTitles.length > 3 && (
-            <Grid item sm={12} md={4}>
+            <Grid item xs={12} md={12} lg={4}>
               <Card sx={{ borderRadius: 3, boxShadow: 6 }}>
                 <CardContent>
                   <Typography fontSize={20} color="#333" fontWeight="bold">
