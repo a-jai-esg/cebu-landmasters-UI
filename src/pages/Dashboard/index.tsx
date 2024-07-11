@@ -55,7 +55,7 @@ const Dashboard: React.FC<DashboardProps> = ({
 
   const barDataFiltered: revenueDataInterface[] = barData.filter(
     (data) => data !== null
-  );
+  ) as revenueDataInterface[];
 
   // get gauge data
   const gaugeData: (singleValueRowDataInterface | null)[] =
@@ -80,8 +80,9 @@ const Dashboard: React.FC<DashboardProps> = ({
         : [];
     });
 
-  const composedChartFiltered: singleValueRowDataInterface[] =
-    composedChartData.filter((data) => data !== null);
+  const composedChartFiltered: singleValueRowDataInterface[] = composedChartData.filter(
+    (data) => data !== null
+  ) as singleValueRowDataInterface[];
 
   // get pie data
   const pieData: (operatingExpenseDataInterface | null)[] =
@@ -96,9 +97,9 @@ const Dashboard: React.FC<DashboardProps> = ({
         : [];
     });
 
-  const pieDataFiltered: operatingExpenseDataInterface[] = pieData.filter(
-    (data) => data !== null
-  );
+    const pieDataFiltered: operatingExpenseDataInterface[] = pieData.filter(
+      (data) => data !== null
+    ) as operatingExpenseDataInterface[];
 
   // get income statement table data
   const incomeStatementData: (incomeStatementRowDataInterface | null)[] =
@@ -110,8 +111,9 @@ const Dashboard: React.FC<DashboardProps> = ({
         : [];
     });
 
-  const incomeStatementDataFiltered: incomeStatementRowDataInterface[] =
-    incomeStatementData.filter((data) => data !== null);
+    const incomeStatementDataFiltered: incomeStatementRowDataInterface[] = incomeStatementData.filter(
+      (data) => data !== null
+    ) as incomeStatementRowDataInterface[];
 
   // Modal handlers
   const handleOpenBarChartModal = () => setIsBarChartModalOpen(true);
@@ -189,7 +191,7 @@ const Dashboard: React.FC<DashboardProps> = ({
           )}
           {/* Bar chart */}
           {cardTitles.length > 1 && (
-              <Grid item sm={12} md={4}>
+              <Grid item xs={12} md={6} lg={4}>
               <Card sx={{ borderRadius: 3, boxShadow: 6, width:"100%" }}>
                 <CardContent>
                   <BarchartComponent
@@ -214,7 +216,7 @@ const Dashboard: React.FC<DashboardProps> = ({
           )}
           {/* Pie Chart*/}
           {cardTitles.length > 2 && (
-            <Grid item sm={12} md={4}>
+            <Grid item xs={12} md={6} lg={4}>
               <Card sx={{ borderRadius: 3, boxShadow: 6, height:"100%" }}>
                 <CardContent>
                   <PrimaryPieChartComponent
@@ -241,7 +243,7 @@ const Dashboard: React.FC<DashboardProps> = ({
           {/* Income Statement Table */}
           {/* Table*/}
           {cardTitles.length > 3 && (
-            <Grid item sm={12} md={4}>
+            <Grid item xs={12} md={12} lg={4}>
               <Card sx={{ borderRadius: 3, boxShadow: 6 }}>
                 <CardContent>
                   <Typography fontSize={20} color="#333" fontWeight="bold">
