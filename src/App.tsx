@@ -20,7 +20,7 @@ const App: React.FC = () => {
   const [previousDatasource, setPreviousDatasource] =
     useState<companyDataInterface | null>(null);
 
-  const [dateDataSource, setDateDataSource] = useState("current");
+  const [dateDataSource] = useState("current");
   const [filteredEntity, setFilteredEntity] = useState<string>("CLI");
   const [loading, setLoading] = useState(false);
 

@@ -55,7 +55,7 @@ const Dashboard: React.FC<DashboardProps> = ({
 
   const barDataFiltered: revenueDataInterface[] = barData.filter(
     (data) => data !== null
-  );
+  ) as revenueDataInterface[];
 
   // get gauge data
   const gaugeData: (singleValueRowDataInterface | null)[] =
@@ -80,8 +80,9 @@ const Dashboard: React.FC<DashboardProps> = ({
         : [];
     });
 
-  const composedChartFiltered: singleValueRowDataInterface[] =
-    composedChartData.filter((data) => data !== null);
+  const composedChartFiltered: singleValueRowDataInterface[] = composedChartData.filter(
+    (data) => data !== null
+  ) as singleValueRowDataInterface[];
 
   // get pie data
   const pieData: (operatingExpenseDataInterface | null)[] =
@@ -96,9 +97,9 @@ const Dashboard: React.FC<DashboardProps> = ({
         : [];
     });
 
-  const pieDataFiltered: operatingExpenseDataInterface[] = pieData.filter(
-    (data) => data !== null
-  );
+    const pieDataFiltered: operatingExpenseDataInterface[] = pieData.filter(
+      (data) => data !== null
+    ) as operatingExpenseDataInterface[];
 
   // get income statement table data
   const incomeStatementData: (incomeStatementRowDataInterface | null)[] =
@@ -110,8 +111,9 @@ const Dashboard: React.FC<DashboardProps> = ({
         : [];
     });
 
-  const incomeStatementDataFiltered: incomeStatementRowDataInterface[] =
-    incomeStatementData.filter((data) => data !== null);
+    const incomeStatementDataFiltered: incomeStatementRowDataInterface[] = incomeStatementData.filter(
+      (data) => data !== null
+    ) as incomeStatementRowDataInterface[];
 
   // Modal handlers
   const handleOpenBarChartModal = () => setIsBarChartModalOpen(true);
