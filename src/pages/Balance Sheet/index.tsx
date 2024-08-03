@@ -16,7 +16,7 @@ import operatingExpenseDataInterface from "../../common/interfaces/data/objects/
 import revenueDataInterface from "../../common/interfaces/data/objects/forms/graph-related/data-interfaces/revenueDataInterface";
 import incomeStatementRowDataInterface from "../../common/interfaces/data/charts/incomeStatementRowDataInterface";
 
-interface DashboardProps {
+interface BalanceSheetProps {
   cardTitles: {
     title: string | null;
   }[];
@@ -25,7 +25,7 @@ interface DashboardProps {
   entityFilter: string;
 }
 
-const BalanceSheet: React.FC<DashboardProps> = ({
+const BalanceSheetComponent: React.FC<BalanceSheetProps> = ({
   cardTitles,
   chartData,
   reload,
@@ -137,7 +137,7 @@ const BalanceSheet: React.FC<DashboardProps> = ({
         marginLeft: "1.5vh",
       }}
     >
-      <Header title="Financial Dashboard - Income Statement" />
+      <Header title="Financial Dashboard - Balance Sheet" />
       <Box>
         <Grid container spacing={1.5} key={reloadKey}>
           {/* Doughnut charts */}
@@ -321,4 +321,4 @@ const BalanceSheet: React.FC<DashboardProps> = ({
   );
 };
 
-export default BalanceSheet;
+export default BalanceSheetComponent;

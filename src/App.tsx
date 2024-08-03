@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./App.css";
 import SidebarComponent from "./components/global/Sidebar";
-import Dashboard from "../src/pages/Dashboard";
+import IncomeStatementComponent from "./pages/Income Statement";
+import BalanceSheetComponent from "./pages/Balance Sheet";
+import CashFlowComponent from "./pages/Cash Flow";
 import chartDataInterface from "./common/interfaces/data/charts/chartDataInterface";
 import dataCalculation from "./data-calculation/dataCalculation";
 
@@ -13,8 +15,6 @@ import _ from "lodash";
 import companyDataInterface from "./common/interfaces/data/companyDataInterface";
 import singleValueBooleanRowDataInterface from "./common/interfaces/data/objects/forms/singleValueBooleanRowDataInterface";
 import { Routes, Route } from "react-router-dom";
-import BalanceSheet from "./pages/Balance Sheet";
-import CashFlow from "./pages/Cash Flow";
 
 const App: React.FC = () => {
   const [reloadDashboard, setReloadDashboard] = useState<boolean>(false);
@@ -26,9 +26,6 @@ const App: React.FC = () => {
   const [dateDataSource] = useState("current");
   const [filteredEntity, setFilteredEntity] = useState<string>("CLI");
   const [loading, setLoading] = useState(false);
-
-  // current page
-  const [page, setPage] = useState("Dashboard");
 
   // handle for current and previous income statement uploads
   const handleReloadDashboard = (data: string | null) => {
@@ -80,7 +77,8 @@ const App: React.FC = () => {
     }
   };
 
-  const dashboardCardTitles = [
+  // dashboard component titles
+  const incomeStatementCardTitles = [
     { title: null },
     { title: "REVENUE per BUs (PHP in millions)" },
     { title: "OPERATION EXPENSES (PHP in millions)" },
@@ -695,11 +693,11 @@ const App: React.FC = () => {
         <Routes>
           {/* Dashboard */}
           <Route
-            path="/dashboard"
+            path="/income-statement"
             element={
               <div className="dashboard-container">
-                <Dashboard
-                  cardTitles={dashboardCardTitles}
+                <IncomeStatementComponent
+                  cardTitles={incomeStatementCardTitles}
                   chartData={chartData}
                   reload={reloadDashboard}
                   entityFilter={filteredEntity}
@@ -712,8 +710,8 @@ const App: React.FC = () => {
             path="/balance-sheet"
             element={
               <div className="dashboard-container">
-                <BalanceSheet
-                  cardTitles={dashboardCardTitles}
+                <BalanceSheetComponent
+                  cardTitles={balanceSheetCardTitles}
                   chartData={chartData}
                   reload={reloadDashboard}
                   entityFilter={filteredEntity}
@@ -726,8 +724,8 @@ const App: React.FC = () => {
             path="/cash-flow"
             element={
               <div className="dashboard-container">
-                <CashFlow
-                  cardTitles={dashboardCardTitles}
+                <CashFlowComponent
+                  cardTitles={cashFlowCardTitles}
                   chartData={chartData}
                   reload={reloadDashboard}
                   entityFilter={filteredEntity}

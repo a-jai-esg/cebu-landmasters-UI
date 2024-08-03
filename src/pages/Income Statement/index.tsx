@@ -16,7 +16,7 @@ import operatingExpenseDataInterface from "../../common/interfaces/data/objects/
 import revenueDataInterface from "../../common/interfaces/data/objects/forms/graph-related/data-interfaces/revenueDataInterface";
 import incomeStatementRowDataInterface from "../../common/interfaces/data/charts/incomeStatementRowDataInterface";
 
-interface DashboardProps {
+interface IncomeStatementProps {
   cardTitles: {
     title: string | null;
   }[];
@@ -25,7 +25,7 @@ interface DashboardProps {
   entityFilter: string;
 }
 
-const Dashboard: React.FC<DashboardProps> = ({
+const IncomeStatementComponent: React.FC<IncomeStatementProps> = ({
   cardTitles,
   chartData,
   reload,
@@ -254,7 +254,6 @@ const Dashboard: React.FC<DashboardProps> = ({
             </Grid>
           )}
           {/* Income Statement Table */}
-          {/* Table*/}
           {cardTitles.length > 3 && (
             <Grid item xs={12} md={12} lg={4}>
               <Card sx={{ borderRadius: 3, boxShadow: 6 }}>
@@ -317,4 +316,4 @@ const Dashboard: React.FC<DashboardProps> = ({
   );
 };
 
-export default Dashboard;
+export default IncomeStatementComponent;
