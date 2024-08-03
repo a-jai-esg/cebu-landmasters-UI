@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal, Box, Card, CardContent, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import CustomPieChartComponent from "../../../../pages/Dashboard/cards/CustomPieChartComponent";
+import CustomPieChartComponent from "../../Cards/CustomPieChartComponent";
 import operatingExpenseDataInterface from "../../../../common/interfaces/data/objects/forms/graph-related/data-interfaces/operatingExpenseDataInterface";
 
 interface PieChartModalProps {

@@ -12,6 +12,9 @@ import singleValueRowDataInterface from "./common/interfaces/data/objects/forms/
 import _ from "lodash";
 import companyDataInterface from "./common/interfaces/data/companyDataInterface";
 import singleValueBooleanRowDataInterface from "./common/interfaces/data/objects/forms/singleValueBooleanRowDataInterface";
+import { Routes, Route } from "react-router-dom";
+import BalanceSheet from "./pages/Balance Sheet";
+import CashFlow from "./pages/Cash Flow";
 
 const App: React.FC = () => {
   const [reloadDashboard, setReloadDashboard] = useState<boolean>(false);
@@ -23,6 +26,9 @@ const App: React.FC = () => {
   const [dateDataSource] = useState("current");
   const [filteredEntity, setFilteredEntity] = useState<string>("CLI");
   const [loading, setLoading] = useState(false);
+
+  // current page
+  const [page, setPage] = useState("Dashboard");
 
   // handle for current and previous income statement uploads
   const handleReloadDashboard = (data: string | null) => {
@@ -74,7 +80,23 @@ const App: React.FC = () => {
     }
   };
 
-  const cardTitles = [
+  const dashboardCardTitles = [
+    { title: null },
+    { title: "REVENUE per BUs (PHP in millions)" },
+    { title: "OPERATION EXPENSES (PHP in millions)" },
+    { title: null },
+    { title: "GPM PER ENTITY (%)" },
+  ];
+
+  const cashFlowCardTitles = [
+    { title: null },
+    { title: "REVENUE per BUs (PHP in millions)" },
+    { title: "OPERATION EXPENSES (PHP in millions)" },
+    { title: null },
+    { title: "GPM PER ENTITY (%)" },
+  ];
+
+  const balanceSheetCardTitles = [
     { title: null },
     { title: "REVENUE per BUs (PHP in millions)" },
     { title: "OPERATION EXPENSES (PHP in millions)" },
@@ -669,14 +691,52 @@ const App: React.FC = () => {
         onRemoveFile={handleClearDataSources}
         isUploading={loading}
       />
-      <div className="dashboard-container">
-        <Dashboard
-          cardTitles={cardTitles}
-          chartData={chartData}
-          reload={reloadDashboard}
-          entityFilter={filteredEntity}
-        />
-      </div>
+      <main>
+        <Routes>
+          {/* Dashboard */}
+          <Route
+            path="/dashboard"
+            element={
+              <div className="dashboard-container">
+                <Dashboard
+                  cardTitles={dashboardCardTitles}
+                  chartData={chartData}
+                  reload={reloadDashboard}
+                  entityFilter={filteredEntity}
+                />
+              </div>
+            }
+          />
+          {/* Balance Sheet */}
+          <Route
+            path="/balance-sheet"
+            element={
+              <div className="dashboard-container">
+                <BalanceSheet
+                  cardTitles={dashboardCardTitles}
+                  chartData={chartData}
+                  reload={reloadDashboard}
+                  entityFilter={filteredEntity}
+                />
+              </div>
+            }
+          />
+          {/* Cash Flow */}
+          <Route
+            path="/cash-flow"
+            element={
+              <div className="dashboard-container">
+                <CashFlow
+                  cardTitles={dashboardCardTitles}
+                  chartData={chartData}
+                  reload={reloadDashboard}
+                  entityFilter={filteredEntity}
+                />
+              </div>
+            }
+          />
+        </Routes>
+      </main>
     </div>
   );
 };

@@ -219,7 +219,7 @@ const FilterComponent: React.FC<FilterProps> = ({
           style={{
             display: "flex",
             alignItems: "center",
-            margin: "70px 0 15px 20px",
+            margin: "50px 0 15px 20px",
           }}
         >
           <AnimatedTypography

@@ -25,7 +25,7 @@ interface DashboardProps {
   entityFilter: string;
 }
 
-const Dashboard: React.FC<DashboardProps> = ({
+const BalanceSheet: React.FC<DashboardProps> = ({
   cardTitles,
   chartData,
   reload,
@@ -234,8 +234,13 @@ const Dashboard: React.FC<DashboardProps> = ({
                   <PrimaryPieChartComponent
                     pieData={pieDataFiltered}
                     title={cardTitles[2].title ?? "Pie Chart"}
-                    colors={["#3FB3E5", "#D777C3", "#84E48D", "#85C7EE", "#7B9BB1"]}
-                    colors={["#3FB3E5", "#D777C3", "#84E48D", "#85C7EE", "#7B9BB1"]}
+                    colors={[
+                      "#3FB3E5",
+                      "#D777C3",
+                      "#84E48D",
+                      "#85C7EE",
+                      "#7B9BB1",
+                    ]}
                   />
                   <Typography
                     onClick={handleOpenPieChartModal}
@@ -282,7 +287,6 @@ const Dashboard: React.FC<DashboardProps> = ({
           {/* Composed Chart*/}
           {cardTitles.length > 4 && (
             <Grid item xs={12}>
-            <Grid item xs={12}>
               <Card sx={{ borderRadius: 3, boxShadow: 6 }}>
                 <CardContent>
                   <ComposedChartComponent
@@ -317,4 +321,4 @@ const Dashboard: React.FC<DashboardProps> = ({
   );
 };
 
-export default Dashboard;
+export default BalanceSheet;

@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal, Box, Card, CardContent, IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import IncomeStatementTable from "../../../../pages/Dashboard/cards/IncomeStatementTableComponent";
+import IncomeStatementTable from "../../Cards/IncomeStatementTableComponent";
 import incomeStatementRowDataInterface from "../../../../common/interfaces/data/charts/incomeStatementRowDataInterface";
 
 interface IncomeStatementTableModalProps {
@@ -14,7 +14,7 @@ interface IncomeStatementTableModalProps {
 const IncomeStatementTableModal: React.FC<IncomeStatementTableModalProps> = ({
   open,
   onClose,
-  data
+  data,
 }) => {
   return (
     <Modal open={open} onClose={onClose}>
@@ -27,7 +27,16 @@ const IncomeStatementTableModal: React.FC<IncomeStatementTableModalProps> = ({
           outline: "none",
         }}
       >
-        <Card sx={{ width: "80%", maxHeight: "90vh", overflow: "auto", borderRadius: 3, boxShadow: 6, position: "relative" }}>
+        <Card
+          sx={{
+            width: "80%",
+            maxHeight: "90vh",
+            overflow: "auto",
+            borderRadius: 3,
+            boxShadow: 6,
+            position: "relative",
+          }}
+        >
           <CardContent>
             <IconButton
               aria-label="close"
