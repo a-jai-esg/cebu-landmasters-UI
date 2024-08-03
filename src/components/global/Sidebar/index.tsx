@@ -5,6 +5,8 @@ import LogoComponent from "./LogoComponent";
 import CurrencyExchangeOutlined from "@mui/icons-material/CurrencyExchangeOutlined";
 import AccountBalanceOutlined from "@mui/icons-material/AccountBalanceOutlined";
 import MoneyOutlined from "@mui/icons-material/MoneyOutlined";
+import AccountBalanceOutlined from "@mui/icons-material/AccountBalanceOutlined";
+import MoneyOutlined from "@mui/icons-material/MoneyOutlined";
 import { Box, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import FilterComponent from "./FilterComponent";
@@ -72,6 +74,14 @@ const SidebarComponent: React.FC<SidebarProps> = ({
 
   const handleMenuItemClick = (menuItem: string) => {
     setSelected(menuItem);
+
+    menuItem === "Income Statement"
+      ? setIsFilterVisible((prevState) => !prevState)
+      : setIsFilterVisible(false);
+
+    menuItem === "Balance Sheet"
+      ? setIsFilterVisible((prevState) => !prevState)
+      : setIsFilterVisible(false);
   };
 
   return (
@@ -115,25 +125,87 @@ const SidebarComponent: React.FC<SidebarProps> = ({
     >
       <ProSidebar>
         <Menu iconShape="square">
-          <LogoComponent />
-          {menuItems.map((item) => (
-            <Item
-              key={item.name}
-              title={item.name}
-              to={item.link}
-              icon={item.icon}
-              selected={selected}
-              setSelected={handleMenuItemClick}
-            />
-          ))}
-          <Box sx={{ marginTop: "5vh", marginLeft: "25px" }}>
-            <FilterComponent
-              onCheckboxChange={onCheckboxClick}
-              onFileUpload={onFileUpload}
-              onRemoveFile={onRemoveFile}
-              isUploading={isUploading}
-            />
+          {/* Logo Component */}
+          <Box>
+            <LogoComponent />
           </Box>
+          {/* Income Statement Button */}
+          <Box
+            sx={{
+              paddingTop: "20px",
+            }}
+          >
+            <MenuItem
+              active={selected === "Income Statement"}
+              style={{
+                color: "#24274c",
+                fontWeight: selected === "Income Statement" ? 600 : "normal",
+              }}
+              onClick={() => handleMenuItemClick("Income Statement")}
+              icon={<CurrencyExchangeOutlined />}
+              className="sidebar-item"
+            >
+              <Typography>Income Statement</Typography>
+              <Link to="/dashboard" />
+            </MenuItem>
+          </Box>
+          {/* Balance Sheet Button*/}
+          <Box
+            sx={{
+              paddingTop: "15px",
+            }}
+          >
+            <MenuItem
+              active={selected === "Balance Sheet"}
+              style={{
+                color: "#24274c",
+                fontWeight: selected === "Balance Sheet" ? 600 : "normal",
+              }}
+              onClick={() => handleMenuItemClick("Balance Sheet")}
+              icon={<AccountBalanceOutlined />}
+              className="sidebar-item"
+            >
+              <Typography>Balance Sheet</Typography>
+              <Link to="/balance-sheet" />
+            </MenuItem>
+          </Box>
+          {/* Cash Flow Button*/}
+          <Box
+            sx={{
+              paddingTop: "15px",
+            }}
+          >
+            <MenuItem
+              active={selected === "Cash Flow"}
+              style={{
+                color: "#24274c",
+                fontWeight: selected === "Cash Flow" ? 600 : "normal",
+              }}
+              onClick={() => handleMenuItemClick("Cash Flow")}
+              icon={<MoneyOutlined />}
+              className="sidebar-item"
+            >
+              <Typography>Cash Flow</Typography>
+              <Link to="/cash-flow" />
+            </MenuItem>
+          </Box>
+
+          {/* Filter Component */}
+          {isFilterVisible && (
+            <Box
+              sx={{
+                marginTop: "5vh",
+                marginLeft: "25px",
+              }}
+            >
+              <FilterComponent
+                onCheckboxChange={onCheckboxClick}
+                onFileUpload={onFileUpload}
+                onRemoveFile={onRemoveFile}
+                isUploading={isUploading}
+              />
+            </Box>
+          )}
         </Menu>
       </ProSidebar>
     </Box>
