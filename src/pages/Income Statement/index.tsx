@@ -234,8 +234,13 @@ const IncomeStatementComponent: React.FC<IncomeStatementProps> = ({
                   <PrimaryPieChartComponent
                     pieData={pieDataFiltered}
                     title={cardTitles[2].title ?? "Pie Chart"}
-                    colors={["#3FB3E5", "#D777C3", "#84E48D", "#85C7EE", "#7B9BB1"]}
-                    colors={["#3FB3E5", "#D777C3", "#84E48D", "#85C7EE", "#7B9BB1"]}
+                    colors={[
+                      "#3FB3E5",
+                      "#D777C3",
+                      "#84E48D",
+                      "#85C7EE",
+                      "#7B9BB1",
+                    ]}
                   />
                   <Typography
                     onClick={handleOpenPieChartModal}
@@ -254,6 +259,7 @@ const IncomeStatementComponent: React.FC<IncomeStatementProps> = ({
             </Grid>
           )}
           {/* Income Statement Table */}
+          {/* Table*/}
           {cardTitles.length > 3 && (
             <Grid item xs={12} md={12} lg={4}>
               <Card sx={{ borderRadius: 3, boxShadow: 6 }}>
@@ -280,7 +286,6 @@ const IncomeStatementComponent: React.FC<IncomeStatementProps> = ({
           )}
           {/* Composed Chart*/}
           {cardTitles.length > 4 && (
-            <Grid item xs={12}>
             <Grid item xs={12}>
               <Card sx={{ borderRadius: 3, boxShadow: 6 }}>
                 <CardContent>

@@ -693,7 +693,7 @@ const App: React.FC = () => {
         <Routes>
           {/* Dashboard */}
           <Route
-            path="/income-statement"
+            path="/"
             element={
               <div className="dashboard-container">
                 <IncomeStatementComponent
@@ -705,39 +705,6 @@ const App: React.FC = () => {
               </div>
             }
           />
-          {/* Balance Sheet */}
-          <Route
-            path="/balance-sheet"
-            element={
-              <div className="dashboard-container">
-                <BalanceSheetComponent
-                  cardTitles={balanceSheetCardTitles}
-                  chartData={chartData}
-                  reload={reloadDashboard}
-                  entityFilter={filteredEntity}
-                />
-              </div>
-            }
-          />
-          {/* Cash Flow */}
-          <Route
-            path="/cash-flow"
-            element={
-              <div className="dashboard-container">
-                <CashFlowComponent
-                  cardTitles={cashFlowCardTitles}
-                  chartData={chartData}
-                  reload={reloadDashboard}
-                  entityFilter={filteredEntity}
-                />
-              </div>
-            }
-          />
-        </Routes>
-      </main>
-      <main>
-        <Routes>
-          {/* Dashboard */}
           <Route
             path="/income-statement"
             element={
