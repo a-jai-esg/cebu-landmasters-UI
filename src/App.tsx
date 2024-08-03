@@ -27,9 +27,6 @@ const App: React.FC = () => {
   const [filteredEntity, setFilteredEntity] = useState<string>("CLI");
   const [loading, setLoading] = useState(false);
 
-  // current page
-  const [page, setPage] = useState("Dashboard");
-
   // handle for current and previous income statement uploads
   const handleReloadDashboard = (data: string | null) => {
     setReloadDashboard(!reloadDashboard);
@@ -696,11 +693,11 @@ const App: React.FC = () => {
         <Routes>
           {/* Dashboard */}
           <Route
-            path="/dashboard"
+            path="/income-statement"
             element={
               <div className="dashboard-container">
-                <Dashboard
-                  cardTitles={dashboardCardTitles}
+                <IncomeStatementComponent
+                  cardTitles={incomeStatementCardTitles}
                   chartData={chartData}
                   reload={reloadDashboard}
                   entityFilter={filteredEntity}
@@ -713,8 +710,8 @@ const App: React.FC = () => {
             path="/balance-sheet"
             element={
               <div className="dashboard-container">
-                <BalanceSheet
-                  cardTitles={dashboardCardTitles}
+                <BalanceSheetComponent
+                  cardTitles={balanceSheetCardTitles}
                   chartData={chartData}
                   reload={reloadDashboard}
                   entityFilter={filteredEntity}
@@ -727,8 +724,8 @@ const App: React.FC = () => {
             path="/cash-flow"
             element={
               <div className="dashboard-container">
-                <CashFlow
-                  cardTitles={dashboardCardTitles}
+                <CashFlowComponent
+                  cardTitles={cashFlowCardTitles}
                   chartData={chartData}
                   reload={reloadDashboard}
                   entityFilter={filteredEntity}
