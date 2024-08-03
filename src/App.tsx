@@ -27,9 +27,6 @@ const App: React.FC = () => {
   const [filteredEntity, setFilteredEntity] = useState<string>("CLI");
   const [loading, setLoading] = useState(false);
 
-  // current page
-  const [page, setPage] = useState("Dashboard");
-
   // handle for current and previous income statement uploads
   const handleReloadDashboard = (data: string | null) => {
     setReloadDashboard(!reloadDashboard);
