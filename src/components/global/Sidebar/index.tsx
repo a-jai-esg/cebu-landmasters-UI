@@ -5,8 +5,6 @@ import LogoComponent from "./LogoComponent";
 import CurrencyExchangeOutlined from "@mui/icons-material/CurrencyExchangeOutlined";
 import AccountBalanceOutlined from "@mui/icons-material/AccountBalanceOutlined";
 import MoneyOutlined from "@mui/icons-material/MoneyOutlined";
-import AccountBalanceOutlined from "@mui/icons-material/AccountBalanceOutlined";
-import MoneyOutlined from "@mui/icons-material/MoneyOutlined";
 import { Box, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import FilterComponent from "./FilterComponent";
