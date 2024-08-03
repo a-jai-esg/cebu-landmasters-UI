@@ -27,6 +27,9 @@ const App: React.FC = () => {
   const [filteredEntity, setFilteredEntity] = useState<string>("CLI");
   const [loading, setLoading] = useState(false);
 
+  // current page
+  const [page, setPage] = useState("Dashboard");
+
   // handle for current and previous income statement uploads
   const handleReloadDashboard = (data: string | null) => {
     setReloadDashboard(!reloadDashboard);
@@ -689,6 +692,52 @@ const App: React.FC = () => {
         onRemoveFile={handleClearDataSources}
         isUploading={loading}
       />
+      <main>
+        <Routes>
+          {/* Dashboard */}
+          <Route
+            path="/dashboard"
+            element={
+              <div className="dashboard-container">
+                <Dashboard
+                  cardTitles={dashboardCardTitles}
+                  chartData={chartData}
+                  reload={reloadDashboard}
+                  entityFilter={filteredEntity}
+                />
+              </div>
+            }
+          />
+          {/* Balance Sheet */}
+          <Route
+            path="/balance-sheet"
+            element={
+              <div className="dashboard-container">
+                <BalanceSheet
+                  cardTitles={dashboardCardTitles}
+                  chartData={chartData}
+                  reload={reloadDashboard}
+                  entityFilter={filteredEntity}
+                />
+              </div>
+            }
+          />
+          {/* Cash Flow */}
+          <Route
+            path="/cash-flow"
+            element={
+              <div className="dashboard-container">
+                <CashFlow
+                  cardTitles={dashboardCardTitles}
+                  chartData={chartData}
+                  reload={reloadDashboard}
+                  entityFilter={filteredEntity}
+                />
+              </div>
+            }
+          />
+        </Routes>
+      </main>
       <main>
         <Routes>
           {/* Dashboard */}
